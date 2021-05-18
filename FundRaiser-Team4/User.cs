@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FundRaiser_Team4
+namespace FundRaiser_Team5
 {
     public class User
     {

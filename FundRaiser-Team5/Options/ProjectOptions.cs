@@ -8,6 +8,7 @@ namespace FundRaiser_Team5.Options
 {
     public class ProjectOptions
     {
+        public string ProjectCode { get; set; }
         public int CreatorId { get; set; }
         public string Title { get; set; }
         public int Category { get; set; } //specific categories

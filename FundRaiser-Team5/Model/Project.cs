@@ -9,6 +9,16 @@ namespace FundRaiser_Team5
     public class Project
     {
         public int ProjectId { get; set; }
+        public string ProjectCode
+        {
+            get
+            {
+                return $"{ProjectId:000000}";
+            }
+            set 
+            { 
+            }
+        } 
         public int CreatorId { get; set; }
         public string Title { get; set; }
         public int Category { get; set; } //specific categories
@@ -17,7 +27,7 @@ namespace FundRaiser_Team5
         public List<string> Videos { get; set; }
         public List<StatusUpdate> StatusUpdates { get; set; }
         public decimal FundingGoal { get; set; } //>0 
-        public decimal CurrentFund { get; set; } // >0
+        public decimal CurrentFund { get; set; } = 0;
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime Deadline { get; set; } //>DateTime.Now
     }

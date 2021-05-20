@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FundRaiser_Team5.Model
+namespace FundRaiser_Team5
 {
     public class Project
     {

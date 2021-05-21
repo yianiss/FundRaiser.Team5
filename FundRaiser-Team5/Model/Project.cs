@@ -9,16 +9,6 @@ namespace FundRaiser_Team5
     public class Project
     {
         public int ProjectId { get; set; }
-        public string ProjectCode
-        {
-            get
-            {
-                return $"{ProjectId:000000}";
-            }
-            set 
-            { 
-            }
-        } 
         public int CreatorId { get; set; }
         public string Title { get; set; }
         public int Category { get; set; } //specific categories

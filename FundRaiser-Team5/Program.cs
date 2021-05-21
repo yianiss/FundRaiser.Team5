@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FundRaiser_Team5.Model;
 
 namespace FundRaiser_Team5
 {
@@ -38,7 +37,6 @@ namespace FundRaiser_Team5
            );
 
             Console.WriteLine($"{project.ProjectId}");
-            Console.WriteLine($"{project.ProjectCode}");
             Console.WriteLine($"{project.CreatorId}");
             Console.WriteLine($"{project.Category}");
             Console.WriteLine($"{project.Title}");
@@ -54,8 +52,6 @@ namespace FundRaiser_Team5
             Console.WriteLine($"{project.DateCreated}");
             Console.WriteLine($"{project.Deadline}");
 
-            
-            Console.WriteLine($"{int.Parse(project.ProjectCode)}");
         }
     }
 }

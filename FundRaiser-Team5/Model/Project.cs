@@ -10,7 +10,6 @@ namespace FundRaiser_Team5
     public class Project
     {
         public int ProjectId { get; set; }
-        public int CreatorId { get; set; }
         public string Title { get; set; }
         public Category Category { get; set; } 
         public string Description { get; set; }
@@ -21,5 +20,6 @@ namespace FundRaiser_Team5
         public decimal CurrentFund { get; set; } = 0;
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime Deadline { get; set; } //>DateTime.Now
+        public User User { get; set; }
     }
 }

@@ -1,4 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FundRaiser_Team5.Project">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAgAGAAAAAAAAAABIAAAAAAAAEEACAACAg=</HashCode>
+      <FileName>Model\Project.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FundRaiser_Team5.StatusUpdate">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEgIAAAACAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Model\StatusUpdate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="FundRaiser_Team5.Model.Category">
+    <Position X="2.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAgAAAAAAQAAAAAA=</HashCode>
+      <FileName>Model\Category.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

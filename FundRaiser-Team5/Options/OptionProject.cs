@@ -11,7 +11,7 @@ namespace FundRaiser_Team5.Options
         public string ProjectId { get; set; }
         public int CreatorId { get; set; }
         public string Title { get; set; }
-        public int Category { get; set; } //specific categories
+        public Category Category { get; set; } //specific categories
         public string Description { get; set; }
         public List<string> Photos { get; set; } // URL
         public List<string> Videos { get; set; }// URL

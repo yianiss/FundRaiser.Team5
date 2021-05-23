@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FundRaiser_Team5.Model;
 
 namespace FundRaiser_Team5
 {
@@ -11,7 +12,7 @@ namespace FundRaiser_Team5
         public int ProjectId { get; set; }
         public int CreatorId { get; set; }
         public string Title { get; set; }
-        public int Category { get; set; } //specific categories
+        public Category Category { get; set; } 
         public string Description { get; set; }
         public List<string> Photos { get; set; }
         public List<string> Videos { get; set; }

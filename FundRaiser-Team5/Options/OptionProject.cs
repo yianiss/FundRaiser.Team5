@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Options
 {
-    public class ProjectOptions
+    public class OptionProject
     {
         public string ProjectId { get; set; }
         public int CreatorId { get; set; }

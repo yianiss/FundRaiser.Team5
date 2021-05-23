@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Options
 {
-    class OptionFundingPackage
+    public class OptionFundingPackage
     {
         public int OptionFundingPackageId { get; set; }
         public int ProjectId { get; set; }

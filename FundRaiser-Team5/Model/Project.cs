@@ -13,6 +13,7 @@ namespace FundRaiser_Team5
         public string Title { get; set; }
         public Category Category { get; set; } 
         public string Description { get; set; }
+        public List<FundingPackage> FundingPackages { get; set; }
         public List<string> Photos { get; set; }
         public List<string> Videos { get; set; }
         public List<StatusUpdate> StatusUpdates { get; set; }

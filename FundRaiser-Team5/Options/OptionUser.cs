@@ -1,19 +1,20 @@
-﻿using System;
+﻿using FundRaiser_Team5.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FundRaiser_Team5.Model
+namespace FundRaiser_Team5.Options
 {
-    public class Backer : IUser
+    public class OptionUser
     {
-        public int BackerId { get; set; }
-        public List<Project> Projects { get; set; }
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public List<FundingPackage> FundingPackages { get; set; }
+        public List<Project> Projects { get; set; }
     }
 }

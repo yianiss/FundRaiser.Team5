@@ -10,7 +10,7 @@ namespace FundRaiser_Team5
     public class BackerFundingPackage
     {
         public int BackerFundingPackageId { get; set; }
-        public Backer Backer { get; set; }
+        public User User { get; set; }
         public FundingPackage FundingPackage { get; set; }
         public DateTime CreateDate { get; set; }
         public int Price { get; set; }

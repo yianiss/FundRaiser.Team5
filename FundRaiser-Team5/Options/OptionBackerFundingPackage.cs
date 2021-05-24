@@ -10,7 +10,7 @@ namespace FundRaiser_Team5.Options
     class OptionBackerFundingPackage
     {
         public int OptionBackerFundingPackageId { get; set; }
-        public int BackerId { get; set; }
+        public int UserId { get; set; }
         public int FundingPackageId { get; set; }
         public DateTime CreateDate { get; set; }
         public int Price { get; set; }
@@ -22,7 +22,7 @@ namespace FundRaiser_Team5.Options
             if (backerFundingPackage != null)
             {
                 OptionBackerFundingPackageId = backerFundingPackage.BackerFundingPackageId;
-                BackerId = backerFundingPackage.Backer.BackerId;
+                UserId = backerFundingPackage.User.UserId;
                 FundingPackageId = backerFundingPackage.FundingPackage.FundingPackageId;
                 CreateDate = backerFundingPackage.CreateDate;
                 Price = backerFundingPackage.Price;

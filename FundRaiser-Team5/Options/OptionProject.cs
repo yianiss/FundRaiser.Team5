@@ -9,7 +9,7 @@ namespace FundRaiser_Team5.Options
     public class OptionProject
     {
         public string ProjectId { get; set; }
-        public int CreatorId { get; set; }
+        public int UserId { get; set; }
         public string Title { get; set; }
         public int Category { get; set; } //specific categories
         public string Description { get; set; }

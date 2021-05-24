@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Services
 {
-    public class UserService: IUserInterface
+    public class ProjectService : IProjectInterface
     {
-       // private Crm
     }
 }

@@ -21,6 +21,6 @@ namespace FundRaiser_Team5
         public decimal CurrentFund { get; set; } = 0;
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime Deadline { get; set; } //>DateTime.Now
-        public User User { get; set; }
+        public User Users { get; set; }
     }
 }

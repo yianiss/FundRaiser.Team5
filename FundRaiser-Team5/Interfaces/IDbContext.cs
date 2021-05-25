@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FundRaiser_Team5.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FundRaiser_Team5.Model;
 
-namespace FundRaiser_Team5.Data
+namespace FundRaiser_Team5.Interfaces
 {
-    class FrDbContext : DbContext
+    interface IDbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
@@ -18,5 +18,6 @@ namespace FundRaiser_Team5.Data
         public DbSet<StatusUpdate> StatusUpdates { get; set; }
         public DbSet<FundingPackage> FundingPackages { get; set; }
 
+        //Task<int> SaveChangesAsync();
     }
 }

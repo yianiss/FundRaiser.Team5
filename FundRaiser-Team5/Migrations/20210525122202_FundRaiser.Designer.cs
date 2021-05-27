@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FundRaiser_Team5.Migrations
 {
     [DbContext(typeof(FrDbContext))]
-    [Migration("20210524133416_initial")]
-    partial class initial
+    [Migration("20210525122202_FundRaiser")]
+    partial class FundRaiser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,7 @@ namespace FundRaiser_Team5.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BackerFundingPackages");
+                    b.ToTable("backerFundingPackages");
                 });
 
             modelBuilder.Entity("FundRaiser_Team5.Model.FundingPackage", b =>
@@ -88,7 +88,7 @@ namespace FundRaiser_Team5.Migrations
 
             modelBuilder.Entity("FundRaiser_Team5.Model.ImagePath", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("ImagePathId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -99,16 +99,16 @@ namespace FundRaiser_Team5.Migrations
                     b.Property<int?>("ProjectId")
                         .HasColumnType("int");
 
-                    b.HasKey("ID");
+                    b.HasKey("ImagePathId");
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("ImagePath");
+                    b.ToTable("ImagePaths");
                 });
 
             modelBuilder.Entity("FundRaiser_Team5.Model.VideoPath", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("VideoPathId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -119,11 +119,11 @@ namespace FundRaiser_Team5.Migrations
                     b.Property<string>("Video")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("VideoPathId");
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("VideoPath");
+                    b.ToTable("VideoPaths");
                 });
 
             modelBuilder.Entity("FundRaiser_Team5.Project", b =>
@@ -154,12 +154,12 @@ namespace FundRaiser_Team5.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UsersUserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("ProjectId");
 
-                    b.HasIndex("UsersUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Projects");
                 });
@@ -245,24 +245,24 @@ namespace FundRaiser_Team5.Migrations
             modelBuilder.Entity("FundRaiser_Team5.Model.ImagePath", b =>
                 {
                     b.HasOne("FundRaiser_Team5.Project", null)
-                        .WithMany("ImagePaths")
+                        .WithMany("Photos")
                         .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("FundRaiser_Team5.Model.VideoPath", b =>
                 {
                     b.HasOne("FundRaiser_Team5.Project", null)
-                        .WithMany("VideoPath")
+                        .WithMany("Videos")
                         .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("FundRaiser_Team5.Project", b =>
                 {
-                    b.HasOne("FundRaiser_Team5.User", "Users")
+                    b.HasOne("FundRaiser_Team5.User", "User")
                         .WithMany("Projects")
-                        .HasForeignKey("UsersUserId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Users");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FundRaiser_Team5.StatusUpdate", b =>
@@ -283,11 +283,11 @@ namespace FundRaiser_Team5.Migrations
                 {
                     b.Navigation("FundingPackages");
 
-                    b.Navigation("ImagePaths");
+                    b.Navigation("Photos");
 
                     b.Navigation("StatusUpdates");
 
-                    b.Navigation("VideoPath");
+                    b.Navigation("Videos");
                 });
 
             modelBuilder.Entity("FundRaiser_Team5.User", b =>

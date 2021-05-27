@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Interfaces
 {
-    interface IDbContext
+    public interface IDbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }

@@ -14,4 +14,20 @@ namespace FundRaiser_Team5.Interfaces
        // Task<User> GetUserByIdAsync(int id);
        // Task<int> DeleteUserByIdAsync(int id);
     }
+
+    public interface IUserService
+    {
+        public OptionUser CreateUser(OptionUser optionUser);
+
+        public List<OptionUser> GetAllUsers();
+        public List<OptionUser> ReadUser();
+        public OptionUser ReadUser(int UserId);
+        public List<OptionUser> ReadUser(OptionUser optionUser);
+        
+
+        public OptionUser UpdateUser(OptionUser optionUser, int id);
+
+        public bool DeleteUser(int id);
+
+    }
 }

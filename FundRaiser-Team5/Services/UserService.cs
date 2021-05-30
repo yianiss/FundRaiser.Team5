@@ -9,26 +9,59 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Services
 {
-    public class UserService: IUserInterface, IUserService
+    public class UserService : IUserInterface
     {
         private readonly FrDbContext _context;
-        //private readonly ILogger<UserService> _logger;
+        private readonly ILogger<UserService> _logger; // out of the box services for not returning null in our crud functions
 
-        //public UserService(FrDbContext context/*, ILogger<UserService> logger*/)
-        //{
+        public UserService(FrDbContext context, ILogger<UserService> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
+        public async Task<User> CreateUserAsync(OptionUser optionUser)
+        {
+            // Validations
+            if (optionUser == null)
+            {
+                _logger.LogError("Null options");
+                return null;
+            }
 
-        //    _context = context;
-        //    //_logger = logger;
-        //}
+            if (optionUser.Email == null)
+            {
+                _logger.LogError("Email must be provided");
+                return null;
+            }
+            
+            if (string.IsNullOrWhiteSpace(optionUser.FirstName) ||
+                string.IsNullOrWhiteSpace(optionUser.LastName) ||
+                string.IsNullOrWhiteSpace(optionUser.Password))
+            {
+                _logger.LogError("Not all required parameters passed");
+                return null;
+            }
+
+            await _context.Users.SingleOrDefaultAsync(user => user.)
+
+            var newUser = new User
+            {
+                FirstName = optionUser.FirstName,
+                LastName = optionUser.LastName,
+                Email = optionUser.Email,
+                Password = optionUser.Password
+            };
+
+            _context.Add(newUser);
+            await _context.SaveChangesAsync();
+            return newUser;
+        }
+
         public Task<List<User>> GetUsersAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> CreateUserAsync(OptionUser options)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<User> GetUserByIdAsync(int id)
         {
@@ -79,7 +112,7 @@ namespace FundRaiser_Team5.Services
         //    db.SaveChanges();
         //    return user;
         //}
- 
+
         public OptionUser CreateUser(OptionUser optionUser)
         {
             if (optionUser == null)
@@ -87,13 +120,13 @@ namespace FundRaiser_Team5.Services
                 return null;
             }
 
-            if (optionUser.Email == null)                               
-            {                       
+            if (optionUser.Email == null)
+            {
                 return null;
             }
 
             User user = optionUser.GetUser();
-          
+
             db.Users.Add(user);
             db.SaveChanges();
             return new OptionUser(user);
@@ -124,7 +157,7 @@ namespace FundRaiser_Team5.Services
         public OptionUser ReadUser(int userId)
         {
             User user = db.Users.Find(userId);
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
@@ -149,10 +182,10 @@ namespace FundRaiser_Team5.Services
         public OptionUser UpdateUser(int UserId, OptionUser optionUser)
         {
             //using FrDbContext db = new();
-            
+
             User DbUser = db.Users.Find(UserId);
 
-            if ( DbUser == null)
+            if (DbUser == null)
             {
                 return null;
             }
@@ -171,7 +204,7 @@ namespace FundRaiser_Team5.Services
             //using FrDbContext db = new();
 
             User DbUser = db.Users.Find(UserId);
-            if(DbUser == null)
+            if (DbUser == null)
             {
                 return false;
             }

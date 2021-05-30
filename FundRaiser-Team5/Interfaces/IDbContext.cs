@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Interfaces
 {
-    interface IDbContext
+   public interface IDbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
@@ -17,7 +17,6 @@ namespace FundRaiser_Team5.Interfaces
         public DbSet<VideoPath> VideoPaths { get; set; }
         public DbSet<StatusUpdate> StatusUpdates { get; set; }
         public DbSet<FundingPackage> FundingPackages { get; set; }
-
-        //Task<int> SaveChangesAsync();
+        Task<int> SaveChangesAsync();
     }
 }

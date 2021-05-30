@@ -14,8 +14,8 @@ namespace FundRaiser_Team5.Options
         public Category Category { get; set; }
         public string Description { get; set; }
         public List<FundingPackage> FundingPackages { get; set; }
-        public List<string> Photos { get; set; }
-        public List<string> Videos { get; set; }
+        public List<ImagePath> Images { get; set; }
+        public List<VideoPath> Videos { get; set; }
         public List<StatusUpdate> StatusUpdates { get; set; }
         public decimal FundingGoal { get; set; } //>0 
         public decimal CurrentFund { get; set; } = 0;

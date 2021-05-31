@@ -8,7 +8,7 @@ using FundRaiser_Team5.Model;
 
 namespace FundRaiser_Team5.Data
 {
-    class FrDbContext : DbContext
+    public class FrDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
@@ -18,7 +18,12 @@ namespace FundRaiser_Team5.Data
         public DbSet<StatusUpdate> StatusUpdates { get; set; }
         public DbSet<FundingPackage> FundingPackages { get; set; }
 
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=FundRaiser; User Id=sa; Password=admin!@#123");
+        }
 
     }
+
+ 
 }

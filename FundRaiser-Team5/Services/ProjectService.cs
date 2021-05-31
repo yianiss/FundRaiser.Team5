@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using FundRaiser_Team5.Data;
 
 namespace FundRaiser_Team5.Services
 {
@@ -137,6 +138,95 @@ namespace FundRaiser_Team5.Services
                 Data = projects.Count > 0 ? projects : new List<Project>()
             };
         }
+
+    private FrDbContext db;
+    public ProjectService(FrDbContext _db)
+    {
+        db = _db;
     }
-       
+
+    public OptionProject CreateProject(OptionProject optionProject)
+    {
+        if (optionProject == null)
+        {
+            return null;
+        }
+
+        if (optionProject.Title == null)
+        {
+            return null;
+        }
+
+        Project project = optionProject.GetProject();
+        db.Projects.Add(project);
+        db.SaveChanges();
+            return new OptionProject(project);
+    }
+
+   
+    public List<OptionProject> ReadProject()
+    {
+        // using FrDbContext db = new();
+        List<Project> projects = db.Projects.ToList();
+        List<OptionProject> optionProject = new List<OptionProject>();
+        projects.ForEach(project => optionProject.Add(new OptionProject(project)));
+        return optionProject;
+    }
+
+    public OptionProject ReadProject(int ProjectId)
+    {
+        Project project = db.Projects.Find(ProjectId);
+        if (project == null)
+        {
+            return null;
+        }
+        return new OptionProject(project);
+    }
+
+    public List<OptionProject> ReadProject(OptionProject optionProject,string str)
+        {
+
+        List<Project> projects = db.Projects
+            .Where(project => project.Description.Contains(str))
+            .Where(project => project.Category.Equals(optionProject.Category))
+            .ToList();
+
+        List<OptionProject> optionProjects= new List<OptionProject>();
+
+        projects.ForEach(project => optionProjects.Add(new OptionProject(project)));
+        return optionProjects;
+    }
+
+    public OptionProject UpdateProject(int ProjectId)
+    {
+
+        Project DbProject = db.Projects.Find(ProjectId);
+
+        if (DbProject == null)
+        {
+            return null;
+        }
+
+        //DbUser.Email = optionUser.Email;
+      
+        db.SaveChanges();
+
+        return new OptionProject(DbProject);
+    }
+
+    public bool DeleteProject(int ProjectId)
+    {
+
+        Project DbProject = db.Projects.Find(ProjectId);
+        if (DbProject == null)
+        {
+            return false;
+        }
+        else
+        {
+            db.Projects.Remove(DbProject);
+        }
+        return true;
+    }
+}
 }

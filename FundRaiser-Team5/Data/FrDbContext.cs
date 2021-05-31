@@ -18,5 +18,7 @@ namespace FundRaiser_Team5.Data
         public DbSet<StatusUpdate> StatusUpdates { get; set; }
         public DbSet<FundingPackage> FundingPackages { get; set; }
 
+
+
     }
 }

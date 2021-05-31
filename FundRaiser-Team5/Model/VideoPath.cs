@@ -8,7 +8,7 @@ namespace FundRaiser_Team5.Model
 {
     public class VideoPath
     {
-        public int ID { get; set; }
+        public int VideoPathID { get; set; }
         public string Video { get; set; }
     }
 }

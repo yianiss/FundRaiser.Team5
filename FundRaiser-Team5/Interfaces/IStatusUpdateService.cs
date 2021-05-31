@@ -7,11 +7,11 @@ using FundRaiser_Team5.Options;
 
 namespace FundRaiser_Team5.Interfaces
 {
-    interface IStatusUpdateService
+    public interface IStatusUpdateService
     {
         Task<List<StatusUpdate>> GetStatusUpdatesAsync();
         Task<StatusUpdate> CreateStatusUpdateAsync(OptionStatusUpdate options);
-        Task<User> GetStatusUpdateByIdAsync(int id);
+        Task<StatusUpdate> GetStatusUpdateByIdAsync(int id);
         Task<StatusUpdate> UpdateStatusUpdateAsync(OptionStatusUpdate options);
         Task<int> DeleteUpdateByIdAsync(int id);
     }

@@ -8,7 +8,7 @@ namespace FundRaiser_Team5.Model
 {
     public class ImagePath
     {
-        public int ID { get; set; }
+        public int ImagePathID { get; set; }
         public string Image{ get; set; }
     }
 }

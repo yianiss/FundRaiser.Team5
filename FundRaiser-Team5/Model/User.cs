@@ -6,14 +6,14 @@ using System.Text;
 
 namespace FundRaiser_Team5
 {
-    public interface User
+    public class User
     {
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public List<FundingPackage> FundingPackage { get; set; }
+        public List<BackerFundingPackage> BackerFundingPackage { get; set; }
         public List<Project> Projects { get; set; }
         public bool IsCreator();
         public bool IsBacker();

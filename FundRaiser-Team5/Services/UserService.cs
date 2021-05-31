@@ -1,6 +1,8 @@
 ﻿using FundRaiser_Team5.Data;
 using FundRaiser_Team5.Interfaces;
 using FundRaiser_Team5.Options;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,13 +38,21 @@ namespace FundRaiser_Team5.Services
             
             if (string.IsNullOrWhiteSpace(optionUser.FirstName) ||
                 string.IsNullOrWhiteSpace(optionUser.LastName) ||
-                string.IsNullOrWhiteSpace(optionUser.Password))
+                string.IsNullOrWhiteSpace(optionUser.Password) ||
+                string.IsNullOrWhiteSpace(optionUser.Email)
+                )
             {
                 _logger.LogError("Not all required parameters passed");
                 return null;
             }
 
-            await _context.Users.SingleOrDefaultAsync(user => user.)
+            var UserWithTheSameEmail = await _context.Users.SingleOrDefaultAsync(user => user.Email == optionUser.Email); //check the db if there is already user with the same email
+
+            if(UserWithTheSameEmail != null)
+            {
+                _logger.LogError($"User with email {optionUser.Email} already exists");
+                return null;
+            }
 
             var newUser = new User
             {
@@ -52,25 +62,65 @@ namespace FundRaiser_Team5.Services
                 Password = optionUser.Password
             };
 
-            _context.Add(newUser);
+            await _context.Users.AddAsync(newUser);
+
             await _context.SaveChangesAsync();
+
             return newUser;
         }
 
-        public Task<List<User>> GetUsersAsync()
+        public async Task<List<User>> GetUsersAsync()
+        {
+            return await _context.Users.ToListAsync(); 
+        }
+
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            if (id <= 0)
+            {
+                _logger.LogError("Id cannot be less than or equal to 0");
+                return null;
+            }
+            var userById = await _context.
+                Users.
+                SingleOrDefaultAsync(user => user.UserId == id);
+
+            if (userById == null)
+            {
+                _logger.LogError($"User with id {id} not found");
+
+                return null;
+            }
+
+            return userById;
+        }
+
+        //TODO : Search by criteria
+        public Task<User> GetUserAsync(OptionUser options) 
         {
             throw new NotImplementedException();
         }
 
-
-        public Task<User> GetUserByIdAsync(int id)
+        public Task<User> UpdateUserAsync(OptionUser optionUser, int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<int> DeleteUserByIdAsync(int id)
+        public async Task<int> DeleteUserByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var userToDelete = await _context.Users.FindAsync(id); //await GetUserByIdAsync(int id);
+
+            if (userToDelete == null)
+            {
+                _logger.LogError($"User with id {id} not found");
+
+                return -1;
+            }
+
+            _context.Users.Remove(userToDelete);
+
+            return await _context.SaveChangesAsync();
         }
 
         /*********************************************************/
@@ -209,7 +259,7 @@ namespace FundRaiser_Team5.Services
                 return false;
             }
             else
-            {
+            {         
                 db.Users.Remove(DbUser);
             }
             return true;

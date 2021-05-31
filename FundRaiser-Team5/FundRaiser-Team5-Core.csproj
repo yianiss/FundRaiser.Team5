@@ -24,20 +24,4 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
 </Project>

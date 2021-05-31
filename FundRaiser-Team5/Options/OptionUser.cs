@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace FundRaiser_Team5.Options
 {
     public class OptionUser
-    {
-        public int UserId { get; set; }
+    { 
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -21,7 +20,6 @@ namespace FundRaiser_Team5.Options
         {
             User user = new()
             {
-                UserId = UserId,
                 FirstName = FirstName,
                 LastName = LastName,
                 Email = Email, //Email = this.Email
@@ -36,7 +34,6 @@ namespace FundRaiser_Team5.Options
         {
             if (user != null)
             {
-                UserId = user.UserId;
                 FirstName = user.FirstName;
                 LastName = user.LastName;
                 Email = user.Email;

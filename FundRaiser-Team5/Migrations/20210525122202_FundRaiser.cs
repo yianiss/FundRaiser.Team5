@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FundRaiser_Team5.Migrations
 {
-    public partial class initial : Migration
+    public partial class FundRaiser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,14 +36,14 @@ namespace FundRaiser_Team5.Migrations
                     CurrentFund = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Deadline = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsersUserId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projects", x => x.ProjectId);
                     table.ForeignKey(
-                        name: "FK_Projects_Users_UsersUserId",
-                        column: x => x.UsersUserId,
+                        name: "FK_Projects_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
@@ -80,19 +80,19 @@ namespace FundRaiser_Team5.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ImagePath",
+                name: "ImagePaths",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    ImagePathId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProjectId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImagePath", x => x.ID);
+                    table.PrimaryKey("PK_ImagePaths", x => x.ImagePathId);
                     table.ForeignKey(
-                        name: "FK_ImagePath_Projects_ProjectId",
+                        name: "FK_ImagePaths_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "ProjectId",
@@ -122,19 +122,19 @@ namespace FundRaiser_Team5.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "VideoPath",
+                name: "VideoPaths",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    VideoPathId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Video = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProjectId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_VideoPath", x => x.ID);
+                    table.PrimaryKey("PK_VideoPaths", x => x.VideoPathId);
                     table.ForeignKey(
-                        name: "FK_VideoPath_Projects_ProjectId",
+                        name: "FK_VideoPaths_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "ProjectId",
@@ -142,7 +142,7 @@ namespace FundRaiser_Team5.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BackerFundingPackages",
+                name: "backerFundingPackages",
                 columns: table => new
                 {
                     BackerFundingPackageId = table.Column<int>(type: "int", nullable: false)
@@ -155,15 +155,15 @@ namespace FundRaiser_Team5.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BackerFundingPackages", x => x.BackerFundingPackageId);
+                    table.PrimaryKey("PK_backerFundingPackages", x => x.BackerFundingPackageId);
                     table.ForeignKey(
-                        name: "FK_BackerFundingPackages_FundingPackages_FundingPackageId",
+                        name: "FK_backerFundingPackages_FundingPackages_FundingPackageId",
                         column: x => x.FundingPackageId,
                         principalTable: "FundingPackages",
                         principalColumn: "FundingPackageId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_BackerFundingPackages_Users_UserId",
+                        name: "FK_backerFundingPackages_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -171,13 +171,13 @@ namespace FundRaiser_Team5.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BackerFundingPackages_FundingPackageId",
-                table: "BackerFundingPackages",
+                name: "IX_backerFundingPackages_FundingPackageId",
+                table: "backerFundingPackages",
                 column: "FundingPackageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BackerFundingPackages_UserId",
-                table: "BackerFundingPackages",
+                name: "IX_backerFundingPackages_UserId",
+                table: "backerFundingPackages",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -191,14 +191,14 @@ namespace FundRaiser_Team5.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ImagePath_ProjectId",
-                table: "ImagePath",
+                name: "IX_ImagePaths_ProjectId",
+                table: "ImagePaths",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_UsersUserId",
+                name: "IX_Projects_UserId",
                 table: "Projects",
-                column: "UsersUserId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StatusUpdates_ProjectId",
@@ -206,24 +206,24 @@ namespace FundRaiser_Team5.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VideoPath_ProjectId",
-                table: "VideoPath",
+                name: "IX_VideoPaths_ProjectId",
+                table: "VideoPaths",
                 column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BackerFundingPackages");
+                name: "backerFundingPackages");
 
             migrationBuilder.DropTable(
-                name: "ImagePath");
+                name: "ImagePaths");
 
             migrationBuilder.DropTable(
                 name: "StatusUpdates");
 
             migrationBuilder.DropTable(
-                name: "VideoPath");
+                name: "VideoPaths");
 
             migrationBuilder.DropTable(
                 name: "FundingPackages");

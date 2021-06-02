@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FundRaiser-Team5\FundRaiser-Team5-Core.csproj" />
+    <ProjectReference Include="..\FundRaiser.Team5.Core\FundRaiser.Team5.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

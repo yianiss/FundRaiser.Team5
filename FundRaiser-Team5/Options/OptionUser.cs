@@ -27,6 +27,7 @@ namespace FundRaiser_Team5.Options
         public string Password { get; set; }
 
         public List<FundingPackage> FundingPackages { get; set; }
+
         public List<Project> Projects { get; set; }
 
         public User GetUser()

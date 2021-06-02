@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Options
 {
-    class OptionStatusUpdate
+    public class OptionStatusUpdate
     {
         public int StatusUpdateId { get; set; }
         public string Title { get; set; }

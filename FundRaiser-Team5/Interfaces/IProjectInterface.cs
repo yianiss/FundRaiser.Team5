@@ -15,4 +15,15 @@ namespace FundRaiser_Team5.Interfaces
        Task<Result<Project>> GetProjectByIdAsync(int id);
        Task<Result<int>> DeleteProjectByIdAsync(int id);
     }
+
+    public interface IProjectService
+    {
+        public OptionProject CreateProject(OptionProject optionProject);
+        public List<OptionProject> ReadProject();
+        public OptionProject ReadProject(int ProjectId);
+        public List<OptionProject> ReadProject(OptionProject optionProject);
+        public OptionProject UpdateProject(OptionProject optionProject, int id);
+        public bool DeleteUser(int id);
+
+    }
 }

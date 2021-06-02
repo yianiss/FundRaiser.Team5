@@ -43,7 +43,7 @@ namespace FundRaiserMVC.Controllers
             return View(user);
         }
 
-        // GET: UserController/Create
+        // GET: Controller/Create
         public ActionResult Create()
         {
             return View();
@@ -52,16 +52,16 @@ namespace FundRaiserMVC.Controllers
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,Email,Password")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,Email,Password")] OptionUser optionUser)
         {
             if (ModelState.IsValid)
             {
                 await _userService.CreateUserAsync(new OptionUser
                 {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    Password = user.Password
+                    FirstName = optionUser.FirstName,
+                    LastName = optionUser.LastName,
+                    Email = optionUser.Email,
+                    Password = optionUser.Password
                 });
 
                 return RedirectToAction(nameof(Index));

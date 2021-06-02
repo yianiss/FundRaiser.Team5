@@ -11,16 +11,12 @@ namespace FundRaiser_Team5
     {
         public int UserId { get; set; } // not need to take it to Options, the EF will create it by default
 
-        [Required]
         public string FirstName { get; set; }
 
-        [Required]
         public string LastName { get; set; }
 
-        [Required]
         public string Email { get; set; }
 
-        [Required]
         public string Password { get; set; }
 
         public List<BackerFundingPackage> BackerFundingPackage { get; set; }

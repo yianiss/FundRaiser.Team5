@@ -20,12 +20,12 @@ namespace FundRaiser_Team5
 
 
             using FrDbContext db = new();
-            IUserService userService = new UserService(db);
+           /* IUserService userService = new UserService(db);
 
             List<OptionUser> users = userService.ReadUser(optionUser);
 
             users.ForEach(user => Console.WriteLine($"{user.UserId} {user.FirstName}"));
-
+           */
 
            /* OptionUser optionUser = userService.ReadUser(3);
 

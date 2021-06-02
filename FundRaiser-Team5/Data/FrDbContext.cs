@@ -12,7 +12,7 @@ namespace FundRaiser_Team5.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<BackerFundingPackage> backerFundingPackages { get; set; }
+        public DbSet<UserFundingPackage> UserFundingPackages { get; set; }
         public DbSet<ImagePath> ImagePaths { get; set; }
         public DbSet<VideoPath> VideoPaths { get; set; }
         public DbSet<StatusUpdate> StatusUpdates { get; set; }

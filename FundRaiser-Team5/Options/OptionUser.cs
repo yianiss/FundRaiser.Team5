@@ -26,6 +26,7 @@ namespace FundRaiser_Team5.Options
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+
         public List<FundingPackage> FundingPackages { get; set; }
 
         public List<Project> Projects { get; set; }

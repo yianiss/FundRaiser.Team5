@@ -19,6 +19,5 @@ namespace FundRaiser_Team5
         public DateTime CreateDate { get; set; }
         [Required]
         public int Price { get; set; }
-        public virtual UserFundingPackageStatus UserFundingPackageStatus { get; set; } // ??
     }
 }

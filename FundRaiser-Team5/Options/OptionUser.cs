@@ -13,7 +13,7 @@ namespace FundRaiser_Team5.Options
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public List<BackerFundingPackage> BackerFundingPackages { get; set; }
+        public List<UserFundingPackage> UserFundingPackages { get; set; }
         public List<Project> Projects { get; set; }
 
         public User GetUser()

@@ -15,7 +15,6 @@ namespace FundRaiser_Team5.Options
         public string Description { get; set; }
         public int MinPrice { get; set; }
         public int AvailablePackages { get; set; }
-        public List<BackerFundingPackage> BackerFundingPackages { get; set; }
 
         public OptionFundingPackage() { }
         public OptionFundingPackage(FundingPackage fundingPackage)
@@ -28,8 +27,6 @@ namespace FundRaiser_Team5.Options
                 Description = fundingPackage.Description;
                 MinPrice = fundingPackage.MinPrice;
                 AvailablePackages = fundingPackage.AvailablePackages;
-                BackerFundingPackages = fundingPackage.BackerFundingPackages;
-
             }
         }
         public FundingPackage GetFundingPackage()
@@ -37,12 +34,10 @@ namespace FundRaiser_Team5.Options
             return new FundingPackage
             {
                 FundingPackageId = OptionFundingPackageId,
-                // TODO ProjectId = ProjectId,          => Do we run SQL?
                 Title = Title,
                 Description = Description,
                 MinPrice = MinPrice,
                 AvailablePackages = AvailablePackages,
-                BackerFundingPackages = BackerFundingPackages
             };
         }
     }

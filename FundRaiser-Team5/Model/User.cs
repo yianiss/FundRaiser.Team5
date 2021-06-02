@@ -23,7 +23,7 @@ namespace FundRaiser_Team5
         [Required]
         public string Password { get; set; }
 
-        public List<BackerFundingPackage> BackerFundingPackage { get; set; }
+        public List<UserFundingPackage> BackerFundingPackage { get; set; }
 
         public List<Project> Projects { get; set; }
 

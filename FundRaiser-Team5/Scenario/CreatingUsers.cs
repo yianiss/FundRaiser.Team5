@@ -17,11 +17,11 @@ namespace FundRaiser_Team5.Scenario
             OptionUser user = new OptionUser() { FirstName = "Yianis", LastName = "Karopoulos" };
 
             using FrDbContext db = new();
-            IUserService userService = new UserService(db);
+          //  IUserService userService = new UserService(db);
 
-            OptionUser OptionUserResult = userService.CreateUser(user);
+          //  OptionUser OptionUserResult = userService.CreateUser(user);
 
-            Console.WriteLine(OptionUserResult.UserId);
+           // Console.WriteLine(OptionUserResult.UserId);
         }
     }
 }

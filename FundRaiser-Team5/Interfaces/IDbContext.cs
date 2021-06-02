@@ -18,5 +18,6 @@ namespace FundRaiser_Team5.Interfaces
         public DbSet<StatusUpdate> StatusUpdates { get; set; }
         public DbSet<FundingPackage> FundingPackages { get; set; }
         Task<int> SaveChangesAsync();
+
     }
 }

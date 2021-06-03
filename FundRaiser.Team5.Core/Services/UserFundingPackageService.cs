@@ -1,4 +1,5 @@
-﻿using FundRaiser_Team5.Interfaces;
+﻿using FundRaiser_Team5.Data;
+using FundRaiser_Team5.Interfaces;
 using FundRaiser_Team5.Model;
 using FundRaiser_Team5.Options;
 using Microsoft.EntityFrameworkCore;
@@ -24,12 +25,7 @@ namespace FundRaiser_Team5.Services.Implementation
         public async Task<Result<OptionUserFundingPackage>> CreateUserFundingPackageAsync(OptionUserFundingPackage optionUserFundingPackage)
         {
 
-            //UserFundingPackage userFundingPackage = optionUserFundingPackage.GetUserFundingPackage();
-            //userFundingPackage.User = dbUser;
-            //userFundingPackage.FundingPackage = dbFundingPackage;
-            //db.UserFundingPackages.Add(userFundingPackage);
-            //db.SaveChanges();
-            //return new OptionUserFundingPackage(userFundingPackage);
+
 
             if (optionUserFundingPackage == null)
             {
@@ -44,7 +40,7 @@ namespace FundRaiser_Team5.Services.Implementation
             }
 
             FundingPackage dbfundingPackage = await _context.FundingPackages.SingleOrDefaultAsync(fundingPackage => fundingPackage.FundingPackageId == optionUserFundingPackage.FundingPackageId);
-            FundingPackage dbUser = await _context.Users.SingleOrDefaultAsync(user => user.UserId == optionUserFundingPackage.UserId);
+            User dbUser = await _context.Users.SingleOrDefaultAsync(user => user.UserId == optionUserFundingPackage.UserId);
 
             if (dbfundingPackage == null)
             {
@@ -77,28 +73,29 @@ namespace FundRaiser_Team5.Services.Implementation
 
         public async Task<Result<int>> DeleteUserFundingPackageAsync(int userFundingPackageId)
         {
-            UserFundingPackage dbUserFundingPackage = await _context.UserFundingPackages.SingleOrDefaultAsync(UserFundingPackage => UserFundingPackage.UserFundingPackageId == UserFundingPackageId);
-            if (dbUserFundingPackage == null)
-            {
-                return new Result<int>(ErrorCode.NotFound, $"FundingPackage with id #{userFundingPackageId} not found.");
-            }
+            //UserFundingPackage dbUserFundingPackage = await _context.UserFundingPackages.SingleOrDefaultAsync(UserFundingPackage => UserFundingPackage.UserFundingPackageId == UserFundingPackageId);
+            //if (dbUserFundingPackage == null)
+            //{
+            //    return new Result<int>(ErrorCode.NotFound, $"FundingPackage with id #{userFundingPackageId} not found.");
+            //}
 
-            dbUserFundingPackage.IsActive = optionUserFundingPackage.IsActive;
+            //dbUserFundingPackage.IsActive = optionUserFundingPackage.IsActive;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-                return new Result<int>(ErrorCode.InternalServerError, "Could not Update OptionUserFundingPackage.");
-            }
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex.Message);
+            //    return new Result<int>(ErrorCode.InternalServerError, "Could not Delete UserFundingPackage.");
+            //}
 
-            return new Result<int>
-            {
-                Data = 1
-            };
+            //return new Result<int>
+            //{
+            //    Data = 1
+            //};
+            throw new NotImplementedException();
         }
 
         public async Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackageAsync()
@@ -161,14 +158,13 @@ namespace FundRaiser_Team5.Services.Implementation
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
-            UserFundingPackage dbUserFundingPackage = await _context.UserFundingPackages.SingleOrDefaultAsync(UserFundingPackage => UserFundingPackage.UserFundingPackageId == UserFundingPackageId);
+            UserFundingPackage dbUserFundingPackage = await _context.UserFundingPackages.SingleOrDefaultAsync(userFundingPackage => userFundingPackage.UserFundingPackageId == userFundingPackageId);
             if (dbUserFundingPackage == null)
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"FundingPackage with id #{userFundingPackageId} not found.");
             }
 
             dbUserFundingPackage.Price = optionUserFundingPackage.Price;
-            dbUserFundingPackage.UserFundingPackageStatus = optionUserFundingPackage.UserFundingPackageStatus;
 
             try
             {

@@ -10,14 +10,14 @@ namespace FundRaiser_Team5.Interfaces
 {
     public interface IUserService
     {
-        public Task<Result<User>> CreateUserAsync(OptionUser optionUser);
+        public Task<Result<OptionUser>> CreateUserAsync(OptionUser optionUser);
        
-        public Task<Result<List<User>>> GetUsersAsync();
-        public Task<Result<User>> GetUserByIdAsync(int id);
-        public Task<Result<User>> GetUserAsync(OptionUser optionUser);
+        public Task<Result<List<OptionUser>>> GetUsersAsync();
+        public Task<Result<OptionUser>> GetUserByIdAsync(int id);
+        public Task<Result<OptionUser>> GetUserAsync(OptionUser optionUser);
 
 
-        public Task<Result<User>> UpdateUserAsync(OptionUser optionUser, int id);
+        public Task<Result<OptionUser>> UpdateUserAsync(OptionUser optionUser, int id);
 
         public Task<Result<int>> DeleteUserByIdAsync(int id);
     }

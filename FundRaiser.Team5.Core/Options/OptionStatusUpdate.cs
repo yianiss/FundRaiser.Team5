@@ -17,6 +17,7 @@ namespace FundRaiser_Team5.Options
         [Display(Name = "Text")]
         public string Text { get; set; }
         public DateTime TimeUploaded { get; set; } = DateTime.Now;
+        public int IsActive { get; set; }
         public Project Project { get; set; }
     }
 }

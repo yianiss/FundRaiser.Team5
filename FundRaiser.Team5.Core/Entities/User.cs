@@ -17,9 +17,10 @@ namespace FundRaiser_Team5
         public List<UserFundingPackage> BackerFundingPackage { get; set; }
 
         public List<Project> Projects { get; set; }
+        public int IsActive { get; set; }
 
-      //  public bool IsCreator();
-       // public bool IsBacker();
+        //  public bool IsCreator();
+        // public bool IsBacker();
 
     }
 }

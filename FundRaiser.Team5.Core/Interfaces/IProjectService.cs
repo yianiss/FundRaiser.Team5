@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FundRaiser_Team5.Model;
 
 namespace FundRaiser_Team5.Interfaces
 {
     public interface IProjectInterface
     {
-       Task<Result<List<Project>>> GetProjectsAsync();
-       Task<Result<Project>> CreateProjectAsync(OptionProject options);
-       Task<Result<Project>> GetProjectByIdAsync(int id);
+       Task<Result<List<OptionProject>>> GetProjectsAsync();
+       Task<Result<OptionProject>> CreateProjectAsync(OptionProject options);
+       Task<Result<OptionProject>> GetProjectByIdAsync(int id);
        Task<Result<int>> DeleteProjectByIdAsync(int id);
     }
 

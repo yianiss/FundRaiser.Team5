@@ -15,6 +15,7 @@ namespace FundRaiser_Team5.Options
         public string Description { get; set; }
         public int MinPrice { get; set; }
         public int AvailablePackages { get; set; }
+        public int IsActive { get; set; }
 
         public OptionFundingPackage() { }
         public OptionFundingPackage(FundingPackage fundingPackage)

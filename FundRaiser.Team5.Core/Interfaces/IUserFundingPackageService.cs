@@ -1,4 +1,5 @@
 ﻿using FundRaiser_Team5.Interfaces;
+using FundRaiser_Team5.Model;
 using FundRaiser_Team5.Options;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace FundRaiser_Team5.Services
     interface IUserFundingPackageService
     {
         public Task<Result<OptionUserFundingPackage>> CreateUserFundingPackageAsync(OptionUserFundingPackage optionUserFundingPackage);
-        public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackageAsync(); // All??? 
-        public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackagesByProjectIdAsync(int projectId);  // ???
+        // public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackageAsync(); // All??? 
+        public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackagesByProjectIdAsync(int projectId);  // MOST used way so one function
         public Task<Result<OptionUserFundingPackage>> ReadUserFundingPackageAsync(int userFundingPackageId);
         public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackageAsync(OptionUserFundingPackage optionUserFundingPackage);
         public Task<Result<OptionUserFundingPackage>> UpdateUserFundingPackageAsync(int userFundingPackageId, OptionUserFundingPackage optionUserFundingPackage);

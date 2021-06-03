@@ -1,9 +1,5 @@
 ﻿using FundRaiser_Team5.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Options
 {
@@ -27,7 +23,6 @@ namespace FundRaiser_Team5.Options
                 FundingPackageId = userFundingPackage.FundingPackage.FundingPackageId;
                 CreateDate = userFundingPackage.CreateDate;
                 Price = userFundingPackage.Price;
-                BackerFundingPackageStatus = userFundingPackage.BackerFundingPackageStatus;
             }
         }
 
@@ -39,7 +34,6 @@ namespace FundRaiser_Team5.Options
                 UserFundingPackageId = OptionUserFundingPackageId,
                 CreateDate = DateTime.Now,
                 Price = Price,
-                BackerFundingPackageStatus = UserFundingPackageStatus.CREATED
             };
         }
     }

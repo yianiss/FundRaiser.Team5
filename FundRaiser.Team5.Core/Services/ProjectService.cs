@@ -8,16 +8,20 @@ using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using FundRaiser_Team5.Data;
+
 
 namespace FundRaiser_Team5.Services
 {
     public class ProjectService : IProjectInterface
     {
         private readonly IDbContext _context;
+        private readonly ILogger<ProjectService> _logger;
 
-        public ProjectService(IDbContext context)
+        public ProjectService(IDbContext context, ILogger<ProjectService> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Result<Project>> CreateProjectAsync(OptionProject options)
@@ -74,6 +78,7 @@ namespace FundRaiser_Team5.Services
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return new Result<Project>(ErrorCode.InternalServerError, "Could not save Project.");
             }
 
@@ -119,6 +124,7 @@ namespace FundRaiser_Team5.Services
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return new Result<int>(ErrorCode.InternalServerError, "Could not delete project.");
             }
 

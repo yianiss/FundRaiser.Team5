@@ -97,10 +97,10 @@ namespace FundRaiser_Team5.Services
         }
 
         //TODO : Search by criteria
-        public async Task<User> GetUserAsync(OptionUser optionUser) 
+        public async Task<List<OptionUser>> GetUserAsync(OptionUser optionUser) 
         {
             // Search by criteria
-            List<User> users = db.Users
+            List<User> users = _context.Users
                 //.Where(user => user.Email.Equals(optionUser.Email))
                 //.Where(user => user.FirstName.Equals(optionUser.FirstName))
                 .Where(user => user.LastName.Equals(optionUser.LastName))

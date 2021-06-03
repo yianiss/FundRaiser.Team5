@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FundRaiser_Team5.Data;
 using FundRaiser_Team5.Interfaces;
+using FundRaiser_Team5.Model;
 using FundRaiser_Team5.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -14,31 +14,32 @@ namespace FundRaiser_Team5.Services
     public class StatusUpdateService : IStatusUpdateService
     {
         //private readonly IDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILogger<StatusUpdateService> _logger;
-        IApplicationDbContext _context;
+        
 
-        public StatusUpdateService(/*IApplicationDbContext context,*/ ILogger<StatusUpdateService> logger)
+        public StatusUpdateService(IApplicationDbContext context, ILogger<StatusUpdateService> logger)
         {
-        //    _context = context;
+            _context = context;
             _logger = logger;
         }
 
-        public async Task<Result<StatusUpdate>> CreateStatusUpdateAsync(OptionStatusUpdate options)
+        public async Task<Result<OptionStatusUpdate>> CreateStatusUpdateAsync(OptionStatusUpdate optionStatusUpdate)
         {
-            if (options == null)
+            if (optionStatusUpdate == null)
             {
-                return new Result<StatusUpdate>(ErrorCode.BadRequest, "Null StatusUpdate options.");
+                return new Result<OptionStatusUpdate>(ErrorCode.BadRequest, "Null StatusUpdate options.");
             }
 
-            if(string.IsNullOrWhiteSpace(options.Title) || string.IsNullOrWhiteSpace(options.Text))
+            if(string.IsNullOrWhiteSpace(optionStatusUpdate.Title) || string.IsNullOrWhiteSpace(optionStatusUpdate.Text))
             {
-                return new Result<StatusUpdate>(ErrorCode.BadRequest, $"Title or Text was empty (required)!");
+                return new Result<OptionStatusUpdate>(ErrorCode.BadRequest, $"Title or Text was empty (required)!");
             }
 
             StatusUpdate newStatusUpdate = new()
             {
-                Title = options.Title,
-                Text = options.Text,
+                Title = optionStatusUpdate.Title,
+                Text = optionStatusUpdate.Text,
             };
 
             await _context.StatusUpdates.AddAsync(newStatusUpdate);
@@ -51,20 +52,19 @@ namespace FundRaiser_Team5.Services
             {
                 _logger.LogError(ex.Message);
 
-                return new Result<StatusUpdate>(ErrorCode.InternalServerError, "Could not save status Update.");
-            } 
-
-            return new Result<StatusUpdate>
+                return new Result<OptionStatusUpdate>(ErrorCode.InternalServerError, "Could not save status Update.");
+            }
+            return new Result<OptionStatusUpdate>
             {
-                Data = newStatusUpdate
+                Data = new OptionStatusUpdate(newStatusUpdate)
             };
         }
 
-        public async Task<Result<StatusUpdate>> GetStatusUpdateByIdAsync(int id)
+        public async Task<Result<OptionStatusUpdate>> GetStatusUpdateByIdAsync(int id)
         {
             if (id <= 0)
             {
-                return new Result<StatusUpdate>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+                return new Result<OptionStatusUpdate>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
 
             StatusUpdate statusUpdate = await _context
@@ -73,28 +73,39 @@ namespace FundRaiser_Team5.Services
 
             if (statusUpdate == null)
             {
-                return new Result<StatusUpdate>(ErrorCode.NotFound, $"StatusUpdate with id #{id} not found.");
+                return new Result<OptionStatusUpdate>(ErrorCode.NotFound, $"StatusUpdate with id #{id} not found.");
             }
 
-            return new Result<StatusUpdate>
+            return new Result<OptionStatusUpdate>
             {
-                Data = statusUpdate
+                Data = new OptionStatusUpdate(statusUpdate)
             };
         }
 
         public async Task<Result<int>> DeleteStatusUpdateByIdAsync(int id)
         {
-            var statusUpdateToDelete = await GetStatusUpdateByIdAsync(id);
+            //var statusUpdateToDelete = await GetStatusUpdateByIdAsync(id);
 
-            if (statusUpdateToDelete.Error != null || statusUpdateToDelete.Data == null)
+            //if (statusUpdateToDelete.Error != null || statusUpdateToDelete.Data == null)
+            //{
+            //    return new Result<int>(ErrorCode.NotFound, $"Status update with ID={id} not found");
+            //}
+
+            //_context.
+            //StatusUpdates.
+            //Remove(statusUpdateToDelete.Data);
+
+            if (id <= 0)
             {
-                return new Result<int>(ErrorCode.NotFound, $"Status update with ID={id} not found");
+                return new Result<int>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
 
-            _context.
-            StatusUpdates.
-            Remove(statusUpdateToDelete.Data);
-
+            StatusUpdate dbStatusUpdate = await _context.StatusUpdates.SingleOrDefaultAsync(statusUpdate => statusUpdate.StatusUpdateId == id);
+            if (dbStatusUpdate == null)
+            {
+                return new Result<int>(ErrorCode.NotFound, $"Status Update with id #{id} not found.");
+            }
+            dbStatusUpdate.IsActive = false;
             try
             {
                 await _context.SaveChangesAsync();
@@ -112,17 +123,20 @@ namespace FundRaiser_Team5.Services
             };
         }
 
-        public async Task<Result<List<StatusUpdate>>> GetStatusUpdatesAsync()
+        public async Task<Result<List<OptionStatusUpdate>>> GetStatusUpdatesAsync()
         {
             List<StatusUpdate> statusUpdates = await _context.StatusUpdates.ToListAsync();
+            List<OptionStatusUpdate> optionStatusUpdates = new();
+            statusUpdates.ForEach(statusUpdate => optionStatusUpdates.Add(new OptionStatusUpdate(statusUpdate)));
 
-            return new Result<List<StatusUpdate>>
+
+            return new Result<List<OptionStatusUpdate>>
             {
-                Data = statusUpdates.Count > 0 ? statusUpdates : new List<StatusUpdate>()
+                Data = optionStatusUpdates
             };
         }
 
-        public async Task<Result<StatusUpdate>> UpdateStatusUpdateAsync(OptionStatusUpdate options)
+        public async Task<Result<OptionStatusUpdate>> UpdateStatusUpdateAsync(OptionStatusUpdate options)
         {
             var statusUpdateToUpdate = await GetStatusUpdateByIdAsync(options.StatusUpdateId);
 

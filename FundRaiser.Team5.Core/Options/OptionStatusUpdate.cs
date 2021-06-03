@@ -20,9 +20,9 @@ namespace FundRaiser_Team5.Options
         public bool IsActive { get; set; }
         public Project Project { get; set; }
 
-        OptionStatusUpdate() { }
+        public OptionStatusUpdate() { }
 
-        OptionStatusUpdate(StatusUpdate statusUpdate)
+        public OptionStatusUpdate(StatusUpdate statusUpdate)
         {
             StatusUpdateId = statusUpdate.StatusUpdateId;
             Title = statusUpdate.Title;

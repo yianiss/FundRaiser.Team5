@@ -1,5 +1,4 @@
-﻿using FundRaiser_Team5.Data;
-using FundRaiser_Team5.Interfaces;
+﻿using FundRaiser_Team5.Interfaces;
 using FundRaiser_Team5.Model;
 using FundRaiser_Team5.Options;
 using Microsoft.EntityFrameworkCore;

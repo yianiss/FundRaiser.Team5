@@ -14,8 +14,7 @@ namespace FundRaiser_Team5.Interfaces
        
         public Task<Result<List<OptionUser>>> GetUsersAsync();
         public Task<Result<OptionUser>> GetUserByIdAsync(int id);
-        public Task<Result<OptionUser>> GetUserAsync(OptionUser optionUser);
-
+        public Task<Result<List<OptionUser>>> GetUserAsync(OptionUser optionUser);
 
         public Task<Result<OptionUser>> UpdateUserAsync(OptionUser optionUser, int id);
 

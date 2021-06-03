@@ -10,5 +10,6 @@ namespace FundRaiser_Team5
         public FundingPackage FundingPackage { get; set; }
         public DateTime CreateDate { get; set; }
         public int Price { get; set; }
+        public bool IsActive { get; internal set; }
     }
 }

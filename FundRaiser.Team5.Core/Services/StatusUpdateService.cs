@@ -11,9 +11,9 @@ using Microsoft.Extensions.Logging;
 
 namespace FundRaiser_Team5.Services
 {
-    public class StatusUpdateService : IStatusUpdateInterface
+    public class StatusUpdateService : IStatusUpdateService
     {
-        //private readonly IApplicationDbContext _context;
+        //private readonly IDbContext _context;
         private readonly ILogger<StatusUpdateService> _logger;
         FrDbContext _context;
 
@@ -82,7 +82,7 @@ namespace FundRaiser_Team5.Services
             };
         }
 
-        public async Task<Result<int>> DeleteUpdateByIdAsync(int id)
+        public async Task<Result<int>> DeleteStatusUpdateByIdAsync(int id)
         {
             var statusUpdateToDelete = await GetStatusUpdateByIdAsync(id);
 

@@ -12,6 +12,6 @@ namespace FundRaiser_Team5.Model
         PROCESSING = 1, // The Creator is processing the Package
         READY = 2,      // The Creator is ready to Send the Package ??
         DELIVERY = 3,   // The Creator Send the Package
-        COMPLETED = 4   // The Backer Receive the PAckage
+        COMPLETED = 4   // The Backer Receive the Package
     }
 }

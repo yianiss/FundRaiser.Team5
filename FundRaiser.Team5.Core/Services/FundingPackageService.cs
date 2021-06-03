@@ -18,6 +18,7 @@ namespace FundRaiser_Team5.Services.Implementation
         private readonly ILogger<FundingPackageService> _logger;
 
         public FundingPackageService(FrDbContext context, ILogger<FundingPackageService> logger)
+
         {
             _context = context;
             _logger = logger;

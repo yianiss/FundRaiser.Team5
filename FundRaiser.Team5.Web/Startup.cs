@@ -1,4 +1,5 @@
 using FundRaiser.Team5.Core;
+using FundRaiser.Team5.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

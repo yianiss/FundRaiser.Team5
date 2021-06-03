@@ -13,7 +13,7 @@ namespace FundRaiser_Team5
     {
         public static IServiceCollection AddCore(this IServiceCollection services)
         {
-            services.AddScoped<IStatusUpdateInterface, StatusUpdateService>();
+            services.AddScoped<IStatusUpdateService, StatusUpdateService>();
             services.AddScoped<IUserInterface, UserService>();
             services.AddScoped<IProjectInterface, ProjectService>();
             return services;

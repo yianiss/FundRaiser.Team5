@@ -19,5 +19,6 @@ namespace FundRaiser_Team5
         public DateTime CreateDate { get; set; }
         [Required]
         public int Price { get; set; }
+        public bool IsActive { get; internal set; }
     }
 }

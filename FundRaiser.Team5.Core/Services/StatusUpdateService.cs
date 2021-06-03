@@ -13,7 +13,7 @@ namespace FundRaiser_Team5.Services
 {
     public class StatusUpdateService : IStatusUpdateService
     {
-        //private readonly IApplicationDbContext _context;
+        //private readonly IDbContext _context;
         private readonly ILogger<StatusUpdateService> _logger;
         FrDbContext _context;
 

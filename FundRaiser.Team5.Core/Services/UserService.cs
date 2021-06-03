@@ -11,16 +11,17 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Services
 {
-    public class UserService : IUserInterface
+    public class UserService : IUserService
     {
-        private readonly FrDbContext _context;
+        private readonly IDbContext _context;
         private readonly ILogger<UserService> _logger; // out of the box services for not returning null in our crud functions
 
-        public UserService(FrDbContext context, ILogger<UserService> logger)
+        public UserService(IDbContext context, ILogger<UserService> logger)
         {
             _context = context;
             _logger = logger;
         }
+
         public async Task<User> CreateUserAsync(OptionUser optionUser)
         {
             // Validations

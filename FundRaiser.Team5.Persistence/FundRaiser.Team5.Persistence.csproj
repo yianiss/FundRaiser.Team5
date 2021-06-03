@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FundRaiser.Team5.Core\FundRaiser.Team5.Core.csproj" />
-    <ProjectReference Include="..\FundRaiser.Team5.Web\FundRaiser.Team5.Web.csproj" />
   </ItemGroup>
 
 </Project>

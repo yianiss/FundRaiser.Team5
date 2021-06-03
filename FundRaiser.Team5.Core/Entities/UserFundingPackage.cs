@@ -1,22 +1,21 @@
-﻿using FundRaiser_Team5.Model;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FundRaiser_Team5
+namespace FundRaiser_Team5.Entities
 {
     public class UserFundingPackage
     {
         public int UserFundingPackageId { get; set; }
+        
         [Required]
         public User User { get; set; }
+        
         [Required]
         public FundingPackage FundingPackage { get; set; }
+        
         [Required]
         public DateTime CreateDate { get; set; }
+        
         [Required]
         public int Price { get; set; }
 

@@ -1,22 +1,23 @@
-﻿using FundRaiser_Team5.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FundRaiser_Team5.Entities;
 
 namespace FundRaiser_Team5.Options
 {
     public class OptionFundingPackage
     {
         public int OptionFundingPackageId { get; set; }
+
         public int ProjectId { get; set; }
+
         public string Title { get; set; }
+
         public string Description { get; set; }
+
         public int MinPrice { get; set; }
+
         public int AvailablePackages { get; set; }
 
         public OptionFundingPackage() { }
+
         public OptionFundingPackage(FundingPackage fundingPackage)
         {
             if (fundingPackage != null)
@@ -29,6 +30,7 @@ namespace FundRaiser_Team5.Options
                 AvailablePackages = fundingPackage.AvailablePackages;
             }
         }
+
         public FundingPackage GetFundingPackage()
         {
             return new FundingPackage

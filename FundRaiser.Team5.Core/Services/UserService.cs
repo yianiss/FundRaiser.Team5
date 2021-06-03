@@ -1,40 +1,37 @@
-﻿using FundRaiser_Team5.Data;
-using FundRaiser_Team5.Interfaces;
+﻿using FundRaiser_Team5.Interfaces;
+using FundRaiser_Team5.Model;
 using FundRaiser_Team5.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Services
 {
     public class UserService : IUserService
     {
-        private readonly IDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILogger<UserService> _logger; // out of the box services for not returning null in our crud functions
 
-        public UserService(IDbContext context, ILogger<UserService> logger)
+        public UserService(IApplicationDbContext context, ILogger<UserService> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        public async Task<User> CreateUserAsync(OptionUser optionUser)
+        public async Task<Result<User>> CreateUserAsync(OptionUser optionUser)
         {
             // Validations
             if (optionUser == null)
             {
-                _logger.LogError("Null options");
-                return null;
+                return new Result<User>(ErrorCode.BadRequest, "Null options.");
             }
 
             if (optionUser.Email == null)
             {
-                _logger.LogError("Email must be provided");
-                return null;
+                return new Result<User>(ErrorCode.BadRequest, "Email must be provided.");
             }
             
             if (string.IsNullOrWhiteSpace(optionUser.FirstName) ||
@@ -43,61 +40,72 @@ namespace FundRaiser_Team5.Services
                 string.IsNullOrWhiteSpace(optionUser.Email)
                 )
             {
-                _logger.LogError("Not all required parameters passed");
-                return null;
+                return new Result<User>(ErrorCode.BadRequest, "Not all required customer options provided.");
             }
 
             var UserWithTheSameEmail = await _context.Users.SingleOrDefaultAsync(user => user.Email == optionUser.Email); //check the db if there is already user with the same email
 
             if(UserWithTheSameEmail != null)
             {
-                _logger.LogError($"User with email {optionUser.Email} already exists");
-                return null;
+                return new Result<User>(ErrorCode.Conflict, $"User with #{optionUser.Email} already exists.");
             }
 
-            var newUser = new User
-            {
-                FirstName = optionUser.FirstName,
-                LastName = optionUser.LastName,
-                Email = optionUser.Email,
-                Password = optionUser.Password
-            };
+            var newUser = optionUser.GetUser();
 
             await _context.Users.AddAsync(newUser);
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
 
-            return newUser;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return new Result<User>(ErrorCode.InternalServerError, "Could not save user.");
+            }
+
+            return new Result<User>
+            {
+                Data = newUser
+            };
         }
 
-        public async Task<List<User>> GetUsersAsync()
+        public async Task<Result<List<User>>> GetUsersAsync()
         {
-            return await _context.Users.ToListAsync(); 
+            var users = await _context.Users.ToListAsync();
+
+            return new Result<List<User>>
+            {
+                Data = users.Count > 0 ? users : new List<User>()
+            };
         }
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<Result<User>> GetUserByIdAsync(int id)
         {
             if (id <= 0)
             {
-                _logger.LogError("Id cannot be less than or equal to 0");
-                return null;
+                return new Result<User>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
+
             var userById = await _context.
                 Users.
                 SingleOrDefaultAsync(user => user.UserId == id);
 
             if (userById == null)
             {
-                _logger.LogError($"User with id {id} not found");
-
-                return null;
+                return new Result<User>(ErrorCode.NotFound, $"Customer with id #{id} not found.");
             }
 
-            return userById;
+            return new Result<User>
+            {
+                Data = userById
+            };
         }
 
         //TODO : Search by criteria
-        public async Task<List<OptionUser>> GetUserAsync(OptionUser optionUser) 
+        public async Task<Result<User>> GetUserAsync(OptionUser optionUser) 
         {
             // Search by criteria
             List<User> users = _context.Users
@@ -112,25 +120,63 @@ namespace FundRaiser_Team5.Services
             return optionUsers;
         }
 
-        public Task<User> UpdateUserAsync(OptionUser optionUser, int id)
+        public async Task<Result<User>> UpdateUserAsync(OptionUser optionUser, int id)
         {
-            throw new NotImplementedException();
-        }
+            var userToUpdate = await GetUserByIdAsync(id);
 
-        public async Task<int> DeleteUserByIdAsync(int id)
-        {
-            var userToDelete = await _context.Users.FindAsync(id); //await GetUserByIdAsync(int id);
-
-            if (userToDelete == null)
+            if (userToUpdate.Error != null || userToUpdate.Data == null)
             {
-                _logger.LogError($"User with id {id} not found");
-
-                return -1;
+                return new Result<int>(ErrorCode.NotFound, $"User with id #{id} not found.");
             }
 
+            userToUpdate.FirstName = optionUser.FirstName;
+            userToUpdate.LastName = optionUser.LastName;
+            userToUpdate.Email = optionUser.Email;
+            userToUpdate.Password = optionUser.Password;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return new Result<int>(ErrorCode.Conflict, "Could not update user.");
+            }
+
+            return new Result<int>
+            {
+                Data = id
+            };
+        }
+
+        public async Task<Result<int>> DeleteUserByIdAsync(int id)
+        {
+            var userToDelete = /*await _context.Users.FindAsync(id);*/ await GetUserByIdAsync(id);
+
+            if (userToDelete.Error != null || userToDelete.Data == null)
+            {
+                return new Result<int>(ErrorCode.NotFound, $"User with id #{id} not found.");
+            }
+        
             _context.Users.Remove(userToDelete);
 
-            return await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return new Result<int>(ErrorCode.InternalServerError, "Could not delete user.");
+            }
+
+            return new Result<int>
+            {
+                Data = id
+            };
         }
     }
 }

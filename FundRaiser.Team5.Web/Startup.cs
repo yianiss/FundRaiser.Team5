@@ -2,14 +2,11 @@ using FundRaiser_Team5.Interfaces;
 using FundRaiser_Team5.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using FundRaiser_Team5.Core;
+using FundRaiser_Team5.Persistence;
 
 namespace FundRaiserMVC
 {
@@ -26,7 +23,8 @@ namespace FundRaiserMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddScoped<IUserInterface, UserService>();
+            services.AddPersistence(Configuration);
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

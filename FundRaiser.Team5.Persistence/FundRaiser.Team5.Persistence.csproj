@@ -1,7 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FundRaiser.Team5.Core\FundRaiser.Team5.Core.csproj" />
+    <ProjectReference Include="..\FundRaiser.Team5.Web\FundRaiser.Team5.Web.csproj" />
+  </ItemGroup>
 
 </Project>

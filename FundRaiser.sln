@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundRaiser.Team5.Test", "Fu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundRaiser.Team5.Web", "FundRaiser.Team5.Web\FundRaiser.Team5.Web.csproj", "{D391C9EF-90C9-42E4-B424-C344D6FD846E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundRaiser.Team5.Persistence", "FundRaiser.Team5.Persistence\FundRaiser.Team5.Persistence.csproj", "{BA5A5687-8B14-4EF2-98E8-9F4E5A09F859}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D391C9EF-90C9-42E4-B424-C344D6FD846E} = {D391C9EF-90C9-42E4-B424-C344D6FD846E}
+		{4AB197F4-6BF6-436D-952E-291EFE59495A} = {4AB197F4-6BF6-436D-952E-291EFE59495A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +33,10 @@ Global
 		{D391C9EF-90C9-42E4-B424-C344D6FD846E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D391C9EF-90C9-42E4-B424-C344D6FD846E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D391C9EF-90C9-42E4-B424-C344D6FD846E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA5A5687-8B14-4EF2-98E8-9F4E5A09F859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA5A5687-8B14-4EF2-98E8-9F4E5A09F859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA5A5687-8B14-4EF2-98E8-9F4E5A09F859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA5A5687-8B14-4EF2-98E8-9F4E5A09F859}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

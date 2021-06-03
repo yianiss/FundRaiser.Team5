@@ -1,6 +1,8 @@
-﻿using FundRaiser_Team5.Interfaces;
+﻿using FundRaiser_Team5.Data;
+using FundRaiser_Team5.Interfaces;
 using FundRaiser_Team5.Model;
 using FundRaiser_Team5.Options;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,10 +14,10 @@ namespace FundRaiser_Team5.Services.Implementation
 {
     class FundingPackageService : IFundingPackageService
     {
-        private readonly IApplicationDbContext _context;
+        private readonly FrDbContext _context;
         private readonly ILogger<FundingPackageService> _logger;
 
-        public FundingPackageService(IApplicationDbContext context, ILogger<FundingPackageService> logger)
+        public FundingPackageService(FrDbContext context, ILogger<FundingPackageService> logger)
         {
             _context = context;
             _logger = logger;

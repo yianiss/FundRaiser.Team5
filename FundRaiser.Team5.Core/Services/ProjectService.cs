@@ -3,19 +3,17 @@ using FundRaiser_Team5.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using FundRaiser_Team5.Model;
 
 namespace FundRaiser_Team5.Services
 {
     public class ProjectService : IProjectInterface
     {
-        private readonly IDbContext _context;
+        private readonly IApplicationDbContext _context;
 
-        public ProjectService(IDbContext context)
+        public ProjectService(IApplicationDbContext context)
         {
             _context = context;
         }
@@ -26,6 +24,7 @@ namespace FundRaiser_Team5.Services
             {
                 return new Result<Project>(ErrorCode.BadRequest, "Null Options.");
             }
+
             if (string.IsNullOrWhiteSpace(options.Title) || string.IsNullOrWhiteSpace(options.Description))
             {
                 return new Result<Project>(ErrorCode.BadRequest, "Not all required Project Options provided.");
@@ -85,14 +84,14 @@ namespace FundRaiser_Team5.Services
 
         public async Task<Result<Project>> GetProjectByIdAsync(int id)
         {
-            if(id<=0)
+            if (id <= 0)
             {
                 return new Result<Project>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
 
             var project = await _context.Projects.SingleOrDefaultAsync(pro => pro.ProjectId == id);
 
-            if(project==null)
+            if (project == null)
             {
                 return new Result<Project>(ErrorCode.BadRequest, $"Product with d #{id} not found.");
             }
@@ -137,95 +136,5 @@ namespace FundRaiser_Team5.Services
                 Data = projects.Count > 0 ? projects : new List<Project>()
             };
         }
-
-    private FrDbContext db;
-    public ProjectService(FrDbContext _db)
-    {
-        db = _db;
     }
-
-    public OptionProject CreateProject(OptionProject optionProject)
-    {
-        if (optionProject == null)
-        {
-            return null;
-        }
-
-        if (optionProject.Title == null)
-        {
-            return null;
-        }
-
-        Project project = optionProject.GetProject();
-        db.Projects.Add(project);
-        db.SaveChanges();
-            return new OptionProject(project);
-    }
-
-   
-    public List<OptionProject> ReadProject()
-    {
-        // using FrDbContext db = new();
-        List<Project> projects = db.Projects.ToList();
-        List<OptionProject> optionProject = new List<OptionProject>();
-        projects.ForEach(project => optionProject.Add(new OptionProject(project)));
-        return optionProject;
-    }
-
-    public OptionProject ReadProject(int ProjectId)
-    {
-        Project project = db.Projects.Find(ProjectId);
-        if (project == null)
-        {
-            return null;
-        }
-        return new OptionProject(project);
-    }
-
-    public List<OptionProject> ReadProject(OptionProject optionProject,string str)
-        {
-
-        List<Project> projects = db.Projects
-            .Where(project => project.Description.Contains(str))
-            .Where(project => project.Category.Equals(optionProject.Category))
-            .ToList();
-
-        List<OptionProject> optionProjects= new List<OptionProject>();
-
-        projects.ForEach(project => optionProjects.Add(new OptionProject(project)));
-        return optionProjects;
-    }
-
-    public OptionProject UpdateProject(int ProjectId)
-    {
-
-        Project DbProject = db.Projects.Find(ProjectId);
-
-        if (DbProject == null)
-        {
-            return null;
-        }
-
-        //DbUser.Email = optionUser.Email;
-      
-        db.SaveChanges();
-
-        return new OptionProject(DbProject);
-    }
-
-    public bool DeleteProject(int ProjectId)
-    {
-
-        Project DbProject = db.Projects.Find(ProjectId);
-        if (DbProject == null)
-        {
-            return false;
-        }
-        else
-        {
-            db.Projects.Remove(DbProject);
-        }
-        return true;
-    }
-}
 }

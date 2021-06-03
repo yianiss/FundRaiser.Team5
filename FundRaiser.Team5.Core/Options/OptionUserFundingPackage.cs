@@ -27,7 +27,7 @@ namespace FundRaiser_Team5.Options
                 FundingPackageId = userFundingPackage.FundingPackage.FundingPackageId;
                 CreateDate = userFundingPackage.CreateDate;
                 Price = userFundingPackage.Price;
-                BackerFundingPackageStatus = userFundingPackage.BackerFundingPackageStatus;
+                BackerFundingPackageStatus = userFundingPackage.UserFundingPackageStatus;
             }
         }
 

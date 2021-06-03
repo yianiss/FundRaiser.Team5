@@ -13,10 +13,10 @@ namespace FundRaiser_Team5.Services.Implementation
 {
     class FundingPackageService : IFundingPackageService
     {
-        private readonly IDbContext _context;
+        private readonly IApplicationDbContext _context;
         private readonly ILogger<FundingPackageService> _logger;
 
-        public FundingPackageService(IDbContext context, ILogger<FundingPackageService> logger)
+        public FundingPackageService(IApplicationDbContext context, ILogger<FundingPackageService> logger)
         {
             _context = context;
             _logger = logger;

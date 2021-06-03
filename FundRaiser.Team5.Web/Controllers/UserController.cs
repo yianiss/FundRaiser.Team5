@@ -12,9 +12,9 @@ namespace FundRaiserMVC.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserInterface _userService;
+        private readonly IUserService _userService;
 
-        public UserController(IUserInterface userService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
@@ -52,7 +52,7 @@ namespace FundRaiserMVC.Controllers
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,Email,Password")] OptionUser optionUser)
+        public async Task<IActionResult> Create([Bind("FirstName,LastName,Email,Password")] OptionUser optionUser)
         {
             if (ModelState.IsValid)
             {

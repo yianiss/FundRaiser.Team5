@@ -18,7 +18,7 @@ namespace FundRaiser_Team5
         public decimal CurrentFund { get; set; } = 0;
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime Deadline { get; set; } //>DateTime.Now
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
         public User Users { get; set; }
     }
 }

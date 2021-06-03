@@ -9,6 +9,6 @@ namespace FundRaiser_Team5
         public string Text { get; set; }
         public DateTime TimeUploaded { get; set; } = DateTime.Now;
         public Project Project { get; set; }
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
     }
 }

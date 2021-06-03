@@ -21,29 +21,10 @@ namespace FundRaiser_Team5.Options
         public decimal CurrentFund { get; set; } = 0;
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime Deadline { get; set; } //>DateTime.Now
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
         public User Users { get; set; }
 
-        public Project GetProject()
-        {
-            Project project = new()
-            {
-            ProjectId = ProjectId,
-            Title = Title,
-            Category = Category,
-            Description = Description,
-            FundingPackages = FundingPackages,
-            Images = Images,
-            Videos = Videos,
-            StatusUpdates = StatusUpdates,
-            FundingGoal = FundingGoal,
-            CurrentFund = CurrentFund,
-            DateCreated = DateCreated,
-            Deadline = Deadline,
-            Users = Users
-          };
-            return project;
-        }
+
         public OptionProject() { }
 
         public OptionProject(Project project)
@@ -63,7 +44,30 @@ namespace FundRaiser_Team5.Options
                 DateCreated = project.DateCreated;
                 Deadline = project.Deadline;
                 Users = project.Users;
+                IsActive = project.IsActive;
             }
+        }
+
+        public Project GetProject()
+        {
+            Project project = new()
+            {
+                ProjectId = ProjectId,
+                Title = Title,
+                Category = Category,
+                Description = Description,
+                FundingPackages = FundingPackages,
+                Images = Images,
+                Videos = Videos,
+                StatusUpdates = StatusUpdates,
+                FundingGoal = FundingGoal,
+                CurrentFund = CurrentFund,
+                DateCreated = DateCreated,
+                Deadline = Deadline,
+                Users = Users,
+                IsActive = true
+            };
+            return project;
         }
     }
 }

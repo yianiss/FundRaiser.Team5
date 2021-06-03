@@ -10,7 +10,7 @@ namespace FundRaiser_Team5.Model
         public string Description { get; set; }
         public int MinPrice { get; set; }
         public int AvailablePackages { get; set; }
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
         public virtual List<UserFundingPackage> UserFundingPackages { get; set; }
     }
 }

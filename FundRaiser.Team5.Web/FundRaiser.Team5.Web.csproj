@@ -20,6 +20,4 @@
   <ItemGroup>
     <ProjectReference Include="..\FundRaiser.Team5.Core\FundRaiser.Team5.Core.csproj" />
   </ItemGroup>
-
-
-	  <ProjectReference Include="..\FundRaiser.Team5.Core\FundRaiser.Team5.Core.csproj" />PersistenecePersistence</Project>
+</Project>

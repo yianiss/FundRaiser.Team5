@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace FundRaiser_Team5.Entities
+namespace FundRaiser.Team5.Core.Entities
 {
     public class FundingPackage
     {

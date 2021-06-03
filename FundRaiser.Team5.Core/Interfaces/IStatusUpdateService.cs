@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using FundRaiser_Team5.Entities;
-using FundRaiser_Team5.Model;
-using FundRaiser_Team5.Options;
+using FundRaiser.Team5.Core.Entities;
+using FundRaiser.Team5.Core.Model;
+using FundRaiser.Team5.Core.Options;
 
-namespace FundRaiser_Team5.Interfaces
+namespace FundRaiser.Team5.Core.Interfaces
 {
     public interface IStatusUpdateService
     {

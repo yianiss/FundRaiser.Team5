@@ -1,11 +1,6 @@
-﻿using FundRaiser_Team5.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace FundRaiser_Team5.Entities
+namespace FundRaiser.Team5.Core.Entities
 {
     public class User
     {

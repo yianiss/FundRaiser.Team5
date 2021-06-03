@@ -1,4 +1,4 @@
-﻿namespace FundRaiser_Team5.Model.Entities
+﻿namespace FundRaiser.Team5.Core.Entities
 {
     public enum UserFundingPackageStatus
     {

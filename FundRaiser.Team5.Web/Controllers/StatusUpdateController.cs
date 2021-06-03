@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Options;
+using FundRaiser.Team5.Core.Interfaces;
+using FundRaiser.Team5.Core.Options;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FundRaiser.Team5.Web.Controllers

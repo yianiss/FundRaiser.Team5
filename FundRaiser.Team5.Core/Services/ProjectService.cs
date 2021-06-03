@@ -1,21 +1,21 @@
-﻿using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Options;
+﻿using FundRaiser.Team5.Core.Interfaces;
+using FundRaiser.Team5.Core.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using FundRaiser_Team5.Model;
-using FundRaiser_Team5.Entities;
+using FundRaiser.Team5.Core.Model;
+using FundRaiser.Team5.Core.Entities;
+using Microsoft.Extensions.Logging;
 
-
-namespace FundRaiser_Team5.Services
+namespace FundRaiser.Team5.Core.Services
 {
     public class ProjectService : IProjectService
     {
         private readonly IApplicationDbContext _context;
         private readonly ILogger<ProjectService> _logger;
 
-        public ProjectService(IDbContext context, ILogger<ProjectService> logger)
+        public ProjectService(IApplicationDbContext context, ILogger<ProjectService> logger)
         {
             _context = context;
             _logger = logger;

@@ -1,8 +1,8 @@
-﻿using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Services;
+﻿using FundRaiser.Team5.Core.Interfaces;
+using FundRaiser.Team5.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FundRaiser_Team5
+namespace FundRaiser.Team5.Core
 {
     public static class DependencyInjection
     {

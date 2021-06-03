@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Options;
-using FundRaiser_Team5.Entities;
+using FundRaiser.Team5.Core.Interfaces;
+using FundRaiser.Team5.Core.Options;
+using FundRaiser.Team5.Core.Entities;
 
 namespace FundRaiserMVC.Controllers
 {

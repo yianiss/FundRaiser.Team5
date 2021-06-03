@@ -1,8 +1,8 @@
-﻿using FundRaiser_Team5.Entities;
+﻿using FundRaiser.Team5.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace FundRaiser_Team5.Interfaces
+namespace FundRaiser.Team5.Core.Interfaces
 {
    public interface IApplicationDbContext
     {

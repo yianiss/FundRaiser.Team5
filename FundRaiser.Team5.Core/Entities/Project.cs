@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using FundRaiser_Team5.Model;
+using System.ComponentModel.DataAnnotations;
 
-namespace FundRaiser_Team5
+namespace FundRaiser_Team5.Entities
 {
     public class Project
     {

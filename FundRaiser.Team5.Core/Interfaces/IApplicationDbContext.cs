@@ -1,9 +1,5 @@
-﻿using FundRaiser_Team5.Model;
+﻿using FundRaiser_Team5.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Interfaces
@@ -25,6 +21,5 @@ namespace FundRaiser_Team5.Interfaces
         public DbSet<FundingPackage> FundingPackages { get; set; }
 
         Task<int> SaveChangesAsync();
-
     }
 }

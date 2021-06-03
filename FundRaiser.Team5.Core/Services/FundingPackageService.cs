@@ -1,4 +1,4 @@
-﻿using FundRaiser_Team5.Data;
+﻿using FundRaiser_Team5.Entities;
 using FundRaiser_Team5.Interfaces;
 using FundRaiser_Team5.Model;
 using FundRaiser_Team5.Options;
@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Services.Implementation

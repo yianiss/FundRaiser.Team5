@@ -1,10 +1,6 @@
-﻿using FundRaiser_Team5.Model;
-using System;
+﻿using FundRaiser_Team5.Entities;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Options
 {

@@ -1,8 +1,6 @@
-﻿using FundRaiser_Team5;
+﻿using FundRaiser_Team5.Entities;
 using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Model;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Reflection;
 using System.Threading.Tasks;
 

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using FundRaiser_Team5.Interfaces;
 using FundRaiser_Team5.Options;
 
-namespace FundRaiserMVC.Controllers
+namespace FundRaiser.Team5.Web.Controllers
 {
     public class UserController : Controller
     {

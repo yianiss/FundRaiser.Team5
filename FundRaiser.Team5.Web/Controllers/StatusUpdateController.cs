@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FundRaiser_Team5;
+﻿using System.Threading.Tasks;
 using FundRaiser_Team5.Interfaces;
 using FundRaiser_Team5.Options;
-using FundRaiser_Team5.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FundRaiserMVC.Controllers
+namespace FundRaiser.Team5.Web.Controllers
 {
     public class StatusUpdateController : Controller
     {
@@ -127,7 +122,5 @@ namespace FundRaiserMVC.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-    }
-
-    
+    }  
 }

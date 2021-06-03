@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace FundRaiserMVC
+namespace FundRaiser.Team5.Web
 {
     public class Startup
     {

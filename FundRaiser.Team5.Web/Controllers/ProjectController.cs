@@ -1,20 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5;
 using FundRaiser_Team5.Options;
+using FundRaiser_Team5.Entities;
 
 namespace FundRaiserMVC.Controllers
 {
     public class ProjectController : Controller
     {
-        private readonly IProjectInterface _projectService;
+        private readonly IProjectService _projectService;
 
-        public ProjectController(IProjectInterface projectService)
+        public ProjectController(IProjectService projectService)
         {
             _projectService = projectService;
         }

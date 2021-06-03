@@ -1,4 +1,5 @@
-﻿using FundRaiser_Team5.Interfaces;
+﻿using FundRaiser_Team5.Entities;
+using FundRaiser_Team5.Interfaces;
 using FundRaiser_Team5.Model;
 using FundRaiser_Team5.Options;
 using Microsoft.EntityFrameworkCore;
@@ -124,7 +125,7 @@ namespace FundRaiser_Team5.Services
                 Data = optionUsers
             };
         }
-
+        //TODO : Implement the Update Action
         public async Task<Result<OptionUser>> UpdateUserAsync(OptionUser optionUser, int id)
         {
             var userToUpdate = await GetUserByIdAsync(id);

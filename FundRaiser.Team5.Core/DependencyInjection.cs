@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FundRaiser_Team5.Interfaces;
+﻿using FundRaiser_Team5.Interfaces;
 using FundRaiser_Team5.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +10,7 @@ namespace FundRaiser_Team5
         {
             services.AddScoped<IStatusUpdateService, StatusUpdateService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IProjectInterface, ProjectService>();
+            services.AddScoped<IProjectService, ProjectService>();
             return services;
         }
     }

@@ -2,15 +2,16 @@
 using FundRaiser_Team5.Options;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FundRaiser_Team5.Model;
 using Microsoft.Extensions.Logging;
+using FundRaiser_Team5.Entities;
+
 
 namespace FundRaiser_Team5.Services
 {
-    public class ProjectService : IProjectInterface
+    public class ProjectService : IProjectService
     {
         private readonly IApplicationDbContext _context;
         private readonly ILogger<ProjectService> _logger;
@@ -34,6 +35,7 @@ namespace FundRaiser_Team5.Services
             }
 
             var project_category = Enum.IsDefined(typeof(Model.Category), options.Category);
+
             if (!project_category)
             {
                 return new Result<OptionProject>(ErrorCode.BadRequest, "Category doesnt exist.");

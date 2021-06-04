@@ -13,6 +13,7 @@ namespace FundRaiser.Team5.Core.Services
     public class ProjectService : IProjectService
     {
         private readonly IApplicationDbContext _context;
+
         private readonly ILogger<ProjectService> _logger;
 
         public ProjectService(IApplicationDbContext context, ILogger<ProjectService> logger)
@@ -21,54 +22,48 @@ namespace FundRaiser.Team5.Core.Services
             _logger = logger;
         }
 
-        public async Task<Result<OptionProject>> CreateProjectAsync(OptionProject options)
+        public async Task<Result<OptionProject>> CreateProjectAsync(OptionProject optionProject)
         {
-            if (options == null)
+            if (optionProject == null)
             {
                 return new Result<OptionProject>(ErrorCode.BadRequest, "Null Options.");
             }
 
-            if (string.IsNullOrWhiteSpace(options.Title) || string.IsNullOrWhiteSpace(options.Description))
+            if (string.IsNullOrWhiteSpace(optionProject.Title) || string.IsNullOrWhiteSpace(optionProject.Description))
             {
                 return new Result<OptionProject>(ErrorCode.BadRequest, "Not all required Project Options provided.");
             }
 
-            var project_category = Enum.IsDefined(typeof(Model.Category), options.Category);
+            var project_category = Enum.IsDefined(typeof(Category), optionProject.Category);
 
             if (!project_category)
             {
-                return new Result<OptionProject>(ErrorCode.BadRequest, "Category doesnt exist.");
+                return new Result<OptionProject>(ErrorCode.BadRequest, "Category doesn't exist.");
             }
 
-            if (options.FundingGoal <= 0)
+            if (optionProject.FundingGoal <= 0)
             {
                 return new Result<OptionProject>(ErrorCode.BadRequest, "Funding goal cannot be less than or equal to zero.");
             }
 
-            if (options.CurrentFund < 0)
+            if (optionProject.CurrentFund < 0)
             {
                 return new Result<OptionProject>(ErrorCode.BadRequest, "Current fund cannot be less than or equal to zero.");
             }
 
-            if (options.Deadline <= options.DateCreated)
+            if (optionProject.Deadline <= optionProject.DateCreated)
             {
                 return new Result<OptionProject>(ErrorCode.BadRequest, "Deadline must be later than created date.");
             }
 
-            //var newProject = options.GetProject();        // !!!!!!!!!!!!
-            var newProject = new Project
+            User dbUser = _context.Users.Find(optionProject.UserId);
+
+            if (dbUser == null)
             {
-                Title = options.Title,
-                Description = options.Description,
-                Category = options.Category,
-                Images = options.Images,
-                Videos = options.Videos,
-                StatusUpdates = options.StatusUpdates,
-                FundingGoal = options.FundingGoal,
-                CurrentFund = options.CurrentFund,
-                DateCreated = options.DateCreated,
-                Deadline = options.Deadline
-            };
+                return new Result<OptionProject>(ErrorCode.BadRequest, "You must log in.");
+            }
+
+            var newProject = optionProject.GetProject();
 
             await _context.Projects.AddAsync(newProject);
 
@@ -76,9 +71,11 @@ namespace FundRaiser.Team5.Core.Services
             {
                 await _context.SaveChangesAsync();
             }
+
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
                 return new Result<OptionProject>(ErrorCode.InternalServerError, "Could not save Project.");
             }
 
@@ -107,6 +104,7 @@ namespace FundRaiser.Team5.Core.Services
                 Data = new OptionProject( project)
             };
         }
+
         public async Task<Result<int>> DeleteProjectByIdAsync(int id)
         {
             var projectToDelete = await GetProjectByIdAsync(id);
@@ -116,15 +114,17 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<int>(ErrorCode.NotFound, $"Project with id #{id} not found.");
             }
 
-            _context.Projects.Remove(projectToDelete.Data);
+            projectToDelete.Data.IsActive = false;
 
             try
             {
                 await _context.SaveChangesAsync();
             }
+
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+
                 return new Result<int>(ErrorCode.InternalServerError, "Could not delete project.");
             }
 
@@ -137,7 +137,9 @@ namespace FundRaiser.Team5.Core.Services
         public async Task<Result<List<OptionProject>>> GetProjectsAsync()
         {
             var projects = await _context.Projects.ToListAsync();
+
             List<OptionProject> optionProjects = new();
+
             projects.ForEach(project => optionProjects.Add(new OptionProject(project)));
 
             return new Result<List<OptionProject>>

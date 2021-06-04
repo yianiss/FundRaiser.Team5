@@ -6,6 +6,8 @@ namespace FundRaiser.Team5.Core.Options
 {
     public class OptionUser
     { 
+        public int UserId { get; set; }
+
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
@@ -34,6 +36,7 @@ namespace FundRaiser.Team5.Core.Options
         {
             if (user != null)
             {
+                UserId = user.UserId;
                 FirstName = user.FirstName;
                 LastName = user.LastName;
                 Email = user.Email;
@@ -48,10 +51,11 @@ namespace FundRaiser.Team5.Core.Options
             {
                 FirstName = FirstName,
                 LastName = LastName,
-                Email = Email, //Email = this.Email
+                Email = Email,
                 Password = Password,
                 IsActive = true
             };
+
             return user;
         }
     }

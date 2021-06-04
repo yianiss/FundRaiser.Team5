@@ -16,30 +16,39 @@ namespace FundRaiser.Team5.Core.Options
         [Display(Name = "Text")]
         public string Text { get; set; }
 
-        public DateTime TimeUploaded { get; set; } = DateTime.Now;
+        public DateTime TimeUploaded { get; set; }
+
         public bool IsActive { get; set; }
-        public Project Project { get; set; }
+
+        public int ProjectId { get; set; }
 
         public OptionStatusUpdate() { }
 
         public OptionStatusUpdate(StatusUpdate statusUpdate)
         {
             StatusUpdateId = statusUpdate.StatusUpdateId;
+
             Title = statusUpdate.Title;
+
             Text = statusUpdate.Text;
+
             TimeUploaded = statusUpdate.TimeUploaded;
+
             IsActive = statusUpdate.IsActive;
+
+            ProjectId = statusUpdate.Project.ProjectId;
         }
 
-        public StatusUpdate GeStatusUpdate()
+        public StatusUpdate GetStatusUpdate()
         {
             StatusUpdate statusUpdate = new()
             {
                 Title = Title,
                 Text = Text,
                 TimeUploaded = DateTime.Now,
-                IsActive = IsActive
+                IsActive = true
             };
+
             return statusUpdate;
         }
     }

@@ -55,15 +55,15 @@ namespace FundRaiserMVC.Controllers
                     Title = project.Title,
                     Category = project.Category,
                     Description = project.Description,
-                    FundingPackages=project.FundingPackages,
-                    Images=project.Images,
-                    Videos=project.Videos,
-                    StatusUpdates=project.StatusUpdates,
-                    FundingGoal=project.FundingGoal,
-                    CurrentFund=project.CurrentFund,
-                    DateCreated=project.DateCreated,
-                    Deadline=project.Deadline,
-                    Users=project.Users
+                    FundingPackages = project.FundingPackages,
+                    Images = project.Images,
+                    Videos = project.Videos,
+                    StatusUpdates = project.StatusUpdates,
+                    FundingGoal = project.FundingGoal,
+                    CurrentFund = project.CurrentFund,
+                    DateCreated = project.DateCreated,
+                    Deadline = project.Deadline,
+                    Users = project.Users
 
                 });
 

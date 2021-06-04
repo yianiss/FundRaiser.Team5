@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using FundRaiser.Team5.Core.Entities;
 
 namespace FundRaiser.Team5.Core.Options
@@ -8,12 +9,19 @@ namespace FundRaiser.Team5.Core.Options
     {
         public int ProjectId { get; set; }
 
+        [Required]
+        [Display(Name = "Title")]
         public string Title { get; set; }
 
+        [Required]
+        [Display(Name = "Category")]
         public Category Category { get; set; }
 
+        [Required]
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [Display(Name = "List of Funding Packages")]
         public List<FundingPackage> FundingPackages { get; set; }
 
         public List<ImagePath> Images { get; set; }
@@ -22,34 +30,56 @@ namespace FundRaiser.Team5.Core.Options
 
         public List<StatusUpdate> StatusUpdates { get; set; }
 
-        public decimal FundingGoal { get; set; } //>0 
+        [Required]
+        [Display(Name = "Funding Goal")]
+        public decimal FundingGoal { get; set; }
 
+        [Display(Name = "Current Fund")]
         public decimal CurrentFund { get; set; } = 0;
 
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
-        public DateTime Deadline { get; set; } //>DateTime.Now
+        [Required]
+        [Display(Name = "Deadline")]
+        public DateTime Deadline { get; set; }
+
         public bool IsActive { get; set; }
-        public User Users { get; set; }
+
+        public int UserId { get; set; }
 
         public OptionProject() { }
+
         public OptionProject(Project project)
         {
             if (project != null)
             {
                 ProjectId = project.ProjectId;
+
                 Title = project.Title;
+
                 Category = project.Category;
+
                 Description = project.Description;
+
                 FundingPackages = project.FundingPackages;
+
                 Images = project.Images;
+
                 Videos = project.Videos;
+
                 StatusUpdates = project.StatusUpdates;
+
                 FundingGoal = project.FundingGoal;
+
                 CurrentFund = project.CurrentFund;
+
                 DateCreated = project.DateCreated;
+
                 Deadline = project.Deadline;
-                Users = project.Users;
+
+                UserId = project.User.UserId;
+
                 IsActive = project.IsActive;
             }
         }
@@ -67,12 +97,12 @@ namespace FundRaiser.Team5.Core.Options
                 Videos = Videos,
                 StatusUpdates = StatusUpdates,
                 FundingGoal = FundingGoal,
-                CurrentFund = CurrentFund,
-                DateCreated = DateCreated,
+                CurrentFund = 0,
+                DateCreated = DateTime.Now,
                 Deadline = Deadline,
-                Users = Users,
                 IsActive = true
             };
+
             return project;
         }
     }

@@ -14,6 +14,7 @@ namespace FundRaiser.Team5.Core.Services
     class UserFundingPackageService : IUserFundingPackageService
     {
         private readonly IApplicationDbContext _context;
+
         private readonly ILogger<UserFundingPackageService> _logger;
 
         public UserFundingPackageService(IApplicationDbContext context, ILogger<UserFundingPackageService> logger)
@@ -23,9 +24,6 @@ namespace FundRaiser.Team5.Core.Services
         }
         public async Task<Result<OptionUserFundingPackage>> CreateUserFundingPackageAsync(OptionUserFundingPackage optionUserFundingPackage)
         {
-
-
-
             if (optionUserFundingPackage == null)
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.BadRequest, "Null options.");
@@ -39,16 +37,19 @@ namespace FundRaiser.Team5.Core.Services
             }
 
             FundingPackage dbfundingPackage = await _context.FundingPackages.SingleOrDefaultAsync(fundingPackage => fundingPackage.FundingPackageId == optionUserFundingPackage.FundingPackageId);
+
             User dbUser = await _context.Users.SingleOrDefaultAsync(user => user.UserId == optionUserFundingPackage.UserId);
 
             if (dbfundingPackage == null)
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"FundingPackage with id #{optionUserFundingPackage.FundingPackageId} not found.");
             }
+
             if (dbUser == null)
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"User with id #{optionUserFundingPackage.UserId} not found.");
             }
+
             UserFundingPackage userFundingPackage = optionUserFundingPackage.GetUserFundingPackage();
 
             await _context.UserFundingPackages.AddAsync(userFundingPackage);
@@ -57,6 +58,7 @@ namespace FundRaiser.Team5.Core.Services
             {
                 await _context.SaveChangesAsync();
             }
+
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
@@ -100,7 +102,9 @@ namespace FundRaiser.Team5.Core.Services
         public async Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackageAsync()
         {
             List<UserFundingPackage> userFundingPackages = await _context.UserFundingPackages.ToListAsync();
+
             List<OptionUserFundingPackage> optionUserFundingPackages = new();
+
             userFundingPackages.ForEach(userFundingPackage => optionUserFundingPackages.Add(new OptionUserFundingPackage(userFundingPackage)));
 
             return new Result<List<OptionUserFundingPackage>>
@@ -115,7 +119,9 @@ namespace FundRaiser.Team5.Core.Services
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
+
             UserFundingPackage dbUserfundingPackage = await _context.UserFundingPackages.SingleOrDefaultAsync(userFundingPackage => userFundingPackage.UserFundingPackageId == userFundingPackageId);
+
             if (dbUserfundingPackage == null)
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"UserFundingPackage with id #{userFundingPackageId} not found.");
@@ -125,7 +131,6 @@ namespace FundRaiser.Team5.Core.Services
             {
                 Data = new OptionUserFundingPackage(dbUserfundingPackage)
             };
-            throw new NotImplementedException();
         }
 
         public async Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackageAsync(OptionUserFundingPackage optionUserFundingPackage)
@@ -157,7 +162,9 @@ namespace FundRaiser.Team5.Core.Services
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
+
             UserFundingPackage dbUserFundingPackage = await _context.UserFundingPackages.SingleOrDefaultAsync(userFundingPackage => userFundingPackage.UserFundingPackageId == userFundingPackageId);
+
             if (dbUserFundingPackage == null)
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"FundingPackage with id #{userFundingPackageId} not found.");
@@ -169,6 +176,7 @@ namespace FundRaiser.Team5.Core.Services
             {
                 await _context.SaveChangesAsync();
             }
+
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);

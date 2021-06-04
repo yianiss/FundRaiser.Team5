@@ -9,8 +9,15 @@ namespace FundRaiser.Team5.Core
         public static IServiceCollection AddCore(this IServiceCollection services)
         {
             services.AddScoped<IStatusUpdateService, StatusUpdateService>();
+
             services.AddScoped<IUserService, UserService>();
+
             services.AddScoped<IProjectService, ProjectService>();
+
+            services.AddScoped<IUserFundingPackageService, UserFundingPackageService>();
+
+            services.AddScoped<IFundingPackageService, FundingPackageService>();
+
             return services;
         }
     }

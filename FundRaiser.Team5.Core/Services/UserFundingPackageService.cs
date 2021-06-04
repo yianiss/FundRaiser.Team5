@@ -96,6 +96,7 @@ namespace FundRaiser.Team5.Core.Services
             //{
             //    Data = 1
             //};
+            return new Result<int>();
             throw new NotImplementedException();
         }
 

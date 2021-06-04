@@ -11,7 +11,7 @@ namespace FundRaiser.Team5.Core.Interfaces
         Task<Result<List<OptionStatusUpdate>>> GetStatusUpdatesAsync();
         Task<Result<OptionStatusUpdate>> CreateStatusUpdateAsync(OptionStatusUpdate options);
         Task<Result<OptionStatusUpdate>> GetStatusUpdateByIdAsync(int id);
-        Task<Result<OptionStatusUpdate>> UpdateStatusUpdateAsync(OptionStatusUpdate options);
+        Task<Result<OptionStatusUpdate>> EditStatusUpdateAsync(int statusUpdateId, OptionStatusUpdate options);
         Task<Result<int>> DeleteStatusUpdateByIdAsync(int id);
     }
 }

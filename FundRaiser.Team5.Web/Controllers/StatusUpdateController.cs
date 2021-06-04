@@ -47,11 +47,9 @@ namespace FundRaiser.Team5.Web.Controllers
         }
 
         // POST: /project/id/StatusUpdate/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Text")] OptionStatusUpdate statusUpdate)
+        public async Task<IActionResult> Create([Bind("Title,Text")] OptionStatusUpdate statusUpdate)
         {
             if (ModelState.IsValid)
             {
@@ -113,12 +111,12 @@ namespace FundRaiser.Team5.Web.Controllers
             return View(statusUpdate.Data);
         }
 
-        // POST: project/id/StatusUpdate/id/update
-        [HttpPost, ActionName("Update")]
+        // POST: project/id/StatusUpdate/id/edit
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateConfirmed([Bind("Id,Title,Text")] OptionStatusUpdate optionStatusUpdate)
         {
-            await _statusUpdateService.UpdateStatusUpdateAsync(optionStatusUpdate);
+            await _statusUpdateService.EditStatusUpdateAsync(optionStatusUpdate.StatusUpdateId, optionStatusUpdate);
 
             return RedirectToAction(nameof(Index));
         }

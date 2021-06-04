@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FundRaiser.Team5.Core.Entities;
 using FundRaiser.Team5.Core.Interfaces;
@@ -84,16 +85,6 @@ namespace FundRaiser.Team5.Core.Services
 
         public async Task<Result<int>> DeleteStatusUpdateByIdAsync(int id)
         {
-            //var statusUpdateToDelete = await GetStatusUpdateByIdAsync(id);
-
-            //if (statusUpdateToDelete.Error != null || statusUpdateToDelete.Data == null)
-            //{
-            //    return new Result<int>(ErrorCode.NotFound, $"Status update with ID={id} not found");
-            //}
-
-            //_context.
-            //StatusUpdates.
-            //Remove(statusUpdateToDelete.Data);
 
             if (id <= 0)
             {
@@ -141,13 +132,16 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
-        public async Task<Result<OptionStatusUpdate>> UpdateStatusUpdateAsync(OptionStatusUpdate options)
+        public async Task<Result<OptionStatusUpdate>> EditStatusUpdateAsync(int statusUpdateId, OptionStatusUpdate options)
         {
-            var statusUpdateToUpdate = await GetStatusUpdateByIdAsync(options.StatusUpdateId);
+            var dbStatusUpdates = _context.StatusUpdates;
 
-            if (statusUpdateToUpdate.Error != null || statusUpdateToUpdate.Data == null)
+            StatusUpdate statusUpdateToUpdate = await dbStatusUpdates.FindAsync(statusUpdateId);           
+
+
+            if (statusUpdateToUpdate==null)
             {
-                return new Result<OptionStatusUpdate>(ErrorCode.NotFound, $"Status update with ID={options.StatusUpdateId} not found");
+                return new Result<OptionStatusUpdate>(ErrorCode.NotFound, $"Status update with ID={statusUpdateId} not found");
             }
 
             if (options == null)
@@ -160,14 +154,12 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<OptionStatusUpdate>(ErrorCode.BadRequest, $"Status Update requires a title and a text!");
             }
 
-            statusUpdateToUpdate.Data.Title = options.Title;
-            statusUpdateToUpdate.Data.Text = options.Text;
+            statusUpdateToUpdate.Title = options.Title;
+            statusUpdateToUpdate.Text = options.Text;
 
-            // ToDO:
-          /*  _context.
-            StatusUpdates.
-            Update(statusUpdateToUpdate.Data);*/
 
+            OptionStatusUpdate optionStatusUpdate = new(statusUpdateToUpdate);
+        
             try
             {
                 await _context.SaveChangesAsync();
@@ -180,10 +172,10 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<OptionStatusUpdate>(ErrorCode.InternalServerError, "Could not update status update.");
             }
 
-              return new Result<StatusUpdate>
-              {
-                  Data = statusUpdateToUpdate.Data
-              };
+            return new Result<OptionStatusUpdate>
+            {
+                Data = optionStatusUpdate
+            };
         }
     }
 }

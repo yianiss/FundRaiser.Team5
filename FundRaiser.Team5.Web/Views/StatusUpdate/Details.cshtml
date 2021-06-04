@@ -1,0 +1,35 @@
+﻿@model FundRaiser.Team5.Core.Options.OptionStatusUpdate
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Status Update</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TimeUploaded)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TimeUploaded)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

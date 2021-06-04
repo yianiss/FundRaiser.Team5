@@ -1,0 +1,70 @@
+﻿@model IEnumerable<FundRaiser.Team5.Core.Options.OptionProject>
+@{
+    ViewData["Title"] = "Project";
+}
+
+<p>
+    <a asp-action="Create">Create New Project</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FundingGoal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Videos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Images)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deadline)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FundingGoal)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Videos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Images)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

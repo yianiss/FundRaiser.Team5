@@ -14,12 +14,8 @@ namespace FundRaiser.Team5.Core.Entities
 
         public string Password { get; set; }
 
-        public List<UserFundingPackage> BackerFundingPackage { get; set; }
+        public List<UserFundingPackage> UserFundingPackages { get; set; }
 
         public List<Project> Projects { get; set; }
-
-      //  public bool IsCreator();
-       // public bool IsBacker();
-
     }
 }

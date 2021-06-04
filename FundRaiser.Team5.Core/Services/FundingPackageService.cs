@@ -2,7 +2,6 @@
 using FundRaiser.Team5.Core.Interfaces;
 using FundRaiser.Team5.Core.Model;
 using FundRaiser.Team5.Core.Options;
-using FundRaiser.Team5.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FundRaiser.Team5.Services.Core.Services
+namespace FundRaiser.Team5.Core.Services
 {
-    class FundingPackageService : IFundingPackageService
+    public class FundingPackageService : IFundingPackageService
     {
         private readonly IApplicationDbContext _context;
         private readonly ILogger<FundingPackageService> _logger;
@@ -185,6 +184,11 @@ namespace FundRaiser.Team5.Services.Core.Services
             {
                 Data = new OptionFundingPackage(dbFundingPackage)
             };
+        }
+
+        Task<Result<List<OptionFundingPackage>>> IFundingPackageService.ReadFundingPackagesByProjectIdAsync(int projectId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

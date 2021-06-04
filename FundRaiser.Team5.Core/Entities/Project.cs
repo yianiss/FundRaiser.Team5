@@ -23,12 +23,12 @@ namespace FundRaiser.Team5.Core.Entities
 
         public decimal FundingGoal { get; set; } //>0 
 
-        public decimal CurrentFund { get; set; } = 0;
+        public decimal CurrentFund { get; set; } //= 0;
 
-        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public DateTime DateCreated { get; set; } //= DateTime.Now;
 
         public DateTime Deadline { get; set; } //>DateTime.Now
 
-        public User Users { get; set; }
+        public User User { get; set; }
     }
 }

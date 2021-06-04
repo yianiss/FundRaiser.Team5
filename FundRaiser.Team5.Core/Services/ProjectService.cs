@@ -1,15 +1,14 @@
-﻿using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Options;
+﻿using FundRaiser.Team5.Core.Interfaces;
+using FundRaiser.Team5.Core.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using FundRaiser_Team5.Model;
+using FundRaiser.Team5.Core.Model;
+using FundRaiser.Team5.Core.Entities;
 using Microsoft.Extensions.Logging;
-using FundRaiser_Team5.Entities;
 
-
-namespace FundRaiser_Team5.Services
+namespace FundRaiser.Team5.Core.Services
 {
     public class ProjectService : IProjectService
     {

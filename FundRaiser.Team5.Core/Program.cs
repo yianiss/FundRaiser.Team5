@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using FundRaiser_Team5.Data;
-using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Model;
-using FundRaiser_Team5.Options;
-using FundRaiser_Team5.Services;
+﻿using FundRaiser.Team5.Core.Options;
 
-namespace FundRaiser_Team5
+namespace FundRaiser.Team5.Core
 {
     class Program
     {
@@ -19,7 +13,7 @@ namespace FundRaiser_Team5
             };
 
 
-            using FrDbContext db = new();
+            //using FrDbContext db = new();
            /* IUserService userService = new UserService(db);
 
             List<OptionUser> users = userService.ReadUser(optionUser);

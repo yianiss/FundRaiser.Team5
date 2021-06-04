@@ -1,11 +1,11 @@
-using FundRaiser_Team5;
+using FundRaiser.Team5.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace FundRaiserMVC
+namespace FundRaiser.Team5.Web
 {
     public class Startup
     {

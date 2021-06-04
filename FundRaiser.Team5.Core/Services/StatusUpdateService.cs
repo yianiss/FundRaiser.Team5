@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FundRaiser_Team5.Entities;
-using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Model;
-using FundRaiser_Team5.Options;
+using FundRaiser.Team5.Core.Entities;
+using FundRaiser.Team5.Core.Interfaces;
+using FundRaiser.Team5.Core.Model;
+using FundRaiser.Team5.Core.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace FundRaiser_Team5.Services
+namespace FundRaiser.Team5.Core.Services
 {
     public class StatusUpdateService : IStatusUpdateService
     {

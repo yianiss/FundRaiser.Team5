@@ -1,4 +1,4 @@
-﻿using FundRaiser_Team5.Interfaces;
+﻿using FundRaiser.Team5.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

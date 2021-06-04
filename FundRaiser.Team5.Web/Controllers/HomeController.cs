@@ -1,13 +1,9 @@
-﻿using FundRaiserMVC.Models;
+﻿using FundRaiser.Team5.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FundRaiserMVC.Controllers
+namespace FundRaiser.Team5.Web.Controllers
 {
     public class HomeController : Controller
     {

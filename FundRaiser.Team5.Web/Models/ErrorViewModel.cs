@@ -1,6 +1,4 @@
-using System;
-
-namespace FundRaiserMVC.Models
+namespace FundRaiser.Team5.Web.Models
 {
     public class ErrorViewModel
     {

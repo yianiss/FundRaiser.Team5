@@ -1,4 +1,4 @@
-﻿namespace FundRaiser_Team5.Model
+﻿namespace FundRaiser.Team5.Core.Model
 {
     public class Result<T>
     {

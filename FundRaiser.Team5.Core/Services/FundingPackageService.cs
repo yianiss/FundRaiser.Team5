@@ -1,7 +1,8 @@
-using FundRaiser_Team5.Entities;
-using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Model;
-using FundRaiser_Team5.Options;
+using FundRaiser.Team5.Core.Entities;
+using FundRaiser.Team5.Core.Interfaces;
+using FundRaiser.Team5.Core.Model;
+using FundRaiser.Team5.Core.Options;
+using FundRaiser.Team5.Core.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FundRaiser_Team5.Services.Implementation
+namespace FundRaiser.Team5.Services.Core.Services
 {
     class FundingPackageService : IFundingPackageService
     {

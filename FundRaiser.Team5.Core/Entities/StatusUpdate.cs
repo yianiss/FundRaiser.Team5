@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FundRaiser_Team5.Entities
+namespace FundRaiser.Team5.Core.Entities
 {
     public class StatusUpdate
     {

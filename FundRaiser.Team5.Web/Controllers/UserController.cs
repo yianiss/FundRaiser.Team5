@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Options;
+using FundRaiser.Team5.Core.Interfaces;
+using FundRaiser.Team5.Core.Options;
 
-namespace FundRaiserMVC.Controllers
+namespace FundRaiser.Team5.Web.Controllers
 {
     public class UserController : Controller
     {

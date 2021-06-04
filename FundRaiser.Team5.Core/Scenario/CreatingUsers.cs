@@ -1,14 +1,6 @@
-﻿using FundRaiser_Team5.Data;
-using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Options;
-using FundRaiser_Team5.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FundRaiser.Team5.Core.Options;
 
-namespace FundRaiser_Team5.Scenario
+namespace FundRaiser.Team5.Core.Scenario
 {
     class CreatingUsers
     {
@@ -16,7 +8,7 @@ namespace FundRaiser_Team5.Scenario
         {
             OptionUser user = new OptionUser() { FirstName = "Yianis", LastName = "Karopoulos" };
 
-            using FrDbContext db = new();
+           // using FrDbContext db = new();
           //  IUserService userService = new UserService(db);
 
           //  OptionUser OptionUserResult = userService.CreateUser(user);

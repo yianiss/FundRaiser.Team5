@@ -1,8 +1,7 @@
-﻿using FundRaiser_Team5.Entities;
-using FundRaiser_Team5.Model.Entities;
+﻿using FundRaiser.Team5.Core.Entities;
 using System;
 
-namespace FundRaiser_Team5.Options
+namespace FundRaiser.Team5.Core.Options
 {
     public class OptionUserFundingPackage
     {

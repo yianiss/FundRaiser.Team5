@@ -1,8 +1,8 @@
-﻿using FundRaiser_Team5.Entities;
+﻿using FundRaiser.Team5.Core.Entities;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FundRaiser_Team5.Options
+namespace FundRaiser.Team5.Core.Options
 {
     public class OptionStatusUpdate
     {

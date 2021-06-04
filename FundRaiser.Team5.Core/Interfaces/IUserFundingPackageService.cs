@@ -1,10 +1,9 @@
-using FundRaiser_Team5.Interfaces;
-using FundRaiser_Team5.Model;
-using FundRaiser_Team5.Options;
+using FundRaiser.Team5.Core.Model;
+using FundRaiser.Team5.Core.Options;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FundRaiser_Team5.Services
+namespace FundRaiser.Team5.Core.Services
 {
     interface IUserFundingPackageService
     {

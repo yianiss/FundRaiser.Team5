@@ -177,12 +177,12 @@ namespace FundRaiser.Team5.Core.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return new Result<OptionFundingPackage>(ErrorCode.InternalServerError, "Could not save FundingPackage.");
+                return new Result<OptionUser>(ErrorCode.InternalServerError, "Could not save FundingPackage.");
             }
 
-             return new Result<OptionFundingPackage>
+             return new Result<OptionUser>
              {
-                 Data = new OptionFundingPackage(dbFundingPackage)
+                 Data = new OptionUser(dbUser)
              };
         }
 

@@ -1,4 +1,5 @@
 ﻿using FundRaiser.Team5.Core.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace FundRaiser.Team5.Core.Options
 {
@@ -8,13 +9,22 @@ namespace FundRaiser.Team5.Core.Options
 
         public int ProjectId { get; set; }
 
+        [Required]
+        [Display(Name = "Title")]
         public string Title { get; set; }
 
+        [Required]
+        [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [Required]
+        [Display(Name = "Minimum Price")]
         public int MinPrice { get; set; }
 
-        public int AvailablePackages { get; set; }
+        [Required]
+        [Display(Name = "Available Packages")]
+        public int NumberOfAvailablePackages { get; set; }
+
         public bool IsActive { get; set; }
 
         public OptionFundingPackage() { }
@@ -28,7 +38,7 @@ namespace FundRaiser.Team5.Core.Options
                 Title = fundingPackage.Title;
                 Description = fundingPackage.Description;
                 MinPrice = fundingPackage.MinPrice;
-                AvailablePackages = fundingPackage.AvailablePackages;
+                NumberOfAvailablePackages = fundingPackage.NumberOfAvailablePackages;
                 IsActive = fundingPackage.IsActive;
             }
         }
@@ -41,7 +51,7 @@ namespace FundRaiser.Team5.Core.Options
                 Title = Title,
                 Description = Description,
                 MinPrice = MinPrice,
-                AvailablePackages = AvailablePackages,
+                NumberOfAvailablePackages = NumberOfAvailablePackages,
                 IsActive = true
             };
         }

@@ -32,19 +32,24 @@ namespace FundRaiser.Team5.Core.Services
                 string.IsNullOrWhiteSpace(optionFundingPackage.Title) ||
                 string.IsNullOrWhiteSpace(optionFundingPackage.Description) ||
                 optionFundingPackage.MinPrice < 0 ||
-                optionFundingPackage.AvailablePackages < -1)
+                optionFundingPackage.NumberOfAvailablePackages < -1)
             {
                 return new Result<OptionFundingPackage>(ErrorCode.BadRequest, "Not all required OptionFundingPackage options provided.");
             }
-
+            //Question for ????
             Project dbProject = _context.Projects.Find(optionFundingPackage.ProjectId);
+
             if (dbProject == null)
             {
                 return null;
             }
+
             FundingPackage fundingPackage = optionFundingPackage.GetFundingPackage();
+
             fundingPackage.Project = dbProject;
+
             await _context.FundingPackages.AddAsync(fundingPackage);
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -123,18 +128,42 @@ namespace FundRaiser.Team5.Core.Services
         {
             // Microsoft.EntityFrameworkCore.DbSet<FundingPackage> dbFundingPackages = _context.FundingPackages;
             var dbFundingPackages = _context.FundingPackages;
-            if (!(optionFundingPackage.ProjectId < 0))
-                dbFundingPackages.Where(fundingPackage => fundingPackage.Project.ProjectId.Equals(optionFundingPackage.ProjectId));
+
+            if (!(optionFundingPackage.ProjectId <= 0))
+                dbFundingPackages.Where(fundingPackage => 
+                fundingPackage.
+                Project.
+                ProjectId.
+                Equals(optionFundingPackage.ProjectId));
+
             if (!(string.IsNullOrWhiteSpace(optionFundingPackage.Title)))
-                dbFundingPackages.Where(fundingPackage => fundingPackage.Title.Equals(optionFundingPackage.Title));
+                dbFundingPackages.Where(fundingPackage => 
+                fundingPackage.
+                Title.
+                Equals(optionFundingPackage.Title));
+
             if (!(string.IsNullOrWhiteSpace(optionFundingPackage.Description)))
-                dbFundingPackages.Where(fundingPackage => fundingPackage.Description.Equals(optionFundingPackage.Description));
+                dbFundingPackages.Where(fundingPackage => 
+                fundingPackage.
+                Description.
+                Equals(optionFundingPackage.Description));
+
             if (!(optionFundingPackage.MinPrice < 0))
-                dbFundingPackages.Where(fundingPackage => fundingPackage.MinPrice.Equals(optionFundingPackage.MinPrice));
-            if (!(optionFundingPackage.AvailablePackages < 0))
-                dbFundingPackages.Where(fundingPackage => fundingPackage.AvailablePackages.Equals(optionFundingPackage.AvailablePackages));
+                dbFundingPackages.Where(fundingPackage => 
+                fundingPackage.
+                MinPrice.
+                Equals(optionFundingPackage.MinPrice));
+
+            if (!(optionFundingPackage.NumberOfAvailablePackages < 0))
+                dbFundingPackages.Where(fundingPackage => 
+                fundingPackage.
+                NumberOfAvailablePackages.
+                Equals(optionFundingPackage.NumberOfAvailablePackages));
+
             List<FundingPackage> fundingPackages = await dbFundingPackages.ToListAsync();
+
             List<OptionFundingPackage> optionFundingPackages = new();
+
             fundingPackages.ForEach(fundingPackage => optionFundingPackages.Add(new OptionFundingPackage(fundingPackage)));
 
             return new Result<List<OptionFundingPackage>>
@@ -165,7 +194,7 @@ namespace FundRaiser.Team5.Core.Services
             dbFundingPackage.Title = optionFundingPackage.Title;
             dbFundingPackage.Description = optionFundingPackage.Description;
             dbFundingPackage.MinPrice = optionFundingPackage.MinPrice;
-            dbFundingPackage.AvailablePackages = optionFundingPackage.AvailablePackages;
+            dbFundingPackage.NumberOfAvailablePackages = optionFundingPackage.NumberOfAvailablePackages;
 
             try
             {

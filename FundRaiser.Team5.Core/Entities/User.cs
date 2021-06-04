@@ -17,10 +17,7 @@ namespace FundRaiser.Team5.Core.Entities
         public List<UserFundingPackage> UserFundingPackages { get; set; }
 
         public List<Project> Projects { get; set; }
+       
         public bool IsActive { get; set; }
-
-        //  public bool IsCreator();
-        // public bool IsBacker();
-
     }
 }

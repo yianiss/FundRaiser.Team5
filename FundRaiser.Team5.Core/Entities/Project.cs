@@ -28,7 +28,10 @@ namespace FundRaiser.Team5.Core.Entities
         public DateTime DateCreated { get; set; } //= DateTime.Now;
 
         public DateTime Deadline { get; set; } //>DateTime.Now
+
+        public User User { get; set; }
+
         public bool IsActive { get; set; }
-        public User Users { get; set; }
+
     }
 }

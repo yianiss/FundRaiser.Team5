@@ -10,9 +10,10 @@ namespace FundRaiser.Team5.Core.Entities
 
         public string Text { get; set; }
 
-        public DateTime TimeUploaded { get; set; } = DateTime.Now;
+        public DateTime TimeUploaded { get; set; }//= DateTime.Now;
 
         public Project Project { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

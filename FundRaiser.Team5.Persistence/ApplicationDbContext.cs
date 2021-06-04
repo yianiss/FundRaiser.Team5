@@ -22,6 +22,11 @@ namespace FundRaiser.Team5.Persistence
 
         public DbSet<FundingPackage> FundingPackages { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=RegenerationCrm; User Id=sa; Password=admin!@#123");
+        }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

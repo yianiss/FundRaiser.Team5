@@ -16,4 +16,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FundRaiser.Team5.Core\FundRaiser.Team5.Core.csproj" />
+    <ProjectReference Include="..\FundRaiser.Team5.Persistence\FundRaiser.Team5.Persistence.csproj" />
+  </ItemGroup>
 </Project>

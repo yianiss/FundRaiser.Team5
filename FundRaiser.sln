@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundRaiser.Team5.Test", "Fu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundRaiser.Team5.Web", "FundRaiser.Team5.Web\FundRaiser.Team5.Web.csproj", "{D391C9EF-90C9-42E4-B424-C344D6FD846E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundRaiser.Team5.Persistence", "FundRaiser.Team5.Persistence\FundRaiser.Team5.Persistence.csproj", "{056FD527-A6F7-4512-B3F2-02F24C2C786C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundRaiser.Team5.Persistence", "FundRaiser.Team5.Persistence\FundRaiser.Team5.Persistence.csproj", "{056FD527-A6F7-4512-B3F2-02F24C2C786C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

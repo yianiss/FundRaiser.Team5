@@ -63,7 +63,8 @@ namespace FundRaiserMVC.Controllers
                     CurrentFund = project.CurrentFund,
                     DateCreated = project.DateCreated,
                     Deadline = project.Deadline,
-                    Users = project.Users
+                    UserId = project.User.UserId
+                    //Users = project.Users
 
                 });
 

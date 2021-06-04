@@ -21,6 +21,7 @@ namespace FundRaiser.Team5.Core.Entities
 
         [Required]
         public int AvailablePackages { get; set; }
+        public bool IsActive { get; set; }
 
         public virtual List<UserFundingPackage> UserFundingPackages { get; set; }
     }

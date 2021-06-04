@@ -8,14 +8,10 @@ namespace FundRaiser.Team5.Core.Interfaces
 {
     public interface IStatusUpdateService
     {
-        Task<Result<List<StatusUpdate>>> GetStatusUpdatesAsync();
-
-        Task<Result<StatusUpdate>> CreateStatusUpdateAsync(OptionStatusUpdate options);
-
-        Task<Result<StatusUpdate>> GetStatusUpdateByIdAsync(int id);
-
-        Task<Result<StatusUpdate>> UpdateStatusUpdateAsync(OptionStatusUpdate options);
-
+        Task<Result<List<OptionStatusUpdate>>> GetStatusUpdatesAsync();
+        Task<Result<OptionStatusUpdate>> CreateStatusUpdateAsync(OptionStatusUpdate options);
+        Task<Result<OptionStatusUpdate>> GetStatusUpdateByIdAsync(int id);
+        Task<Result<OptionStatusUpdate>> UpdateStatusUpdateAsync(OptionStatusUpdate options);
         Task<Result<int>> DeleteStatusUpdateByIdAsync(int id);
     }
 }

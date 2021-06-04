@@ -8,12 +8,9 @@ namespace FundRaiser.Team5.Core.Interfaces
 {
     public interface IProjectService
     {
-       Task<Result<List<Project>>> GetProjectsAsync();
-
-       Task<Result<Project>> CreateProjectAsync(OptionProject options);
-
-       Task<Result<Project>> GetProjectByIdAsync(int id);
-
+       Task<Result<List<OptionProject>>> GetProjectsAsync();
+       Task<Result<OptionProject>> CreateProjectAsync(OptionProject options);
+       Task<Result<OptionProject>> GetProjectByIdAsync(int id);
        Task<Result<int>> DeleteProjectByIdAsync(int id);
     }
 }

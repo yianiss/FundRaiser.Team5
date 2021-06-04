@@ -15,6 +15,7 @@ namespace FundRaiser.Team5.Core.Options
         public int MinPrice { get; set; }
 
         public int AvailablePackages { get; set; }
+        public bool IsActive { get; set; }
 
         public OptionFundingPackage() { }
 
@@ -28,6 +29,7 @@ namespace FundRaiser.Team5.Core.Options
                 Description = fundingPackage.Description;
                 MinPrice = fundingPackage.MinPrice;
                 AvailablePackages = fundingPackage.AvailablePackages;
+                IsActive = fundingPackage.IsActive;
             }
         }
 
@@ -40,6 +42,7 @@ namespace FundRaiser.Team5.Core.Options
                 Description = Description,
                 MinPrice = MinPrice,
                 AvailablePackages = AvailablePackages,
+                IsActive = true
             };
         }
     }

@@ -21,40 +21,41 @@ namespace FundRaiser.Team5.Core.Services
             _logger = logger;
         }
 
-        public async Task<Result<Project>> CreateProjectAsync(OptionProject options)
+        public async Task<Result<OptionProject>> CreateProjectAsync(OptionProject options)
         {
             if (options == null)
             {
-                return new Result<Project>(ErrorCode.BadRequest, "Null Options.");
+                return new Result<OptionProject>(ErrorCode.BadRequest, "Null Options.");
             }
 
             if (string.IsNullOrWhiteSpace(options.Title) || string.IsNullOrWhiteSpace(options.Description))
             {
-                return new Result<Project>(ErrorCode.BadRequest, "Not all required Project Options provided.");
+                return new Result<OptionProject>(ErrorCode.BadRequest, "Not all required Project Options provided.");
             }
 
             var project_category = Enum.IsDefined(typeof(Model.Category), options.Category);
 
             if (!project_category)
             {
-                return new Result<Project>(ErrorCode.BadRequest, "Category doesnt exist.");
+                return new Result<OptionProject>(ErrorCode.BadRequest, "Category doesnt exist.");
             }
 
             if (options.FundingGoal <= 0)
             {
-                return new Result<Project>(ErrorCode.BadRequest, "Funding goal cannot be less than or equal to zero.");
+                return new Result<OptionProject>(ErrorCode.BadRequest, "Funding goal cannot be less than or equal to zero.");
             }
 
             if (options.CurrentFund < 0)
             {
-                return new Result<Project>(ErrorCode.BadRequest, "Current fund cannot be less than or equal to zero.");
+                return new Result<OptionProject>(ErrorCode.BadRequest, "Current fund cannot be less than or equal to zero.");
             }
 
             if (options.Deadline <= options.DateCreated)
             {
-                return new Result<Project>(ErrorCode.BadRequest, "Deadline must be later than created date.");
+                return new Result<OptionProject>(ErrorCode.BadRequest, "Deadline must be later than created date.");
             }
 
+            //var newProject = options.GetProject();        // !!!!!!!!!!!!
             var newProject = new Project
             {
                 Title = options.Title,
@@ -78,32 +79,32 @@ namespace FundRaiser.Team5.Core.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return new Result<Project>(ErrorCode.InternalServerError, "Could not save Project.");
+                return new Result<OptionProject>(ErrorCode.InternalServerError, "Could not save Project.");
             }
 
-            return new Result<Project>
+            return new Result<OptionProject>
             {
-                Data = newProject
+                Data = new OptionProject(newProject)
             };
         }
 
-        public async Task<Result<Project>> GetProjectByIdAsync(int id)
+        public async Task<Result<OptionProject>> GetProjectByIdAsync(int id)
         {
             if (id <= 0)
             {
-                return new Result<Project>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+                return new Result<OptionProject>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
 
             var project = await _context.Projects.SingleOrDefaultAsync(pro => pro.ProjectId == id);
 
             if (project == null)
             {
-                return new Result<Project>(ErrorCode.BadRequest, $"Product with d #{id} not found.");
+                return new Result<OptionProject>(ErrorCode.BadRequest, $"Product with d #{id} not found.");
             }
 
-            return new Result<Project>
+            return new Result<OptionProject>
             {
-                Data = project
+                Data = new OptionProject( project)
             };
         }
         public async Task<Result<int>> DeleteProjectByIdAsync(int id)
@@ -133,13 +134,15 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
-        public async Task<Result<List<Project>>> GetProjectsAsync()
+        public async Task<Result<List<OptionProject>>> GetProjectsAsync()
         {
             var projects = await _context.Projects.ToListAsync();
+            List<OptionProject> optionProjects = new();
+            projects.ForEach(project => optionProjects.Add(new OptionProject(project)));
 
-            return new Result<List<Project>>
+            return new Result<List<OptionProject>>
             {
-                Data = projects.Count > 0 ? projects : new List<Project>()
+                Data = projects.Count > 0 ? optionProjects : new List<OptionProject>()
             };
         }
     }

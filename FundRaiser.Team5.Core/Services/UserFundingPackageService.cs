@@ -1,4 +1,4 @@
-﻿using FundRaiser.Team5.Core.Entities;
+using FundRaiser.Team5.Core.Entities;
 using FundRaiser.Team5.Core.Interfaces;
 using FundRaiser.Team5.Core.Model;
 using FundRaiser.Team5.Core.Options;

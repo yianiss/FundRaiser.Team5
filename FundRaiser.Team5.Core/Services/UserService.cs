@@ -22,17 +22,17 @@ namespace FundRaiser.Team5.Core.Services
             _logger = logger;
         }
 
-        public async Task<Result<User>> CreateUserAsync(OptionUser optionUser)
+        public async Task<Result<OptionUser>> CreateUserAsync(OptionUser optionUser)
         {
             // Validations
             if (optionUser == null)
             {
-                return new Result<User>(ErrorCode.BadRequest, "Null options.");
+                return new Result<OptionUser>(ErrorCode.BadRequest, "Null options.");
             }
 
             if (optionUser.Email == null)
             {
-                return new Result<User>(ErrorCode.BadRequest, "Email must be provided.");
+                return new Result<OptionUser>(ErrorCode.BadRequest, "Email must be provided.");
             }
             
             if (string.IsNullOrWhiteSpace(optionUser.FirstName) ||
@@ -41,14 +41,14 @@ namespace FundRaiser.Team5.Core.Services
                 string.IsNullOrWhiteSpace(optionUser.Email)
                 )
             {
-                return new Result<User>(ErrorCode.BadRequest, "Not all required customer options provided.");
+                return new Result<OptionUser>(ErrorCode.BadRequest, "Not all required customer options provided.");
             }
 
             var UserWithTheSameEmail = await _context.Users.SingleOrDefaultAsync(user => user.Email == optionUser.Email); //check the db if there is already user with the same email
 
             if(UserWithTheSameEmail != null)
             {
-                return new Result<User>(ErrorCode.Conflict, $"User with #{optionUser.Email} already exists.");
+                return new Result<OptionUser>(ErrorCode.Conflict, $"User with #{optionUser.Email} already exists.");
             }
 
             var newUser = optionUser.GetUser();
@@ -64,30 +64,32 @@ namespace FundRaiser.Team5.Core.Services
             {
                 _logger.LogError(ex.Message);
 
-                return new Result<User>(ErrorCode.InternalServerError, "Could not save user.");
+                return new Result<OptionUser>(ErrorCode.InternalServerError, "Could not save user.");
             }
 
-            return new Result<User>
+            return new Result<OptionUser>
             {
-                Data = newUser
+                Data = new OptionUser(newUser)
             };
         }
 
-        public async Task<Result<List<User>>> GetUsersAsync()
+        public async Task<Result<List<OptionUser>>> GetUsersAsync()
         {
             var users = await _context.Users.ToListAsync();
+            List<OptionUser> optionUsers = new();
+            users.ForEach(user => optionUsers.Add(new OptionUser(user)));
 
-            return new Result<List<User>>
+            return new Result<List<OptionUser>>
             {
-                Data = users.Count > 0 ? users : new List<User>()
+                Data = users.Count > 0 ? optionUsers : new List<OptionUser>()
             };
         }
 
-        public async Task<Result<User>> GetUserByIdAsync(int id)
+        public async Task<Result<OptionUser>> GetUserByIdAsync(int id)
         {
             if (id <= 0)
             {
-                return new Result<User>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+                return new Result<OptionUser>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
 
             var userById = await _context.
@@ -96,17 +98,17 @@ namespace FundRaiser.Team5.Core.Services
 
             if (userById == null)
             {
-                return new Result<User>(ErrorCode.NotFound, $"Customer with id #{id} not found.");
+                return new Result<OptionUser>(ErrorCode.NotFound, $"Customer with id #{id} not found.");
             }
 
-            return new Result<User>
+            return new Result<OptionUser>
             {
-                Data = userById
+                Data = new OptionUser (userById)
             };
         }
 
         //TODO : Search by criteria
-        public async Task<Result<User>> GetUserAsync(OptionUser optionUser) 
+        public async Task<Result<List<OptionUser>>> GetUserAsync(OptionUser optionUser) 
         {
             // Search by criteria
             List<User> users = _context.Users
@@ -118,17 +120,19 @@ namespace FundRaiser.Team5.Core.Services
             List<OptionUser> optionUsers = new List<OptionUser>();
 
             users.ForEach(user => optionUsers.Add(new OptionUser(user)));
-            return optionUsers;
+            return new Result<List<OptionUser>>
+            {
+                Data = optionUsers
+            };
         }
-
         //TODO : Implement the Update Action
-        public async Task<Result<User>> UpdateUserAsync(OptionUser optionUser, int id)
+        public async Task<Result<OptionUser>> UpdateUserAsync(OptionUser optionUser, int id)
         {
             var userToUpdate = await GetUserByIdAsync(id);
 
             if (userToUpdate.Error != null || userToUpdate.Data == null)
             {
-                return new Result<int>(ErrorCode.NotFound, $"User with id #{id} not found.");
+                return new Result<OptionUser>(ErrorCode.NotFound, $"User with id #{id} not found.");
             }
 
             userToUpdate.FirstName = optionUser.FirstName;
@@ -144,12 +148,12 @@ namespace FundRaiser.Team5.Core.Services
             {
                 _logger.LogError(ex.Message);
 
-                return new Result<int>(ErrorCode.Conflict, "Could not update user.");
+                return new Result<OptionUser>(ErrorCode.Conflict, "Could not update user.");
             }
 
-            return new Result<int>
+            return new Result<OptionUser>
             {
-                Data = id
+                Data = userToUpdate
             };
         }
 

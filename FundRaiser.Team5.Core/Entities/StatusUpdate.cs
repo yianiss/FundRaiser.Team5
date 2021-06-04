@@ -13,5 +13,6 @@ namespace FundRaiser.Team5.Core.Entities
         public DateTime TimeUploaded { get; set; } = DateTime.Now;
 
         public Project Project { get; set; }
+        public bool IsActive { get; set; }
     }
 }

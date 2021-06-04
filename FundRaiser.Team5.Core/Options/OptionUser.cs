@@ -22,22 +22,11 @@ namespace FundRaiser.Team5.Core.Options
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        public bool IsActive { get; set; }
 
         public List<FundingPackage> FundingPackages { get; set; }
 
         public List<Project> Projects { get; set; }
-
-        public User GetUser()
-        {
-            User user = new()
-            {
-                FirstName = FirstName,
-                LastName = LastName,
-                Email = Email, //Email = this.Email
-                Password = Password
-            };
-            return user;
-        }
 
         public OptionUser() { }
 
@@ -49,7 +38,21 @@ namespace FundRaiser.Team5.Core.Options
                 LastName = user.LastName;
                 Email = user.Email;
                 Password = user.Password;
+                IsActive = user.IsActive;
             }
+        }
+        
+        public User GetUser()
+        {
+            User user = new()
+            {
+                FirstName = FirstName,
+                LastName = LastName,
+                Email = Email, //Email = this.Email
+                Password = Password,
+                IsActive = true
+            };
+            return user;
         }
     }
 }

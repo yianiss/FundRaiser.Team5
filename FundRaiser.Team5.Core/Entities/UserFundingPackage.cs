@@ -18,7 +18,6 @@ namespace FundRaiser.Team5.Core.Entities
         
         [Required]
         public int Price { get; set; }
-
         public bool IsActive { get; internal set; }
     }
 }

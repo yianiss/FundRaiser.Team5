@@ -1,4 +1,4 @@
-﻿using FundRaiser.Team5.Core.Entities;
+using FundRaiser.Team5.Core.Entities;
 using FundRaiser.Team5.Core.Interfaces;
 using FundRaiser.Team5.Core.Model;
 using FundRaiser.Team5.Core.Options;
@@ -68,14 +68,12 @@ namespace FundRaiser.Team5.Services.Core.Services
                 return new Result<int>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
 
-            FundingPackage dbfundingPackage = await _context.FundingPackages.SingleOrDefaultAsync(fundingPackage => fundingPackage.FundingPackageId == fundingPackageId);
-            if (dbfundingPackage == null)
+            FundingPackage dbFundingPackage = await _context.FundingPackages.SingleOrDefaultAsync(fundingPackage => fundingPackage.FundingPackageId == fundingPackageId);
+            if (dbFundingPackage == null)
             {
                 return new Result<int>(ErrorCode.NotFound, $"FundingPackage with id #{fundingPackageId} not found.");
             }
-
-            _context.FundingPackages.Remove(dbfundingPackage);
-
+            dbFundingPackage.IsActive = false;
             try
             {
                 await _context.SaveChangesAsync();
@@ -90,7 +88,6 @@ namespace FundRaiser.Team5.Services.Core.Services
             {
                 Data = fundingPackageId
             };
-            throw new NotImplementedException();
         }
 
         public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackageAsync()

@@ -10,8 +10,7 @@ namespace FundRaiser.Team5.Core.Options
         public int FundingPackageId { get; set; }
         public DateTime CreateDate { get; set; }
         public int Price { get; set; }
-        public UserFundingPackageStatus BackerFundingPackageStatus { get; set; }
-        public UserFundingPackageStatus UserFundingPackageStatus { get; internal set; }
+        public bool IsActive { get; set; }
 
         public OptionUserFundingPackage() { }
         public OptionUserFundingPackage(UserFundingPackage userFundingPackage)
@@ -23,8 +22,7 @@ namespace FundRaiser.Team5.Core.Options
                 FundingPackageId = userFundingPackage.FundingPackage.FundingPackageId;
                 CreateDate = userFundingPackage.CreateDate;
                 Price = userFundingPackage.Price;
-                BackerFundingPackageStatus = userFundingPackage.UserFundingPackageStatus;
-
+                IsActive = userFundingPackage.IsActive;
             }
         }
 
@@ -32,10 +30,10 @@ namespace FundRaiser.Team5.Core.Options
         {
             return new UserFundingPackage
             {
-
                 UserFundingPackageId = OptionUserFundingPackageId,
                 CreateDate = DateTime.Now,
                 Price = Price,
+                IsActive = true
             };
         }
     }

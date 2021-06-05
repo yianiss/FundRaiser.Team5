@@ -214,5 +214,47 @@ namespace FundRaiser.Team5.Core.Services
                 Data = id
             };
         }
+
+        public async Task<Result<List<OptionProject>>> GetProjectsCreatedByUser(int id)
+        {
+            var dbProjects = _context.Projects;
+
+            List<Project> projectsCreatedByUser = await dbProjects.Where(pro => pro.User.UserId == id).ToListAsync();
+
+            List<OptionProject> optionProjects = new();
+
+            projectsCreatedByUser.ForEach(pro => optionProjects.Add(new OptionProject(pro)));
+
+            return new Result<List<OptionProject>>
+            {
+                Data = optionProjects.Count > 0 ? optionProjects : new List<OptionProject>()
+            };
+
+        }
+
+        public async Task<Result<List<OptionProject>>> GetProjectsFundedByUser(int id)
+        {
+            var dbUserFundingPackages = _context.UserFundingPackages;
+            var dbProjects = _context.Projects;
+
+            var packagesFundedByUser = await dbUserFundingPackages.Where(pack => pack.User.UserId == id).ToListAsync();
+
+            List<int> projectIds = packagesFundedByUser.Select(pack => pack.FundingPackage.Project.ProjectId).ToList();
+
+            List<Project> projects = new();
+
+            projectIds.ForEach(id => projects.Add(dbProjects.Find(id)));
+
+            List<OptionProject> optionProjects = new();
+
+            projects.ForEach(pro => optionProjects.Add(new OptionProject(pro)));
+
+            return new Result<List<OptionProject>>
+            {
+                Data = optionProjects.Count > 0 ? optionProjects : new List<OptionProject>()
+            };
+        }
+
+
     }
 }

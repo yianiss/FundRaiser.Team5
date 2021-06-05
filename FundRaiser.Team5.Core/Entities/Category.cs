@@ -2,8 +2,12 @@
 {
     public enum Category
     {
-        ART,
-        SCIENCE,
+        ARTS,
+        TECH,
+        FOOD,
+        GAMES,
+        MUSIC,
+        PUBLISHING,
         OTHER
     }
 }

@@ -277,5 +277,24 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
+        public async Task<Result<List<OptionProject>>> GetActiveProjectsAsync()
+        {
+            var projects = await GetProjectsAsync();
+
+            if (projects.Error != null)
+            {
+                return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
+            }
+
+            List<OptionProject> optionProjects = new();
+
+            var activeProjects = projects.Data.Where(pro => pro.IsActive).ToList();
+
+            return new Result<List<OptionProject>>
+            {
+                Data = activeProjects.Count > 0 ? activeProjects : new List<OptionProject>()
+            };
+        }
+
     }
 }

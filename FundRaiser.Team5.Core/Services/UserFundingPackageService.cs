@@ -52,6 +52,16 @@ namespace FundRaiser.Team5.Core.Services
 
             UserFundingPackage userFundingPackage = optionUserFundingPackage.GetUserFundingPackage();
 
+            // TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // Read NumberOfAvailablePackages 
+
+            //if NumberOfAvailablePackages< 0
+            // return Erro
+
+            // Update NumberOfAvailablePackages-1
+            // if Error 
+            // return Error 
+
             await _context.UserFundingPackages.AddAsync(userFundingPackage);
 
             try
@@ -74,30 +84,41 @@ namespace FundRaiser.Team5.Core.Services
 
         public async Task<Result<int>> DeleteUserFundingPackageAsync(int userFundingPackageId)
         {
-            //UserFundingPackage dbUserFundingPackage = await _context.UserFundingPackages.SingleOrDefaultAsync(UserFundingPackage => UserFundingPackage.UserFundingPackageId == UserFundingPackageId);
-            //if (dbUserFundingPackage == null)
-            //{
-            //    return new Result<int>(ErrorCode.NotFound, $"FundingPackage with id #{userFundingPackageId} not found.");
-            //}
+            if (userFundingPackageId <= 0)
+            {
+                return new Result<int>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+            }
 
-            //dbUserFundingPackage.IsActive = optionUserFundingPackage.IsActive;
+            UserFundingPackage dbUserFundingPackage = await _context.UserFundingPackages.SingleOrDefaultAsync(userFundingPackage => userFundingPackage.UserFundingPackageId == userFundingPackageId);
+            if (dbUserFundingPackage == null)
+            {
+                return new Result<int>(ErrorCode.NotFound, $"FundingPackage with id #{userFundingPackageId} not found.");
+            }
+            dbUserFundingPackage.IsActive = false;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new Result<int>(ErrorCode.InternalServerError, "Could not delete customer.");
+            }
 
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex.Message);
-            //    return new Result<int>(ErrorCode.InternalServerError, "Could not Delete UserFundingPackage.");
-            //}
+            return new Result<int>
+            {
+                Data = userFundingPackageId
+            };
+        }
 
-            //return new Result<int>
-            //{
-            //    Data = 1
-            //};
-            return new Result<int>();
-            throw new NotImplementedException();
+        public async Task<Result<int>> GetTotalPriceByProjectId(int projectId)
+        {
+            var totalFunds =  await _context.UserFundingPackages.Where(userFundingPackage => userFundingPackage.FundingPackage.Project.ProjectId == projectId).Select(priice=> priice.Price).SumAsync();
+
+            return new Result<int>
+            {
+                Data = totalFunds
+            };
         }
 
         public async Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackageAsync()

@@ -18,5 +18,7 @@ namespace FundRaiser.Team5.Core.Services
         public Task<Result<OptionUserFundingPackage>> UpdateUserFundingPackageAsync(int userFundingPackageId, OptionUserFundingPackage optionUserFundingPackage);
 
         public Task<Result<int>> DeleteUserFundingPackageAsync(int userFundingPackageId);
+
+        public Task<Result<int>> GetTotalPriceByProjectId(int projectId);
     }
 }

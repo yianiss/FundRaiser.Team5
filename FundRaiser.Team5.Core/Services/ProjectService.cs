@@ -177,7 +177,8 @@ namespace FundRaiser.Team5.Core.Services
 
             var projectsBySearch = projects.Data.Where(pro => pro.Title.Contains(search)).ToList()
                 .Union
-                (projects.Data.Where(pro => pro.Description.Contains(search)).ToList()).ToList();
+                (projects.Data.Where(pro => pro.Description.Contains(search)).ToList()).ToList()
+                .Union(projects.Data.Where(pro => pro.IsActive).ToList()).ToList();
 
             return new Result<List<OptionProject>>
             {

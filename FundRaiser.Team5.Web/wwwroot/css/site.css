@@ -1,6 +1,33 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+@import url("https://fonts.googleapis.com/css?family=Acme|Lobster|Patua+One|Rubik|Sniglet");
+@import url('https://fonts.googleapis.com/css?family=Comfortaa&display=swap&subset=greek');
+
+* {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "PF Din Text Universal ";
+    src: url("../fonts/PFDinTextUniversal.eot"); /* IE9*/
+    src: url("../fonts/PFDinTextUniversal.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("../fonts/PFDinTextUniversal.woff2") format("woff2"), /* chromeγ€firefox */
+    url("../fonts/PFDinTextUniversal.woff") format("woff"), /* chromeγ€firefox */
+    url("../fonts/PFDinTextUniversal.ttf") format("truetype"), /* chromeγ€firefoxγ€operaγ€Safari, Android, iOS 4.2+*/
+    url("../fonts/PFDinTextUniversal.svg#PF Din Text Universal Medium") format("svg"); /* iOS 4.1- */
+}
+
+
+
+:root {
+    --Sniglet-font: "Sniglet", cursive;
+    --Rubik: "Rubik", cursive;
+    --Patua: "Patua One", cursive;
+    --Lobster: "lobster", cursive;
+}
+
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -9,8 +36,22 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+  color: cornsilk;
 }
+
+.navbar-brand 
+{
+    float: left;
+    padding-right: 2rem;
+}
+
+.navbar-nav >li
+{
+    margin-left:1rem;
+    margin-right:1rem;
+}
+
+
 
 .btn-primary {
   color: #fff;
@@ -18,10 +59,16 @@ a {
   border-color: #1861ac;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.nav-link:hover 
+{
+    color: #f3ca20;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link
+{
+    color: #f3ca20;
+    background-color: #f3ca20;
+    border-color: #f3ca20;
 }
 
 /* Sticky footer styles
@@ -68,4 +115,12 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+.mainForm {
+    position: center;
+    border-radius: 2em;
+    background: #f3ca20;
+    padding:30px;
+    font-weight:bold;
 }

@@ -177,7 +177,8 @@ namespace FundRaiser.Team5.Core.Services
 
             var projectsBySearch = projects.Data.Where(pro => pro.Title.Contains(search)).ToList()
                 .Union
-                (projects.Data.Where(pro => pro.Description.Contains(search)).ToList()).ToList();
+                (projects.Data.Where(pro => pro.Description.Contains(search)).ToList()).ToList()
+                .Union(projects.Data.Where(pro => pro.IsActive).ToList()).ToList();
 
             return new Result<List<OptionProject>>
             {
@@ -274,6 +275,25 @@ namespace FundRaiser.Team5.Core.Services
             return new Result<OptionProject>
             {
                 Data = optionProject
+            };
+        }
+
+        public async Task<Result<List<OptionProject>>> GetActiveProjectsAsync()
+        {
+            var projects = await GetProjectsAsync();
+
+            if (projects.Error != null)
+            {
+                return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
+            }
+
+            List<OptionProject> optionProjects = new();
+
+            var activeProjects = projects.Data.Where(pro => pro.IsActive).ToList();
+
+            return new Result<List<OptionProject>>
+            {
+                Data = activeProjects.Count > 0 ? activeProjects : new List<OptionProject>()
             };
         }
 

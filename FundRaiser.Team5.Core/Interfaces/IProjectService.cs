@@ -15,6 +15,7 @@ namespace FundRaiser.Team5.Core.Interfaces
         Task<Result<OptionProject>> EditProjectAsync(int projectId, OptionProject options);
         Task<Result<List<OptionProject>>> GetProjectsByCategory(Category category);
         Task<Result<List<OptionProject>>> GetProjectsBySearch(string search);
+        Task<Result<List<OptionProject>>> GetActiveProjectsAsync();
         Task<Result<OptionProject>> EditProjectAsync(int projectId, decimal options);
 
     }

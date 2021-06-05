@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using FundRaiser.Team5.Core.Model;
 using FundRaiser.Team5.Core.Entities;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace FundRaiser.Team5.Core.Services
 {
@@ -147,5 +148,42 @@ namespace FundRaiser.Team5.Core.Services
                 Data = projects.Count > 0 ? optionProjects : new List<OptionProject>()
             };
         }
+
+        public async Task<Result<List<OptionProject>>> GetProjectsByCategory(Category category)
+        {
+            var projects = await GetProjectsAsync();
+
+            if (projects.Error != null)
+            {
+                return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
+            }
+
+            var projectsByCategory = projects.Data.Where(pro => pro.Category == category).ToList();
+
+            return new Result<List<OptionProject>>
+            {
+                Data = projectsByCategory.Count > 0 ? projectsByCategory : new List<OptionProject>()
+            };
+        }
+
+        public async Task<Result<List<OptionProject>>> GetProjectsBySearch(string search)
+        {
+            var projects = await GetProjectsAsync();
+
+            if (projects.Error != null)
+            {
+                return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
+            }
+
+            var projectsBySearch = projects.Data.Where(pro => pro.Title.Contains(search)).ToList()
+                .Union
+                (projects.Data.Where(pro => pro.Description.Contains(search)).ToList()).ToList();
+
+            return new Result<List<OptionProject>>
+            {
+                Data = projectsBySearch.Count > 0 ? projectsBySearch : new List<OptionProject>()
+            };
+        }
+
     }
 }

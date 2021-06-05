@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using FundRaiser.Team5.Core.Model;
 using FundRaiser.Team5.Core.Entities;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace FundRaiser.Team5.Core.Services
 {
@@ -147,5 +148,134 @@ namespace FundRaiser.Team5.Core.Services
                 Data = projects.Count > 0 ? optionProjects : new List<OptionProject>()
             };
         }
+
+        public async Task<Result<List<OptionProject>>> GetProjectsByCategory(Category category)
+        {
+            var projects = await GetProjectsAsync();
+
+            if (projects.Error != null)
+            {
+                return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
+            }
+
+            var projectsByCategory = projects.Data.Where(pro => pro.Category == category).ToList();
+
+            return new Result<List<OptionProject>>
+            {
+                Data = projectsByCategory.Count > 0 ? projectsByCategory : new List<OptionProject>()
+            };
+        }
+
+        public async Task<Result<List<OptionProject>>> GetProjectsBySearch(string search)
+        {
+            var projects = await GetProjectsAsync();
+
+            if (projects.Error != null)
+            {
+                return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
+            }
+
+            var projectsBySearch = projects.Data.Where(pro => pro.Title.Contains(search)).ToList()
+                .Union
+                (projects.Data.Where(pro => pro.Description.Contains(search)).ToList()).ToList();
+
+            return new Result<List<OptionProject>>
+            {
+                Data = projectsBySearch.Count > 0 ? projectsBySearch : new List<OptionProject>()
+            };
+        }
+
+        public async Task<Result<OptionProject>> EditProjectAsync(int projectId, OptionProject options)
+        {
+            var dbProjects = _context.Projects;
+
+            Project ProjectToEdit = await dbProjects.FindAsync(projectId);
+
+
+            if (ProjectToEdit == null)
+            {
+                return new Result<OptionProject>(ErrorCode.NotFound, $"Project with ID={projectId} not found");
+            }
+
+            if (options == null)
+            {
+                return new Result<OptionProject>(ErrorCode.BadRequest, "Project option is null");
+            }
+
+            if (string.IsNullOrWhiteSpace(options.Title) || string.IsNullOrWhiteSpace(options.Description))
+            {
+                return new Result<OptionProject>(ErrorCode.BadRequest, $"Project requires a title, a description, a deadline, a funding goal!");
+            }
+
+            ProjectToEdit.Title = options.Title;
+            ProjectToEdit.Deadline = options.Deadline;
+            ProjectToEdit.FundingPackages = options.FundingPackages;
+            ProjectToEdit.FundingGoal = options.FundingGoal;
+            ProjectToEdit.Images = options.Images;
+            ProjectToEdit.Videos = options.Videos;
+            ProjectToEdit.Description = options.Description;
+
+
+            OptionProject optionProject = new(ProjectToEdit);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return new Result<OptionProject>(ErrorCode.InternalServerError, "Could not update project.");
+            }
+
+            return new Result<OptionProject>
+            {
+                Data = optionProject
+            };
+        }
+
+        public async Task<Result<OptionProject>> EditProjectAsync(int projectId, decimal price)
+        {
+            var dbProjects = _context.Projects;
+
+            Project ProjectToEdit = await dbProjects.FindAsync(projectId);
+
+
+            if (ProjectToEdit == null)
+            {
+                return new Result<OptionProject>(ErrorCode.NotFound, $"Project with ID={projectId} not found");
+            }
+
+            if (price <= 0)
+            {
+                return new Result<OptionProject>(ErrorCode.BadRequest, "Price is zero or negative");
+            }
+
+
+            ProjectToEdit.CurrentFund += price;
+
+
+            OptionProject optionProject = new(ProjectToEdit);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return new Result<OptionProject>(ErrorCode.InternalServerError, "Could not update project.");
+            }
+
+            return new Result<OptionProject>
+            {
+                Data = optionProject
+            };
+        }
+
     }
 }

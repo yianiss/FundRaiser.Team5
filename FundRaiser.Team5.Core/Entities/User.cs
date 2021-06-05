@@ -19,5 +19,7 @@ namespace FundRaiser.Team5.Core.Entities
         public List<Project> Projects { get; set; }
        
         public bool IsActive { get; set; }
+
+        public bool IsLoggedIn { get; set; }
     }
 }

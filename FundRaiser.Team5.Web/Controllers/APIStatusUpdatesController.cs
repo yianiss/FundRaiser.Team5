@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FundRaiser.Team5.Core.Entities;
-using FundRaiser.Team5.Persistence;
 using FundRaiser.Team5.Core.Interfaces;
 using FundRaiser.Team5.Core.Options;
 

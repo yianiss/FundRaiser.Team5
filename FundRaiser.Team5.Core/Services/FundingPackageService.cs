@@ -232,10 +232,23 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
-        public Result<List<OptionFundingPackage>> ReadFundingPackagesByProjectIdAsync(int projectId)
+        public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesByProjectIdAsync(int projectId)
         {
+            if (projectId <= 0)
+            {
+                return new Result<List<OptionFundingPackage>>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+            }
 
-            throw new NotImplementedException();
+            List<FundingPackage> dbFundingPackages = await _context.FundingPackages.Where(fundingPackage => fundingPackage.Project.ProjectId == projectId).ToListAsync(); ;
+
+            List<OptionFundingPackage> optionFundingPackages = new();
+
+            dbFundingPackages.ForEach(fundingPackage => optionFundingPackages.Add(new OptionFundingPackage(fundingPackage)));
+
+            return new Result<List<OptionFundingPackage>>
+            {
+                Data = optionFundingPackages
+            };
         }
 
         public async  Task<Result<OptionFundingPackage>> UpdateFundingPackageAsync(int fundingPackageId, OptionFundingPackage optionFundingPackage)

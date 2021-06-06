@@ -26,6 +26,8 @@ namespace FundRaiser.Team5.Core.Options
 
         public bool IsActive { get; set; }
 
+        public bool IsLoggedIn { get; set; }
+
         public List<FundingPackage> FundingPackages { get; set; }
 
         public List<Project> Projects { get; set; }
@@ -42,6 +44,7 @@ namespace FundRaiser.Team5.Core.Options
                 Email = user.Email;
                 Password = user.Password;
                 IsActive = user.IsActive;
+                IsLoggedIn = user.IsLoggedIn;
             }
         }
         
@@ -53,7 +56,8 @@ namespace FundRaiser.Team5.Core.Options
                 LastName = LastName,
                 Email = Email,
                 Password = Password,
-                IsActive = true
+                IsActive = true,
+                IsLoggedIn = false
             };
 
             return user;

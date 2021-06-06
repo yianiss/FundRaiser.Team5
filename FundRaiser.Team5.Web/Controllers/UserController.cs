@@ -17,8 +17,9 @@ namespace FundRaiser.Team5.Web.Controllers
 
         // GET: UserController
         public async Task<IActionResult> Index()
-        {             
-            return View(await _userService.GetUsersAsync());
+        {
+            var optionUser = await _userService.GetUsersAsync();
+            return View(optionUser.Data);
         }
 
         // GET: UserController/Details/5

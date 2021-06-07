@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+   
 }
 
 @section Stylesheet {
@@ -7,16 +8,56 @@
     <link rel="stylesheet" href="~/css/index/index.css" />
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to Fundraiser</h1>
-    <p>Explore the projects</p>
+<!-- Header with full-height image -->
+<div class="jumbotron text-center" style="color:white; margin-top:0rem;">
+    <h1 style="font-size:80px; margin-top: 10rem;"> Fundraiser Team 5</h1>
+</div>
+<div class="container-fluid text-center">
 
+    <h2>Categories</h2>
+    <h4>Explore Below</h4>
+    <br>
+    <div class="row">
+        <br><br>
+        @foreach (string todo in Enum.GetNames(typeof(FundRaiser.Team5.Core.Entities.Category)))
+        {
+            <div class="col-sm-4">
+                <div class="box">
+                    @if (todo == "ARTS")
+                    {<span> <i class="fa fa-paint-brush" style="font-size:48px;"></i></span>}
+                    else if (todo == "TECH")
+                    {<span> <i class="fa fa-microchip" style="font-size:48px;"></i></span>}
+                    else if (todo == "FOOD")
+                    {<span> <i class="fa fa-beer" style="font-size:48px;"></i></span>}
+                    else if (todo == "GAMES")
+                    {<span> <i class="fa fa-gamepad" style="font-size:48px;"></i></span>}
+                    else if (todo == "MUSIC")
+                    {<span> <i class="fa fa-music" style="font-size:48px;"></i></span>}
+                    else if (todo == "PUBLISHING")
+                    {<span> <i class="fa fa-book" style="font-size:48px;"></i></span>}
+                    else if (todo == "OTHER")
+                    {<span> <i class="fa fa-paper-plane" style="font-size:48px;"></i></span>}
+                    <h3>@todo</h3>
+                    <input type="button" class="btn btn-secondary" value=Explore onclick="location.href='@Url.Action("GetProjectsByCategory","ProjectController", new { category = @todo })'" />
+                </div>
+            </div>
+            <br>
+
+
+        }
+        <br><br>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
 
 </div>
-
 
 @section Scripts
     {
     <script src="~/js/index/index.js" asp-append-version="true"></script>
 
 }
+

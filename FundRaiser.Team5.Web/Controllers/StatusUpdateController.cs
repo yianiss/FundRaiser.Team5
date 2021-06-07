@@ -94,7 +94,7 @@ namespace FundRaiser.Team5.Web.Controllers
         }
 
         //GET: project/id/StatusUpdate/id/update
-        public async Task<IActionResult> Update(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -114,11 +114,12 @@ namespace FundRaiser.Team5.Web.Controllers
         // POST: project/id/StatusUpdate/id/edit
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateConfirmed([Bind("Id,Title,Text")] OptionStatusUpdate optionStatusUpdate)
+        public async Task<IActionResult> EditConfirmed([Bind("Id,Title,Text")] OptionStatusUpdate optionStatusUpdate)
         {
             await _statusUpdateService.EditStatusUpdateAsync(optionStatusUpdate.StatusUpdateId, optionStatusUpdate);
 
             return RedirectToAction(nameof(Index));
         }
+
     }  
 }

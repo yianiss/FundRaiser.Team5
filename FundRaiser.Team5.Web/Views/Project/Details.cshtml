@@ -2,6 +2,15 @@
 
 @{
     ViewData["Title"] = "Details";
+    if (User.Identity.IsAuthenticated)
+    {
+        Layout = "_LayoutLoggedIn";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
+}
 }
 
 <h1>Details</h1>

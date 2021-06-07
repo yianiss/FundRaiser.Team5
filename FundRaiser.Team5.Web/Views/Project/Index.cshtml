@@ -1,6 +1,15 @@
 ﻿@model IEnumerable<FundRaiser.Team5.Core.Options.OptionProject>
 @{
     ViewData["Title"] = "Project";
+    if (User.Identity.IsAuthenticated)
+    {
+        Layout = "__LayoutLoggedIn";
+    }
+    else
+    {
+        Layout = "__Layout";
+    }
+}
 }
 
 <p>
@@ -36,35 +45,109 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.FundingGoal)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FundingGoal)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Videos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Images)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Deadline)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
-            </td>
-        </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Videos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Images)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deadline)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
+@section Scripts
+{
+    <script>
+        const uri = 'Project';
+
+        function getProject()
+        {
+            fetch(`${uri}/Get`)
+                .then(response => response.json())
+                .then(data => _displayProject(data))
+                .catch(error => console.error('Unable to get Project.', error));
+        }
+
+        function deleteProject(id) {
+            fetch(`${uri}/Delete/${id}`, {
+                method: 'DELETE'
+            })
+                .then(() => getProjec())
+                .catch(error => console.error('Unable to delete Project.', error));
+        }
+
+        function _displayProject(data) {
+            const tBody = document.getElementById('Project');
+            tBody.innerHTML = '';
+
+            const anchorElement = document.createElement('a');
+
+            data.forEach(item => {
+                let detailsAnchor = anchorElement.cloneNode(false);
+                detailsAnchor.innerText = 'Details';
+                detailsAnchor.setAttribute('href', `${uri}/Details/${item.OptionProjectId}`);
+
+                let deleteAnchor = anchorElement.cloneNode(false);
+                deleteAnchor.innerText = 'Delete';
+                deleteAnchor.setAttribute('onclick', `deleteProject(${item.OptionProjectId})`);
+                deleteAnchor.setAttribute('href', 'javascript:void(0)');
+
+                let tr = tBody.insertRow();
+
+                let td1 = tr.insertCell(0);
+                let projectIdNode = document.createTextNode(item.ProjectId);
+                td1.appendChild(projectIdNode);
+
+                let td2 = tr.insertCell(1);
+                let titleNode = document.createTextNode(item.Title);
+                td2.appendChild(titleNode);
+
+                let td3 = tr.insertCell(2);
+                let descriptionNode = document.createTextNode(item.Description);
+                td3.appendChild(descriptionNode);
+
+                let td3 = tr.insertCell(3);
+                let category = document.createTextNode(item.Category);
+                td3.appendChild(category);
+
+                let td3 = tr.insertCell(4);
+                let fundingGoal = document.createTextNode(item.FundingGoal);
+                td3.appendChild(fundingGoal);
+
+                let td4 = tr.insertCell(5);
+                let deadline = document.createTextNode(item.Deadline);
+                td4.appendChild(deadline);
+
+                let td5 = tr.insertCell(6);
+                td5.appendChild(detailsAnchor);
+
+                let td6 = tr.insertCell(7);
+                td6.appendChild(deleteAnchor);
+            });
+        }
+    </script>
+}

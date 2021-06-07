@@ -1,5 +1,7 @@
 ﻿using FundRaiser.Team5.Core.Interfaces;
 using FundRaiser.Team5.Core.Services;
+using FundRaiser_Team5.Interfaces;
+using FundRaiser_Team5.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FundRaiser.Team5.Core
@@ -17,6 +19,10 @@ namespace FundRaiser.Team5.Core
             services.AddScoped<IUserFundingPackageService, UserFundingPackageService>();
 
             services.AddScoped<IFundingPackageService, FundingPackageService>();
+
+            services.AddScoped<IImagePathService, ImagePathService>();
+
+            services.AddScoped<IVideoPathService, VideoPathService>();
 
             return services;
         }

@@ -4,6 +4,11 @@
     {
         public int ImagePathId { get; set; }
 
+        public Project Project { get; set; }
+
         public string Image { get; set; }
+
     }
+
+ 
 }

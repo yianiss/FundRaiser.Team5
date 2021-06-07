@@ -9,10 +9,12 @@ namespace FundRaiser.Team5.Web.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+        private readonly IProjectService _projectService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IProjectService projectService)
         {
             _userService = userService;
+            _projectService = projectService;
         }
 
         // GET: UserController
@@ -20,6 +22,9 @@ namespace FundRaiser.Team5.Web.Controllers
         {
             var optionUser = await _userService.GetUsersAsync();
             return View(optionUser.Data);
+        }
+
+            return View(users.Data);
         }
 
         // GET: UserController/Details/5
@@ -32,12 +37,12 @@ namespace FundRaiser.Team5.Web.Controllers
 
             var user = await _userService.GetUserByIdAsync(id.Value);
 
-            if (user == null)
+            if (user.Error!= null || user.Data == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(user.Data);
         }
 
         // GET: Controller/Create
@@ -53,13 +58,19 @@ namespace FundRaiser.Team5.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _userService.CreateUserAsync(new OptionUser
+
+                var user = await _userService.CreateUserAsync(new OptionUser
                 {
                     FirstName = optionUser.FirstName,
                     LastName = optionUser.LastName,
                     Email = optionUser.Email,
                     Password = optionUser.Password
                 });
+
+                if(user.Error != null || user.Data == null)
+                {
+                    return NotFound();
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -97,12 +108,12 @@ namespace FundRaiser.Team5.Web.Controllers
 
             var user = await _userService.GetUserByIdAsync(id.Value);
 
-            if (user == null)
+            if (user.Error!= null || user.Data == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(user.Data);
         }
 
         // POST: UserController/Delete/5
@@ -114,6 +125,52 @@ namespace FundRaiser.Team5.Web.Controllers
 
             return RedirectToAction(nameof(Index));
 
+        }
+
+        // GET: Controller/LogIn
+        public ActionResult LogIn()
+        {
+            return View();
+        }
+
+        // POST: UserController/LogIn
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogIn([Bind("Email,Password")] OptionUser optionUser)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userService.GetLoggedInUser(new OptionUser
+                {
+                    Email = optionUser.Email,
+                    Password = optionUser.Password
+                });
+
+                if(user.Error !=null || user.Data == null)
+                {
+                    return NotFound();
+                }
+
+                return RedirectToAction("Index","ProjectController");
+            }
+            return View();
+        }
+
+
+        public async Task<ActionResult> LogOut([Bind("Id")] int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _userService.LogOutUser(id.Value);
+
+                return RedirectToAction("Index", "ProjectController");
+            }
+            return View();
         }
     }
 }

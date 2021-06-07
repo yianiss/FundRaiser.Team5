@@ -233,9 +233,11 @@ namespace FundRaiser.Team5.Persistence.Migrations
 
             modelBuilder.Entity("FundRaiser.Team5.Core.Entities.ImagePath", b =>
                 {
-                    b.HasOne("FundRaiser.Team5.Core.Entities.Project", null)
+                    b.HasOne("FundRaiser.Team5.Core.Entities.Project", "Project")
                         .WithMany("Images")
                         .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("FundRaiser.Team5.Core.Entities.Project", b =>
@@ -273,9 +275,11 @@ namespace FundRaiser.Team5.Persistence.Migrations
 
             modelBuilder.Entity("FundRaiser.Team5.Core.Entities.VideoPath", b =>
                 {
-                    b.HasOne("FundRaiser.Team5.Core.Entities.Project", null)
+                    b.HasOne("FundRaiser.Team5.Core.Entities.Project", "Project")
                         .WithMany("Videos")
                         .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("FundRaiser.Team5.Core.Entities.FundingPackage", b =>

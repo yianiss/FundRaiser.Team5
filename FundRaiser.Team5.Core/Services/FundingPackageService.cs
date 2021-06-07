@@ -232,6 +232,20 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
+        public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesAsync()
+        {
+            var fundingPackages = await _context.FundingPackages.ToListAsync();
+
+            List<OptionFundingPackage> optionFundingPackages = new();
+
+            fundingPackages.ForEach(fun => optionFundingPackages.Add(new OptionFundingPackage(fun)));
+
+            return new Result<List<OptionFundingPackage>>
+            {
+                Data = optionFundingPackages.Count > 0 ? optionFundingPackages : new List<OptionFundingPackage>()
+            };
+        }
+
         public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesByProjectIdAsync(int projectId)
         {
             if (projectId <= 0)
@@ -239,15 +253,19 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<List<OptionFundingPackage>>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
             }
 
-            List<FundingPackage> dbFundingPackages = await _context.FundingPackages.Where(fundingPackage => fundingPackage.Project.ProjectId == projectId).ToListAsync(); ;
+            var dbFundingPackages = _context.FundingPackages;
 
-            List<OptionFundingPackage> optionFundingPackages = new();
+            var fundingpackages = await dbFundingPackages
+                .Where(fun => fun.Project.ProjectId == projectId)
+                .OrderBy(fun => fun.MinPrice).ToListAsync();
 
-            dbFundingPackages.ForEach(fundingPackage => optionFundingPackages.Add(new OptionFundingPackage(fundingPackage)));
+            var optionFundingPackages = new List<OptionFundingPackage>();
+
+            fundingpackages.ForEach(fun => optionFundingPackages.Add(new(fun)));
 
             return new Result<List<OptionFundingPackage>>
             {
-                Data = optionFundingPackages
+                Data = optionFundingPackages.Count > 0 ? optionFundingPackages : new List<OptionFundingPackage>()
             };
         }
 
@@ -285,9 +303,6 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
-        Task<Result<List<OptionFundingPackage>>> IFundingPackageService.ReadFundingPackagesByProjectIdAsync(int projectId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

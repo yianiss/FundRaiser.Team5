@@ -21,7 +21,7 @@ namespace FundRaiser.Team5.Web.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var allFundingPackagesResult = await _fundingPackageService.ReadFundingPackageAsync();
+            var allFundingPackagesResult = await _fundingPackageService.ReadFundingPackagesAsync();
 
             //return View(allFundingPackagesResult;
             return View(allFundingPackagesResult.Data);
@@ -72,7 +72,7 @@ namespace FundRaiser.Team5.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var allFundingPackageServiceResult = await _fundingPackageService.ReadFundingPackageAsync();
+            var allFundingPackageServiceResult = await _fundingPackageService.ReadFundingPackagesAsync();
 
             return Ok(allFundingPackageServiceResult.Data);
         }

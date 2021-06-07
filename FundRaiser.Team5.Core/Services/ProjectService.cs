@@ -66,6 +66,8 @@ namespace FundRaiser.Team5.Core.Services
 
             var newProject = optionProject.GetProject();
 
+            newProject.User = dbUser;
+
             await _context.Projects.AddAsync(newProject);
 
             try
@@ -117,6 +119,10 @@ namespace FundRaiser.Team5.Core.Services
 
             projectToDelete.Data.IsActive = false;
 
+            var dbproject = _context.Projects;
+            var project = dbproject.Find(id);
+            project.IsActive = false;
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -149,7 +155,7 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
-        public async Task<Result<List<OptionProject>>> GetProjectsByCategory(Category category)
+        public async Task<Result<List<OptionProject>>> GetProjectsByCategory(OptionProject optionProject)
         {
             var projects = await GetProjectsAsync();
 
@@ -158,7 +164,12 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
             }
 
-            var projectsByCategory = projects.Data.Where(pro => pro.Category == category).ToList();
+            if (optionProject.Category == 0)
+            {
+                return new Result<List<OptionProject>>(ErrorCode.BadRequest, "Category Required");
+            }
+
+            var projectsByCategory = projects.Data.Where(pro => pro.Category == optionProject.Category).ToList();
 
             return new Result<List<OptionProject>>
             {
@@ -287,13 +298,62 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
             }
 
-            List<OptionProject> optionProjects = new();
-
             var activeProjects = projects.Data.Where(pro => pro.IsActive).ToList();
 
             return new Result<List<OptionProject>>
             {
                 Data = activeProjects.Count > 0 ? activeProjects : new List<OptionProject>()
+            };
+        }
+
+        public async Task<Result<List<OptionProject>>> GetActiveMostFundedProjectsAsync()
+        {
+            int maxNumberOfProjectsShown = 5;
+
+            var projects = await GetProjectsAsync();
+
+            if (projects.Error != null)
+            {
+                return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
+            }
+
+            var activeProjects = projects.Data.Where(pro => pro.IsActive).ToList();
+
+            var percentageFundingList = new List<decimal>();
+
+            for(int i=0; i < activeProjects.Count(); i++)
+            {
+                percentageFundingList.Add(activeProjects[i].CurrentFund / activeProjects[i].FundingGoal * 100);
+            }
+
+            var sorted = percentageFundingList
+              .Select((x, i) => new KeyValuePair<decimal, int>(x, i))
+              .OrderByDescending(x => x.Key)
+              .ToList();
+
+            List<int> index = sorted.Select(x => x.Value).ToList();
+
+            List<OptionProject> orderedProjects = new();
+
+            if(orderedProjects.Count() < maxNumberOfProjectsShown)
+            {
+                for(int i = 0; i < orderedProjects.Count() ; i++)
+                {
+                    orderedProjects.Add(activeProjects[i]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < maxNumberOfProjectsShown; i++)
+                {
+                    orderedProjects.Add(activeProjects[i]);
+                }
+            }
+
+
+            return new Result<List<OptionProject>>
+            {
+                Data = orderedProjects.Count > 0 ? orderedProjects : new List<OptionProject>()
             };
         }
 

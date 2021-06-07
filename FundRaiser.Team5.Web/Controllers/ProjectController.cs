@@ -4,13 +4,16 @@ using System.Threading.Tasks;
 using FundRaiser.Team5.Core.Interfaces;
 using FundRaiser.Team5.Core.Options;
 using FundRaiser.Team5.Core.Entities;
+using FundRaiser.Team5.Core.Services;
+using Microsoft.AspNetCore.Hosting;
 
 namespace FundRaiserMVC.Controllers
 {
     public class ProjectController : Controller
     {
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IProjectService _projectService;
-
+        
         public ProjectController(IProjectService projectService)
         {
             _projectService = projectService;
@@ -43,10 +46,14 @@ namespace FundRaiserMVC.Controllers
             return View();
         }
 
+       
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProjectId,Title,Category,Description,FundingPackages,Images,Videos,StatusUpdates,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] Project project)
         {
+
             if (ModelState.IsValid)
             {
                 await _projectService.CreateProjectAsync(new OptionProject
@@ -68,12 +75,13 @@ namespace FundRaiserMVC.Controllers
 
                 });
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create","FundingPackage");
             }
             return View();
         }
 
-        public ActionResult Edit(int id)
+       
+public ActionResult Edit(int id)
         {
             return View();
         }
@@ -120,4 +128,5 @@ namespace FundRaiserMVC.Controllers
         }
     
     }
+
 }

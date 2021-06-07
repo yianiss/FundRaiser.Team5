@@ -4,123 +4,97 @@ for details on configuring this project to bundle and minify static web assets. 
 @import url("https://fonts.googleapis.com/css?family=Acme|Lobster|Patua+One|Rubik|Sniglet");
 @import url('https://fonts.googleapis.com/css?family=Comfortaa&display=swap&subset=greek');
 
-* {
-    box-sizing: border-box;
+.jumbotron 
+{
+    background-repeat: no-repeat;
+    background-size:cover;
+    height:100vh;
+    width:100%;
+    margin:auto;
+    background-position: center;
+    background-image: url(https://freellustrustrations.s3.us-east-2.amazonaws.com/free-images/freeimg_45074996043freejpg850.jpg);
 }
 
-@font-face {
-    font-family: "PF Din Text Universal ";
-    src: url("../fonts/PFDinTextUniversal.eot"); /* IE9*/
-    src: url("../fonts/PFDinTextUniversal.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
-    url("../fonts/PFDinTextUniversal.woff2") format("woff2"), /* chromeγ€firefox */
-    url("../fonts/PFDinTextUniversal.woff") format("woff"), /* chromeγ€firefox */
-    url("../fonts/PFDinTextUniversal.ttf") format("truetype"), /* chromeγ€firefoxγ€operaγ€Safari, Android, iOS 4.2+*/
-    url("../fonts/PFDinTextUniversal.svg#PF Din Text Universal Medium") format("svg"); /* iOS 4.1- */
+.textHome
+{
+    position:absolute;
+    color:white;
+    bottom:2rem;
 }
-
-
-
-:root {
-    --Sniglet-font: "Sniglet", cursive;
-    --Rubik: "Rubik", cursive;
-    --Patua: "Patua One", cursive;
-    --Lobster: "lobster", cursive;
-}
-
-
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
-
-/* Provide sufficient contrast against white background */
-a {
-  color: cornsilk;
-}
-
-.navbar-brand 
-{
-    float: left;
-    padding-right: 2rem;
-}
-
-.navbar-nav >li
-{
-    margin-left:1rem;
-    margin-right:1rem;
-}
-
-
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
-.nav-link:hover 
-{
-    color: #f3ca20;
+.box {
+    border: 5px solid black;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: #6eebff;
 }
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link
-{
-    color: #f3ca20;
-    background-color: #f3ca20;
-    border-color: #f3ca20;
-}
-
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+button.accept-policy 
+{
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }
 
 .mainForm {
     position: center;
     border-radius: 2em;
     background: #f3ca20;
-    padding:30px;
-    font-weight:bold;
+    padding: 30px;
+    font-weight: bold;
 }
+
+

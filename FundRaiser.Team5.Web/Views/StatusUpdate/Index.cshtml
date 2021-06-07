@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+   
 }
 
 <h1>Status Update Index</h1>
@@ -44,4 +45,66 @@
             </tr>
         }
     </tbody>
- </table>
+</table>
+
+@section Scripts
+{
+    <script>
+        const uri = 'Status Update';
+
+        function getStatusUpdate()
+        {
+            fetch(`${uri}/Get`)
+                .then(response => response.json())
+                .then(data => _displayStatusUpdate(data))
+                .catch(error => console.error('Unable to get StatusUpdate.', error));
+        }
+
+        function deleteStatusUpdate(id) {
+            fetch(`${uri}/Delete/${id}`, {
+                method: 'DELETE'
+            })
+                .then(() => getProjec())
+                .catch(error => console.error('Unable to delete StatusUpdate.', error));
+        }
+
+        function _displayStatusUpdate(data) {
+            const tBody = document.getElementById('StatusUpdate');
+            tBody.innerHTML = '';
+
+            const anchorElement = document.createElement('a');
+
+            data.forEach(item =>
+            {
+                let detailsAnchor = anchorElement.cloneNode(false);
+                detailsAnchor.innerText = 'Details';
+                detailsAnchor.setAttribute('href', `${uri}/Details/${item.OptionStatusUpdateId}`);
+
+                let deleteAnchor = anchorElement.cloneNode(false);
+                deleteAnchor.innerText = 'Delete';
+                deleteAnchor.setAttribute('onclick', `deleteProject(${item.OptionStatusUpdateId})`);
+                deleteAnchor.setAttribute('href', 'javascript:void(0)');
+
+                let tr = tBody.insertRow();
+
+                let td1 = tr.insertCell(0);
+                let statusUpdateIdNode = document.createTextNode(item.StatusUpdateId);
+                td1.appendChild(statusUpdateIdNode);
+
+                let td2 = tr.insertCell(1);
+                let titleNode = document.createTextNode(item.Title);
+                td2.appendChild(titleNode);
+
+                let td3 = tr.insertCell(2);
+                let textNode = document.createTextNode(item.Text);
+                td3.appendChild(textNode);
+
+                let td4 = tr.insertCell(4);
+                td4.appendChild(detailsAnchor);
+
+                let td5 = tr.insertCell(5);
+                td5.appendChild(deleteAnchor);
+            });
+        }
+    </script>
+}

@@ -94,7 +94,7 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
-        public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackageAsync()
+        public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesAsync()
         {
             List<FundingPackage> fundingPackages = await _context.FundingPackages.ToListAsync();
             List<OptionFundingPackage> optionFundingPackages = new();
@@ -172,10 +172,23 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
-        public Result<List<OptionFundingPackage>> ReadFundingPackagesByProjectIdAsync(int projectId)
+        public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesByProjectIdAsync(int projectId)
         {
 
-            throw new NotImplementedException();
+            var dbFundingPackages = _context.FundingPackages;
+
+            var fundingpackages = await dbFundingPackages
+                .Where(fun => fun.Project.ProjectId == projectId)
+                .OrderBy(fun => fun.MinPrice).ToListAsync();
+
+            var optionFundingPackages = new List<OptionFundingPackage>();
+
+            fundingpackages.ForEach(fun => optionFundingPackages.Add(new(fun)));
+
+            return new Result<List<OptionFundingPackage>>
+            {
+                Data = optionFundingPackages.Count > 0 ? optionFundingPackages : new List<OptionFundingPackage>()
+            };
         }
 
         public async  Task<Result<OptionFundingPackage>> UpdateFundingPackageAsync(int fundingPackageId, OptionFundingPackage optionFundingPackage)
@@ -212,9 +225,6 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
-        Task<Result<List<OptionFundingPackage>>> IFundingPackageService.ReadFundingPackagesByProjectIdAsync(int projectId)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

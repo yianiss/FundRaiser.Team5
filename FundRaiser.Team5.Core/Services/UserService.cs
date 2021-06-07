@@ -74,6 +74,66 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
+        public async Task<Result<OptionUser>> GetLoggedInUser(OptionUser optionUser)
+        {
+            var dbUsers = _context.Users;
+
+            var checkUser = await dbUsers.Where(user => (user.Email == optionUser.Email) && (user.Password == optionUser.Password)).ToListAsync();
+
+            if(checkUser.Count() != 1)
+            {
+                return new Result<OptionUser>(ErrorCode.InternalServerError, "Could not find user.");
+            }
+
+            User user = checkUser[0];
+
+            user.IsLoggedIn = true;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new Result<OptionUser>(ErrorCode.InternalServerError, "Could not save FundingPackage.");
+            }
+
+            return new Result<OptionUser>
+            {
+                Data = new OptionUser(user)
+            };
+        }
+
+        public async Task<Result<int>> LogOutUser(int id)
+        {
+            var userToLogOut = await GetUserByIdAsync(id);
+
+            if (userToLogOut.Error != null || userToLogOut.Data == null)
+            {
+                return new Result<int>(ErrorCode.NotFound, $"User with id #{id} not found.");
+            }
+
+            userToLogOut.Data.IsLoggedIn = false;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return new Result<int>(ErrorCode.InternalServerError, "Could not log out user.");
+            }
+
+            return new Result<int>
+            {
+                Data = id
+            };
+        }
+
         public async Task<Result<List<OptionUser>>> GetUsersAsync()
         {
             var users = await _context.Users.ToListAsync();
@@ -161,12 +221,18 @@ namespace FundRaiser.Team5.Core.Services
 
             dbUser.LastName = optionUser.LastName;
 
-            dbUser.Email = optionUser.Email;
 
-            if(dbUser.Email == optionUser.Email)
-            {
-
+            if(dbUser.Email != optionUser.Email){
+                var checkUser = await _context.Users.Where(user => (user.Email == optionUser.Email)).ToListAsync();
+                if(checkUser.Count() != 0)
+                {
+                    return new Result<OptionUser>(ErrorCode.BadRequest, $"User with email #{optionUser.Email} already exist.");
+                }
             }
+           
+            dbUser.Email = optionUser.Email;
+           
+            
 
             dbUser.Password = optionUser.Password;
 
@@ -188,7 +254,7 @@ namespace FundRaiser.Team5.Core.Services
 
         public async Task<Result<int>> DeleteUserByIdAsync(int id)
         {
-            var userToDelete = /*await _context.Users.FindAsync(id);*/ await GetUserByIdAsync(id);
+            var userToDelete = await GetUserByIdAsync(id);
 
             if (userToDelete.Error != null || userToDelete.Data == null)
             {

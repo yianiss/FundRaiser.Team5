@@ -18,7 +18,7 @@ namespace FundRaiserMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _projectService.GetProjectsAsync());
+            return View(await _projectService.GetActiveMostFundedProjectsAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -45,7 +45,7 @@ namespace FundRaiserMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,Title,Category,Description,FundingPackages,Images,Videos,StatusUpdates,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] Project project)
+        public async Task<IActionResult> Create([Bind("ProjectId,Title,Category,Description,FundingPackages,Images,Videos,StatusUpdates,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] OptionProject project)
         {
             if (ModelState.IsValid)
             {
@@ -63,9 +63,7 @@ namespace FundRaiserMVC.Controllers
                     CurrentFund = project.CurrentFund,
                     DateCreated = project.DateCreated,
                     Deadline = project.Deadline,
-                    UserId = project.User.UserId
-                    //Users = project.Users
-
+                    UserId = project.UserId
                 });
 
                 return RedirectToAction(nameof(Index));
@@ -73,23 +71,32 @@ namespace FundRaiserMVC.Controllers
             return View();
         }
 
-        public ActionResult Edit(int id)
+        //GET: project/id/edit
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var project = await _projectService.GetProjectByIdAsync(id.Value);
+
+            if (project.Error != null || project.Data == null)
+            {
+                return NotFound();
+            }
+
+            return View(project.Data);
         }
 
-        [HttpPost]
+        // POST: project/id/edit
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> EditConfirmed([Bind("ProjectId,Title,Category,Description,FundingPackages,Images,Videos,StatusUpdates,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] OptionProject optionProject)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await _projectService.EditProjectAsync(optionProject.ProjectId, optionProject);
+
+            return RedirectToAction("Details");
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -101,12 +108,12 @@ namespace FundRaiserMVC.Controllers
 
             var project = await _projectService.GetProjectByIdAsync(id.Value);
 
-            if (project == null)
+            if (project.Error != null || project.Data == null)
             {
                 return NotFound();
             }
 
-            return View(project);
+            return View(project.Data);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -118,6 +125,32 @@ namespace FundRaiserMVC.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-    
+
+        public async Task<ActionResult> SearchByCategory([Bind("Category")] OptionProject optionProject)
+        {
+
+            var projectsResult = await _projectService.GetProjectsByCategory(optionProject);
+
+            if (projectsResult.Error != null)
+            {
+                return NotFound();
+            }
+
+            return View(projectsResult.Data);
+        }
+
+        public async Task<ActionResult> SearchBySearchBar([Bind("search")] string search)
+        {
+
+            var projectsResult = await _projectService.GetProjectsBySearch(search);
+
+            if (projectsResult.Error != null)
+            {
+                return NotFound();
+            }
+
+            return View(projectsResult.Data);
+        }
+
     }
 }

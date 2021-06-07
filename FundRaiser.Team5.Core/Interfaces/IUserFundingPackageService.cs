@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 
 namespace FundRaiser.Team5.Core.Services
 {
-    interface IUserFundingPackageService
+    public interface IUserFundingPackageService
     {
         public Task<Result<OptionUserFundingPackage>> CreateUserFundingPackageAsync(OptionUserFundingPackage optionUserFundingPackage);
-        // public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackageAsync(); // All??? 
-        public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackagesByProjectIdAsync(int projectId);  // MOST used way so one function ???
+        public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackageAsync();
+
+        public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackagesByProjectIdAsync(int projectId);
+
+        public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackagesByUsertIdAsync(int UserId);
         
         public Task<Result<OptionUserFundingPackage>> ReadUserFundingPackageAsync(int userFundingPackageId);
 
@@ -18,5 +21,7 @@ namespace FundRaiser.Team5.Core.Services
         public Task<Result<OptionUserFundingPackage>> UpdateUserFundingPackageAsync(int userFundingPackageId, OptionUserFundingPackage optionUserFundingPackage);
 
         public Task<Result<int>> DeleteUserFundingPackageAsync(int userFundingPackageId);
+
+        public Task<Result<int>> GetTotalPriceByProjectId(int projectId);
     }
 }

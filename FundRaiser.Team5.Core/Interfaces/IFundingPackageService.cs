@@ -11,7 +11,7 @@ namespace FundRaiser.Team5.Core.Services
 
         public Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesAsync(); // All??? 
 
-        public Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesByProjectIdAsync(int projectId);  // ???
+        public Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesByProjectIdAsync(int projectId);
 
         public Task<Result<OptionFundingPackage>> ReadFundingPackageAsync(int fundingPackageId);
 
@@ -20,5 +20,10 @@ namespace FundRaiser.Team5.Core.Services
         public Task<Result<OptionFundingPackage>> UpdateFundingPackageAsync(int fundingPackageId, OptionFundingPackage optionFundingPackage);
 
         public Task<Result<int>> DeleteFundingPackageAsync(int fundingPackageId);
+
+        public Task<Result<OptionFundingPackage>> IncreaseNumberOfAvailablePackagesByFundingPackageIdAsync(int fundingPackageId);
+
+        public Task<Result<OptionFundingPackage>> DecreaseFundingPackageAsync(int fundingPackageId);
+
     }
 }

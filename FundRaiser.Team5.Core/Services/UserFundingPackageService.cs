@@ -36,11 +36,11 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<OptionUserFundingPackage>(ErrorCode.BadRequest, "Not all required customer options provided.");
             }
 
-            FundingPackage dbfundingPackage = await _context.FundingPackages.SingleOrDefaultAsync(fundingPackage => fundingPackage.FundingPackageId == optionUserFundingPackage.FundingPackageId);
+            FundingPackage dbFundingPackage = await _context.FundingPackages.SingleOrDefaultAsync(fundingPackage => fundingPackage.FundingPackageId == optionUserFundingPackage.FundingPackageId);
 
             User dbUser = await _context.Users.SingleOrDefaultAsync(user => user.UserId == optionUserFundingPackage.UserId);
 
-            if (dbfundingPackage == null)
+            if (dbFundingPackage == null)
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"FundingPackage with id #{optionUserFundingPackage.FundingPackageId} not found.");
             }
@@ -50,9 +50,16 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"User with id #{optionUserFundingPackage.UserId} not found.");
             }
 
+            if (dbFundingPackage.NumberOfAvailablePackages <= 0)
+            {
+                return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"This Funding Package with id #{optionUserFundingPackage.FundingPackageId} is no longer available.");
+            }
+
             UserFundingPackage userFundingPackage = optionUserFundingPackage.GetUserFundingPackage();
 
             await _context.UserFundingPackages.AddAsync(userFundingPackage);
+
+            dbFundingPackage.NumberOfAvailablePackages -= 1;
 
             try
             {
@@ -74,30 +81,41 @@ namespace FundRaiser.Team5.Core.Services
 
         public async Task<Result<int>> DeleteUserFundingPackageAsync(int userFundingPackageId)
         {
-            //UserFundingPackage dbUserFundingPackage = await _context.UserFundingPackages.SingleOrDefaultAsync(UserFundingPackage => UserFundingPackage.UserFundingPackageId == UserFundingPackageId);
-            //if (dbUserFundingPackage == null)
-            //{
-            //    return new Result<int>(ErrorCode.NotFound, $"FundingPackage with id #{userFundingPackageId} not found.");
-            //}
+            if (userFundingPackageId <= 0)
+            {
+                return new Result<int>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+            }
 
-            //dbUserFundingPackage.IsActive = optionUserFundingPackage.IsActive;
+            UserFundingPackage dbUserFundingPackage = await _context.UserFundingPackages.SingleOrDefaultAsync(userFundingPackage => userFundingPackage.UserFundingPackageId == userFundingPackageId);
+            if (dbUserFundingPackage == null)
+            {
+                return new Result<int>(ErrorCode.NotFound, $"FundingPackage with id #{userFundingPackageId} not found.");
+            }
+            dbUserFundingPackage.IsActive = false;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new Result<int>(ErrorCode.InternalServerError, "Could not delete customer.");
+            }
 
-            //try
-            //{
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (Exception ex)
-            //{
-            //    _logger.LogError(ex.Message);
-            //    return new Result<int>(ErrorCode.InternalServerError, "Could not Delete UserFundingPackage.");
-            //}
+            return new Result<int>
+            {
+                Data = userFundingPackageId
+            };
+        }
 
-            //return new Result<int>
-            //{
-            //    Data = 1
-            //};
-            return new Result<int>();
-            throw new NotImplementedException();
+        public async Task<Result<int>> GetTotalPriceByProjectId(int projectId)
+        {
+            var totalFunds =  await _context.UserFundingPackages.Where(userFundingPackage => userFundingPackage.FundingPackage.Project.ProjectId == projectId).Select(priice=> priice.Price).SumAsync();
+
+            return new Result<int>
+            {
+                Data = totalFunds
+            };
         }
 
         public async Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackageAsync()
@@ -152,10 +170,43 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
-        public Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackagesByProjectIdAsync(int projectId)
+        public async Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackagesByProjectIdAsync(int projectId)
         {
-            throw new NotImplementedException();
+            if (projectId <= 0)
+            {
+                return new Result<List<OptionUserFundingPackage>>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+            }
+
+            List<UserFundingPackage> dbUserFundingPackages = await _context.UserFundingPackages.Where(userFundingPackage => userFundingPackage.FundingPackage.Project.ProjectId == projectId).ToListAsync(); ;
+
+            List<OptionUserFundingPackage> optionUserFundingPackages = new();
+
+            dbUserFundingPackages.ForEach(userFundingPackage => optionUserFundingPackages.Add(new OptionUserFundingPackage(userFundingPackage)));
+
+            return new Result<List<OptionUserFundingPackage>>
+            {
+                Data = optionUserFundingPackages
+            };
         }
+
+        public async Task<Result<List<OptionUserFundingPackage>>> ReadUserFundingPackagesByUsertIdAsync(int UserId)
+        {
+            if (UserId <= 0)
+            {
+                return new Result<List<OptionUserFundingPackage>>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+            }
+
+            List<UserFundingPackage> dbUserFundingPackages = await _context.UserFundingPackages.Where(userFundingPackage => userFundingPackage.User.UserId == UserId).ToListAsync(); ;
+
+            List<OptionUserFundingPackage> optionUserFundingPackages = new();
+
+            dbUserFundingPackages.ForEach(userFundingPackage => optionUserFundingPackages.Add(new OptionUserFundingPackage(userFundingPackage)));
+
+            return new Result<List<OptionUserFundingPackage>>
+            {
+                Data = optionUserFundingPackages
+            };
+        } 
 
         public async Task<Result<OptionUserFundingPackage>> UpdateUserFundingPackageAsync(int userFundingPackageId, OptionUserFundingPackage optionUserFundingPackage)
         {

@@ -1,0 +1,137 @@
+﻿@model IEnumerable<FundRaiser.Team5.Core.Options.OptionFundingPackage>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfAvailablePackages)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="FundingPackages">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfAvailablePackages)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.OptionFundingPackageId">Details</a> |
+                    <a href="javascript:void(0)" onclick="deleteFundingPackage(@item.OptionFundingPackageId)">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        const uri = 'FundingPackage';
+
+        function getFundingPackage() {
+            fetch(`${uri}/Get`)
+                .then(response => response.json())
+                .then(data => _displayFundingPackage(data))
+                .catch(error => console.error('Unable to get FundingPackages.', error));
+        }
+
+        function deleteFundingPackage(id) {
+            fetch(`${uri}/Delete/${id}`, {
+                method: 'DELETE'
+            })
+                .then(() => getFundingPackage())
+                .catch(error => console.error('Unable to delete customer.', error));
+        }
+
+        function _displayFundingPackage(data) {
+            const tBody = document.getElementById('FundingPackages');
+            tBody.innerHTML = '';
+
+            const anchorElement = document.createElement('a');
+
+            data.forEach(item => {
+                let detailsAnchor = anchorElement.cloneNode(false);
+                detailsAnchor.innerText = 'Details';
+                detailsAnchor.setAttribute('href', `${uri}/Details/${item.OptionFundingPackageId}`);
+
+                let deleteAnchor = anchorElement.cloneNode(false);
+                deleteAnchor.innerText = 'Delete';
+                deleteAnchor.setAttribute('onclick', `deleteFundingPackage(${item.OptionFundingPackageId})`);
+                deleteAnchor.setAttribute('href', 'javascript:void(0)');
+
+                let tr = tBody.insertRow();
+
+                let td1 = tr.insertCell(0);
+                let projectIdNode = document.createTextNode(item.ProjectId);
+                td1.appendChild(projectIdNode);
+
+                let td2 = tr.insertCell(1);
+                let titleNode = document.createTextNode(item.Title);
+                td2.appendChild(titleNode);
+
+                let td3 = tr.insertCell(2);
+                let descriptionNode = document.createTextNode(item.Description);
+                td3.appendChild(descriptionNode);
+
+                let td3 = tr.insertCell(3);
+                let minPriceNode = document.createTextNode(item.MinPrice);
+                td3.appendChild(minPriceNode);
+
+                let td3 = tr.insertCell(4);
+                let numberOfAvailablePackagesNode = document.createTextNode(item.NumberOfAvailablePackages);
+                td3.appendChild(numberOfAvailablePackagesNode);
+
+                let td4 = tr.insertCell(5);
+                let isActiveNode = document.createTextNode(item.IsActive);
+                td4.appendChild(isActiveNode);
+
+                let td5 = tr.insertCell(6);
+                td5.appendChild(detailsAnchor);
+
+                let td6 = tr.insertCell(7);
+                td6.appendChild(deleteAnchor);
+            });
+        }
+    </script>
+}

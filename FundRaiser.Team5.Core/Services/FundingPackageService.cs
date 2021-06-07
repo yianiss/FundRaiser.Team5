@@ -65,6 +65,36 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
+        public async Task<Result<OptionFundingPackage>> DecreaseFundingPackageAsync(int fundingPackageId)
+        {
+            if (fundingPackageId <= 0)
+            {
+                return new Result<OptionFundingPackage>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+            }
+            FundingPackage dbFundingPackage = await _context.FundingPackages.SingleOrDefaultAsync(fundingPackage => fundingPackage.FundingPackageId == fundingPackageId);
+            if (dbFundingPackage == null)
+            {
+                return new Result<OptionFundingPackage>(ErrorCode.NotFound, $"FundingPackage with id #{fundingPackageId} not found.");
+            }
+
+            dbFundingPackage.NumberOfAvailablePackages -= 1;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new Result<OptionFundingPackage>(ErrorCode.InternalServerError, "Could not save FundingPackage.");
+            }
+
+            return new Result<OptionFundingPackage>
+            {
+                Data = new OptionFundingPackage(dbFundingPackage)
+            };
+        }
+
         public async Task<Result<int>> DeleteFundingPackageAsync(int fundingPackageId)
         {
             if (fundingPackageId <= 0)
@@ -94,7 +124,37 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
-        public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesAsync()
+        public async Task<Result<OptionFundingPackage>> IncreaseNumberOfAvailablePackagesByFundingPackageIdAsync(int fundingPackageId)
+        {
+            if (fundingPackageId <= 0)
+            {
+                return new Result<OptionFundingPackage>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+            }
+            FundingPackage dbFundingPackage = await _context.FundingPackages.SingleOrDefaultAsync(fundingPackage => fundingPackage.FundingPackageId == fundingPackageId);
+            if (dbFundingPackage == null)
+            {
+                return new Result<OptionFundingPackage>(ErrorCode.NotFound, $"FundingPackage with id #{fundingPackageId} not found.");
+            }
+
+            dbFundingPackage.NumberOfAvailablePackages += 1;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new Result<OptionFundingPackage>(ErrorCode.InternalServerError, "Could not save FundingPackage.");
+            }
+
+            return new Result<OptionFundingPackage>
+            {
+                Data = new OptionFundingPackage(dbFundingPackage)
+            };
+        }
+
+        public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackageAsync()
         {
             List<FundingPackage> fundingPackages = await _context.FundingPackages.ToListAsync();
             List<OptionFundingPackage> optionFundingPackages = new();
@@ -174,6 +234,10 @@ namespace FundRaiser.Team5.Core.Services
 
         public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesByProjectIdAsync(int projectId)
         {
+            if (projectId <= 0)
+            {
+                return new Result<List<OptionFundingPackage>>(ErrorCode.BadRequest, "Id cannot be less than or equal to zero.");
+            }
 
             var dbFundingPackages = _context.FundingPackages;
 

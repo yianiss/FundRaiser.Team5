@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>0d90b6e3-5ba0-46f7-aa02-a2638a6b77de</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FundRaiser.Team5.Core\FundRaiser.Team5.Core.csproj" />
+  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\FundRaiser.Team5.Persistence\FundRaiser.Team5.Persistence.csproj" />
+	</ItemGroup>
+
+</Project>

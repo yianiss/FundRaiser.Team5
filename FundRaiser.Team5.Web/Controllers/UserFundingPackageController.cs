@@ -1,5 +1,5 @@
 ﻿using FundRaiser.Team5.Core.Options;
-using FundRaiser.Team5.Core.Services;
+using FundRaiser.Team5.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace FundRaiser.Team5.Web.Controllers
 
             var allUserFundingPackagesResult = await _userFundingPackageService.ReadUserFundingPackageAsync();
 
-            return View();
+            return View(allUserFundingPackagesResult.Data);
         }
 
         // GET: UserFundingPackage/Details/5

@@ -3,7 +3,7 @@ using FundRaiser.Team5.Core.Options;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FundRaiser.Team5.Core.Services
+namespace FundRaiser.Team5.Core.Interfaces
 {
     public interface IFundingPackageService
     {

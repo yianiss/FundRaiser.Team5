@@ -18,7 +18,8 @@ namespace FundRaiserMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _projectService.GetActiveMostFundedProjectsAsync());
+            var optionProjects = await _projectService.GetProjectsAsync();
+            return View(optionProjects.Data);
         }
 
         public async Task<IActionResult> Details(int? id)

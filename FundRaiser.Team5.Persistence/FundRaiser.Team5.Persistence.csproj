@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>22ca581b-1239-4963-8ceb-2936eaeaa774</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,10 @@
     <Compile Include="Migrations\20210605113347_migration.cs" />
     <Compile Include="Migrations\20210605113347_migration.Designer.cs" />
     <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>

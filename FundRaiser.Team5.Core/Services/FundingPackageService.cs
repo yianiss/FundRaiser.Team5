@@ -156,7 +156,7 @@ namespace FundRaiser.Team5.Core.Services
 
         public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackageAsync()
         {
-            List<FundingPackage> fundingPackages = await _context.FundingPackages.ToListAsync();
+            var fundingPackages = await _context.FundingPackages.ToListAsync();
             List<OptionFundingPackage> optionFundingPackages = new();
             fundingPackages.ForEach(fundingPackage => optionFundingPackages.Add(new OptionFundingPackage(fundingPackage)));
 

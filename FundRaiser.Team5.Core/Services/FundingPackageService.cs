@@ -232,6 +232,20 @@ namespace FundRaiser.Team5.Core.Services
             };
         }
 
+        public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesAsync()
+        {
+            var fundingPackages = await _context.FundingPackages.ToListAsync();
+
+            List<OptionFundingPackage> optionFundingPackages = new();
+
+            fundingPackages.ForEach(fun => optionFundingPackages.Add(new OptionFundingPackage(fun)));
+
+            return new Result<List<OptionFundingPackage>>
+            {
+                Data = optionFundingPackages.Count > 0 ? optionFundingPackages : new List<OptionFundingPackage>()
+            };
+        }
+
         public async Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesByProjectIdAsync(int projectId)
         {
             if (projectId <= 0)

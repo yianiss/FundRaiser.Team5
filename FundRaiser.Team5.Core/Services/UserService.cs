@@ -140,7 +140,9 @@ namespace FundRaiser.Team5.Core.Services
 
             List<OptionUser> optionUsers = new();
 
-            users.ForEach(user => optionUsers.Add(new OptionUser(user)));
+            var activeUsers = users.Where(user => user.IsActive==true).ToList();
+
+            activeUsers.ForEach(user => optionUsers.Add(new OptionUser(user)));
 
             return new Result<List<OptionUser>>
             {
@@ -254,6 +256,8 @@ namespace FundRaiser.Team5.Core.Services
 
         public async Task<Result<int>> DeleteUserByIdAsync(int id)
         {
+            var dbUsers = _context.Users;
+
             var userToDelete = await GetUserByIdAsync(id);
 
             if (userToDelete.Error != null || userToDelete.Data == null)
@@ -262,6 +266,9 @@ namespace FundRaiser.Team5.Core.Services
             }
 
             userToDelete.Data.IsActive = false;
+            var user = dbUsers.Find(id);
+            user.IsActive = false;
+
 
             try
             {

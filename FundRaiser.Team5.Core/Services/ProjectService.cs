@@ -331,7 +331,6 @@ namespace FundRaiser.Team5.Core.Services
               .OrderByDescending(x => x.Key)
               .ToList();
 
-            //List<decimal> B = sorted.Select(x => x.Key).ToList();
             List<int> index = sorted.Select(x => x.Value).ToList();
 
             List<OptionProject> orderedProjects = new();

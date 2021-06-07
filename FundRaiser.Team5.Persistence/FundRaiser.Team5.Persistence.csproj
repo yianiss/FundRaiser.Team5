@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-
-    <Compile Remove="Migrations\**" />
-    <EmbeddedResource Remove="Migrations\**" />
-    <None Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="Migrations\20210605113347_migration.cs" />
     <Compile Include="Migrations\20210605113347_migration.Designer.cs" />
     <Compile Include="Migrations\ApplicationDbContextModelSnapshot.cs" />

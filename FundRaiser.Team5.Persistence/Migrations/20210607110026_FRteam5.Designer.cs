@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FundRaiser.Team5.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210605113347_migration")]
-    partial class migration
+    [Migration("20210607110026_FRteam5")]
+    partial class FRteam5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -235,9 +235,11 @@ namespace FundRaiser.Team5.Persistence.Migrations
 
             modelBuilder.Entity("FundRaiser.Team5.Core.Entities.ImagePath", b =>
                 {
-                    b.HasOne("FundRaiser.Team5.Core.Entities.Project", null)
+                    b.HasOne("FundRaiser.Team5.Core.Entities.Project", "Project")
                         .WithMany("Images")
                         .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("FundRaiser.Team5.Core.Entities.Project", b =>
@@ -275,9 +277,11 @@ namespace FundRaiser.Team5.Persistence.Migrations
 
             modelBuilder.Entity("FundRaiser.Team5.Core.Entities.VideoPath", b =>
                 {
-                    b.HasOne("FundRaiser.Team5.Core.Entities.Project", null)
+                    b.HasOne("FundRaiser.Team5.Core.Entities.Project", "Project")
                         .WithMany("Videos")
                         .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("FundRaiser.Team5.Core.Entities.FundingPackage", b =>

@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace FundRaiser.Team5.Core.Services
 {
-    interface IFundingPackageService
+    public interface IFundingPackageService
     {
         public Task<Result<OptionFundingPackage>> CreateFundingPackageAsync(OptionFundingPackage optionFundingPackage);
 
-        public Task<Result<List<OptionFundingPackage>>> ReadFundingPackageAsync(); // All??? 
+        public Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesAsync(); // All??? 
 
         public Task<Result<List<OptionFundingPackage>>> ReadFundingPackagesByProjectIdAsync(int projectId);  // ???
 

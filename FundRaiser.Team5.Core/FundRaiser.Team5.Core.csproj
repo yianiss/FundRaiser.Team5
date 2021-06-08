@@ -8,12 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Entities\UserFundingPackageStatus.cs" />
   </ItemGroup>
 
@@ -32,5 +26,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dto\Entities\" />
+    <Folder Include="Dto\Interfaces\" />
+    <Folder Include="Dto\Services\" />
   </ItemGroup>
 </Project>

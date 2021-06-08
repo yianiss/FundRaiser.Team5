@@ -6,6 +6,9 @@ using FundRaiser.Team5.Core.Options;
 using FundRaiser.Team5.Core.Entities;
 using FundRaiser.Team5.Core.Services;
 using Microsoft.AspNetCore.Hosting;
+using System.Collections.Generic;
+using System.IO;
+using System;
 
 namespace FundRaiserMVC.Controllers
 {
@@ -13,9 +16,9 @@ namespace FundRaiserMVC.Controllers
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IProjectService _projectService;
-        
-        public ProjectController(IProjectService projectService)
+        public ProjectController(IProjectService projectService, IWebHostEnvironment hostingEnvironment)
         {
+            _hostingEnvironment = hostingEnvironment;
             _projectService = projectService;
         }
 
@@ -64,8 +67,8 @@ namespace FundRaiserMVC.Controllers
                     Category = project.Category,
                     Description = project.Description,
                     FundingPackages = project.FundingPackages,
-                    Images = project.Images,
-                    Videos = project.Videos,
+                    Images = new List<ImagePath> { },
+                    Videos = new List<VideoPath> { },
                     StatusUpdates = project.StatusUpdates,
                     FundingGoal = project.FundingGoal,
                     CurrentFund = project.CurrentFund,
@@ -73,10 +76,28 @@ namespace FundRaiserMVC.Controllers
                     Deadline = project.Deadline,
                     UserId = project.UserId
                 });
+                    var ProjectFromDb = await _projectService.GetProjectByIdAsync(project.ProjectId);
+                    string webRootPath = _hostingEnvironment.WebRootPath;
+                    var files = HttpContext.Request.Form.Files;
 
-                return RedirectToAction("Create","FundingPackage");
+                    if (files.Count > 0)
+                    {
+                    foreach (var item in files)
+                    {
+                        var uploads = Path.Combine(webRootPath, "images");
+                        var extension = Path.GetExtension(item.FileName);
+                        var dynamicFileName = Guid.NewGuid().ToString() + "_" + project.ProjectId + extension;
+
+                        using (var filesStream = new FileStream(Path.Combine(uploads, dynamicFileName), FileMode.Create))
+                        {
+                            item.CopyTo(filesStream);
+                        }
+                        project.Images.Add(new ImagePath { Image = dynamicFileName });
+                    }
+                    }
             }
-            return View();
+            
+            return RedirectToAction("Create","FundingPackage");
         }
 
 

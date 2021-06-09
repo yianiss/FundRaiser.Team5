@@ -1,7 +1,10 @@
-﻿@{
+﻿@model FundRaiser_Team5.Dto.Entities.HomeDto;
+
+@{
     ViewData["Title"] = "Home Page";
-   
+
 }
+
 
 @section Stylesheet {
 
@@ -53,7 +56,38 @@
     <br />
     <br />
 
+
+
 </div>
+
+<sesion id="login_session" class="position-fixed row d-none">
+    <div id="login_bg" class="position-fix fixed-top min-vw-100 min-vh-100 fnt5-bg-semitransparent" onclick="HideLoginForm()"></div>
+    <div id="login_body" class="position-fix fixed-top col-md-6 mx-auto">
+        <div class="loginForm">
+            <div class=" text-center">
+                <h2>Login</h2>
+            </div>
+            <hr />
+            <form asp-action="">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group hide">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6 mx-auto">
+                    <input type="submit" value="LogIn" class="btn btn-primary" />
+                    <p><a class="text-light " href="/User/Create"><u> Or Sing up </u></a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</sesion>
 
 @section Scripts
     {

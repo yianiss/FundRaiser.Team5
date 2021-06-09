@@ -46,7 +46,7 @@ function _displayProjects(data) {
         newProjectRow.querySelector(".ProjectProgress").innerText = item.ProjectProgress;
         newProjectRow.querySelector(".ProjectDeadline").innerText = item.ProjectDeadline;
         newProjectRow.querySelector(".ProjectCreatorFullName").innerText = item.ProjectCreatorFullName;
-        
+
         let btnProject = newProjectRow.querySelector(".projectById")
 
         btnProject.setAttribute('onclick', `Project/(${item.ProjectId})`);
@@ -57,3 +57,4 @@ function _displayProjects(data) {
     });
 
 
+}

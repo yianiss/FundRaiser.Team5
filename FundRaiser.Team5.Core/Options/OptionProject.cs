@@ -78,7 +78,7 @@ namespace FundRaiser.Team5.Core.Options
 
                 Deadline = project.Deadline;
 
-                UserId = project.User.UserId;
+                //UserId = project.User.UserId;
 
                 IsActive = project.IsActive;
             }

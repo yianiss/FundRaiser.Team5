@@ -164,11 +164,6 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
             }
 
-            if (optionProject.Category == 0)
-            {
-                return new Result<List<OptionProject>>(ErrorCode.BadRequest, "Category Required");
-            }
-
             var projectsByCategory = projects.Data.Where(pro => pro.Category == optionProject.Category).ToList();
 
             return new Result<List<OptionProject>>
@@ -188,8 +183,8 @@ namespace FundRaiser.Team5.Core.Services
 
             var projectsBySearch = projects.Data.Where(pro => pro.Title.Contains(search)).ToList()
                 .Union
-                (projects.Data.Where(pro => pro.Description.Contains(search)).ToList()).ToList()
-                .Union(projects.Data.Where(pro => pro.IsActive).ToList()).ToList();
+                (projects.Data.Where(pro => pro.Description.Contains(search))).ToList()
+                .Union(projects.Data.Where(pro => pro.IsActive)).ToList();
 
             return new Result<List<OptionProject>>
             {

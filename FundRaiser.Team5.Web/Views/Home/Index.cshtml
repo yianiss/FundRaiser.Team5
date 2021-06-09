@@ -41,7 +41,7 @@
                     else if (todo == "OTHER")
                     {<span> <i class="fa fa-paper-plane" style="font-size:48px;"></i></span>}
                     <h3>@todo</h3>
-                    <input type="button" class="btn btn-secondary" value=Explore onclick="location.href='@Url.Action("GetProjectsByCategory","ProjectController", new { category = @todo })'" />
+                    <input type="button" class="btn btn-secondary" value=Explore onclick="location.href='@Url.Action("SearchByCategory","Project", new { category = @todo })'" />
                 </div>
             </div>
             <br>

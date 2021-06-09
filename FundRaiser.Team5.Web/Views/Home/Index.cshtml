@@ -16,12 +16,9 @@
     <h1 style="font-size:80px; margin-top: 10rem;"> Fundraiser Team 5</h1>
 </div>
 <div class="container-fluid text-center">
-
     <h2>Categories</h2>
     <h4>Explore Below</h4>
-    <br>
     <div class="row">
-        <br><br>
         @foreach (string todo in Enum.GetNames(typeof(FundRaiser.Team5.Core.Entities.Category)))
         {
             <div class="col-sm-4">
@@ -44,9 +41,6 @@
                     <input type="button" class="btn btn-secondary" value=Explore onclick="location.href='@Url.Action("GetProjectsByCategory","ProjectController", new { category = @todo })'" />
                 </div>
             </div>
-            <br>
-
-
         }
         <br><br>
     </div>
@@ -55,9 +49,6 @@
     <br />
     <br />
     <br />
-
-
-
 </div>
 
 <sesion id="login_session" class="position-fixed row d-none">

@@ -234,14 +234,13 @@ namespace FundRaiser.Team5.Core.Services
            
             dbUser.Email = optionUser.Email;
            
-            
-
             dbUser.Password = optionUser.Password;
 
             try
             {
                 await _context.SaveChangesAsync();
             }
+
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
@@ -268,7 +267,6 @@ namespace FundRaiser.Team5.Core.Services
             userToDelete.Data.IsActive = false;
             var user = dbUsers.Find(id);
             user.IsActive = false;
-
 
             try
             {
@@ -302,7 +300,6 @@ namespace FundRaiser.Team5.Core.Services
             {
                 Data = optionProjects.Count > 0 ? optionProjects : new List<OptionProject>()
             };
-
         }
 
         public async Task<Result<List<OptionProject>>> GetProjectsFundedByUser(int id)
@@ -327,7 +324,5 @@ namespace FundRaiser.Team5.Core.Services
                 Data = optionProjects.Count > 0 ? optionProjects : new List<OptionProject>()
             };
         }
-         
-
     }
 }

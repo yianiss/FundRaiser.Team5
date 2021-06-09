@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Dto.Interfaces
 {
-    interface IHomeService
+    interface IProjectDtoService
     {
-        public Task<Result<HomeDto>> GetHomeDtoDetailsAsync(int UserId);
+        public Task<Result<ProjectDto>> GetProjectDtoDetailsAsync(int UserId, int projectId);
     }
 }

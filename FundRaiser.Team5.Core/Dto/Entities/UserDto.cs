@@ -1,27 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Dto.Entities
 {
-    public class HomeDto
+    public class UserDto
     {
         public int UserId { get; set; }
-        [Required]
-        [Display(Name = "Email")]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-        [Required]
-        [Display(Name = "Password")]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
         public string UserFulltName { get; set; }
         public List<ProjectDetails> Projects { get; set; }
+        public List<FundingPackageDetails> MyFundingPackage { get; set; }
 
-        public HomeDto() { }
+        public UserDto() { }
 
         public class ProjectDetails
         {
@@ -32,6 +21,16 @@ namespace FundRaiser_Team5.Dto.Entities
             public decimal ProjectProgress { get; set; }
             public DateTime ProjectDeadline { get; set; }
             public string ProjectCreatorFullName { get; set; }
+        }
+
+        public class FundingPackageDetails 
+        {
+            public int ProjectId { get; set; }
+            public string TitleProject { get; set; }
+            public int FundingPackageId { get; set; }
+            public string Title { get; set; }
+            public string Description { get; set; }
+            public int Price { get; set; }
         }
     }
 }

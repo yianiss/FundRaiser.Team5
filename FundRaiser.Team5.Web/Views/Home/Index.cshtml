@@ -2,6 +2,14 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    if (Model.UserId != 0)
+    {
+        Layout = "_LayoutLoggedIn";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 
 }
 
@@ -42,13 +50,9 @@
                 </div>
             </div>
         }
-        <br><br>
+        
     </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+    <div style="margin-bottom:3rem;"></div>
 </div>
 
 <sesion id="login_session" class="position-fixed row d-none">

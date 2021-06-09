@@ -49,7 +49,7 @@ namespace FundRaiser_Team5.Dto.Services
                 ProjectCategory = Convert.ToInt32(project.Category),//optionProject.Category;
                 ProjectProgress = project.CurrentFund / project.FundingGoal,
                 ProjectDeadline = project.Deadline,
-                ProjectCreatorFullName = project.User.FirstName + " " + project.User.LastName
+                //ProjectCreatorFullName = project.User.FirstName + " " + project.User.LastName
             }));
             _HomeDto.Projects = ProjectsDetails;
 

@@ -1,7 +1,9 @@
 ﻿using FundRaiser.Team5.Web.Models;
+using FundRaiser_Team5.Dto.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+
 
 namespace FundRaiser.Team5.Web.Controllers
 {
@@ -11,11 +13,13 @@ namespace FundRaiser.Team5.Web.Controllers
 
         public HomeController(ILogger<HomeController> logger)
         {
+            
             _logger = logger;
         }
 
         public IActionResult Index()
         {
+            var homeDto=new HomeDto();
             return View();
         }
 

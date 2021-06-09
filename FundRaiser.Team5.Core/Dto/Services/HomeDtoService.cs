@@ -2,6 +2,7 @@
 using FundRaiser.Team5.Core.Interfaces;
 using FundRaiser.Team5.Core.Model;
 using FundRaiser_Team5.Dto.Entities;
+using FundRaiser_Team5.Dto.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,19 +14,19 @@ using static FundRaiser_Team5.Dto.Entities.HomeDto;
 
 namespace FundRaiser_Team5.Dto.Services
 {
-    class HomeService
+    public class HomeDtoService: IHomeDtoService
     {
         private readonly IApplicationDbContext _context;
-        private readonly ILogger<HomeService> _logger;
+        private readonly ILogger<HomeDtoService> _logger;
 
-        public HomeService(IApplicationDbContext context, ILogger<HomeService> logger)
+        public HomeDtoService(IApplicationDbContext context, ILogger<HomeDtoService> logger)
         {
             _context = context;
             _logger = logger;
         }
         public async Task<Result<HomeDto>> GetHomeDtoDetailsAsync(int userId)
         {
-            HomeDto _HomeDto = new() { UserId = 0, UserFulltName = "" };
+            HomeDto _HomeDto = new() { UserId = 0, UserFullName = "" };
             User dbUser;
             if (userId > 0)
             {
@@ -33,7 +34,7 @@ namespace FundRaiser_Team5.Dto.Services
                 if (dbUser != null)
                 {
                     _HomeDto.UserId = dbUser.UserId;
-                    _HomeDto.UserFulltName = dbUser.FirstName + " " + dbUser.LastName;
+                    _HomeDto.UserFullName = dbUser.FirstName + " " + dbUser.LastName;
                 }
             }
             var projects = await _context.Projects.ToListAsync();
@@ -55,6 +56,36 @@ namespace FundRaiser_Team5.Dto.Services
             return new Result<HomeDto>
             {
                 Data = _HomeDto
+            };
+        }
+        public async Task<Result<int>> GetLoggedInUser(HomeDto homeDto)
+        {
+            var dbUsers = _context.Users;
+
+            var checkUser = await dbUsers.Where(user => (user.Email == homeDto.Email) && (user.Password == homeDto.Password) && (user.IsActive)).ToListAsync();
+
+            if (checkUser.Count() != 1)
+            {
+                return new Result<int>(ErrorCode.InternalServerError, "Could not find user.");
+            }
+
+            User user = checkUser[0];
+
+            user.IsLoggedIn = true;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new Result<int>(ErrorCode.InternalServerError, "Could not save FundingPackage.");
+            }
+
+            return new Result<int>
+            {
+                Data = user.UserId
             };
         }
     }

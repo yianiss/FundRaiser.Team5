@@ -24,7 +24,6 @@ namespace FundRaiser.Team5.Web.Controllers
             return View(optionUser.Data);
         }
 
-        
         // GET: UserController/Details/5
         public async Task<IActionResult> Details(int? id)
         {

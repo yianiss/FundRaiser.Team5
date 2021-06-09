@@ -78,7 +78,7 @@ namespace FundRaiser.Team5.Core.Services
         {
             var dbUsers = _context.Users;
 
-            var checkUser = await dbUsers.Where(user => (user.Email == optionUser.Email) && (user.Password == optionUser.Password)).ToListAsync();
+            var checkUser = await dbUsers.Where(user => (user.Email == optionUser.Email) && (user.Password == optionUser.Password) && (user.IsActive)).ToListAsync();
 
             if(checkUser.Count() != 1)
             {

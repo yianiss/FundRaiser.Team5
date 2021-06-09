@@ -55,4 +55,23 @@ function _displayProjects(data) {
         projectList.appendChild(newProjectRow);
 
     });
+
+    document.querySelector('#loginbtn').addEventListener("click", function () {
+
+        let form=document.querySelector('#loginform');
+        $.ajax(
+            {
+                url: "/login",
+                dataType: 'POST',
+                data: form.serialize(),
+                success: function (data) {
+                    alert("FormOK"); // show response from the php script.
+                }
+            }
+
+        );
+
+
+    });
+    
 }

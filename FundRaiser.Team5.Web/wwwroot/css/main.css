@@ -1,0 +1,17 @@
+﻿body {
+}
+#mainHeader a.logo:hover {
+    border: none;
+}
+
+#mainHeader a.logo {
+    width: 192px;
+    height: 237px;
+    display: block;
+    background: url(../images/logo.png) no-repeat;
+    position: absolute;
+    top: -25px;
+    left: 50px;
+    text-indent: -1000em;
+    z-index: 2000;
+}

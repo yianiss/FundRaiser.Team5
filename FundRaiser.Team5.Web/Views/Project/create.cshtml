@@ -2,26 +2,22 @@
 
 @{
     ViewData["Title"] = "Create";
-    if (User.Identity.IsAuthenticated)
-    {
-        Layout = "_LayoutLoggedIn";
+   
     }
     else
     {
         Layout = "_Layout";
+
     }
 }
-}
 
-<h1 class="text-center"> Create New Project</h1>
+<h1 class="text-center">Create New Project</h1>
 
-<hr />
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6 mx-auto">
             <div class="mainForm">
-                <form asp-action="Create" enctype="multipart/form-data" onsubmit="AJAXSubmit(this);return false;"
-                      method="post">
+                <form asp-action="Create" enctype="multipart/form-data" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Title" class="control-label"></label>
@@ -44,20 +40,24 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="FundingGoal" class="control-label"></label>
-                        <input asp-for="FundingGoal" class="form-control" id="FundingGoal"/>
+                        <input asp-for="FundingGoal" class="form-control" id="FundingGoal" />
                         <span asp-validation-for="FundingGoal" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Deadline" class="control-label"></label>
-                        <input type=date asp-for="Deadline" class="form-control" id="Deadline"/>
+                           <input type=date asp-for="Deadline" class="form-control" id="Deadline" />
                         <span asp-validation-for="Deadline" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="Images" class="control-label"> Upload Image</label>
-                        <input type="file" name="images" id="Images" /><br>
-                        @ViewBag.Message
-                        <span asp-validation-for="Images" class="text-danger"></span>
+
+                    <div class="form-field">
+                        <p>Select pictures:</p>
+                        <div class="upload-container">
+                            <div class="upload">
+                                <input type="file" name="images" id="images" onchange="uploadFiles('images');" multiple />
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="form-group">
                         <label asp-for="Videos" class="control-label"> Upload Video</label>
                         <input type="file" name="video" id="Video" /><br>
@@ -65,8 +65,8 @@
                         <span asp-validation-for="Videos" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        
-                        <center><<input type="button" value="Submit using ajax" onclick="douUpload()" class="btn btn-secondary btn-lg" /></center>
+
+                        <center><input type="button" value="Submit" onclick="douUpload()" class="btn btn-secondary btn-lg" /></center>
 
                     </div>
                 </form>
@@ -74,51 +74,39 @@
         </div>
     </div>
 </div>
-<div>
-    <a asp-action="Index">Back to Project List</a>
-</div>
 
-@section Scripts 
+
+@section Scripts
 {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script type="text/javascript">
 
-<script>
-    function douUpload()
+    function uploadFiles(inputId)
     {
-        actionMethod = "POST"
-        actionUrl = "/Project/create"
+        var input = document.getElementById(inputId);
+        var files = input.files;
         var formData = new FormData();
-        for (var i = 0; i < $('#MyImage').length; i++)
+
+        for (var i = 0; i !== files.length; i++)
         {
-            formData.append("Image", $('#Image')[0].files[i]);
+            formData.append("files", files[i]);
         }
-        for (var i = 0; i < $('#Video').length; i++) {
-            formData.append("Video", $('#Video')[0].files[i]);
-        }
-        formData.append("Category", $('#Category').val());
-        formData.append("Title", $('#Title').val());
-        formData.append("Description", $('#Description').val());
-        formData.append("Deadline", $('#Deadline').val());
-        formData.append("FundingGoal", $('#FundingGoal').val());
-        console.log(JSON.stringify(Object.fromEntries(formData)));
-        //alert(JSON.stringify(Object.fromEntries(formData)))
-        $.ajax({
-            url: actionUrl,
-            dataType: 'json',
-            type: actionMethod,
-            data: formData,
-            contentType: false,  // important when sending formData
-            processData: false,
-            success: function (data)
+
+        $.ajax(
             {
-                console.log(data)
-                $('#responseDiv').html("The update has been made successfully " + data.name);
-            },
-            error: function (jqXhr, textStatus, errorThrown)
-            {
-                console.log("error in communication");
+                url: "/account/uploadfiles",
+                datatype=; 'json';
+                data: formData,
+                processData: false,
+                contentType: false,
+                type: "POST",
+                success: function (data)
+                {
+                    $("#ResumeFileName").val(data.Image);
+                    alert("Files Uploaded! " + data.Image);
+                }
             }
-        });
+        );
     }
 </script>

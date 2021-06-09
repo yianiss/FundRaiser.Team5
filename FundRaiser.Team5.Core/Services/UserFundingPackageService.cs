@@ -40,6 +40,10 @@ namespace FundRaiser.Team5.Core.Services
 
             User dbUser = await _context.Users.SingleOrDefaultAsync(user => user.UserId == optionUserFundingPackage.UserId);
 
+            var dbProject = _context.Projects;
+
+            var project = await dbProject.SingleOrDefaultAsync(pro => pro.ProjectId == dbFundingPackage.Project.ProjectId);
+
             if (dbFundingPackage == null)
             {
                 return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"FundingPackage with id #{optionUserFundingPackage.FundingPackageId} not found.");
@@ -55,11 +59,18 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"This Funding Package with id #{optionUserFundingPackage.FundingPackageId} is no longer available.");
             }
 
+            if (project == null)
+            {
+                return new Result<OptionUserFundingPackage>(ErrorCode.NotFound, $"User with id #{optionUserFundingPackage.UserId} not found.");
+            }
+
             UserFundingPackage userFundingPackage = optionUserFundingPackage.GetUserFundingPackage();
 
             await _context.UserFundingPackages.AddAsync(userFundingPackage);
 
             dbFundingPackage.NumberOfAvailablePackages -= 1;
+
+            project.CurrentFund += optionUserFundingPackage.Price;
 
             try
             {

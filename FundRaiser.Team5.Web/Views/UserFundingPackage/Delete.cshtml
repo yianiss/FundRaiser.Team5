@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Delete";
+    Layout = "_LayoutLoggedIn";
+
 }
 
 <h1>Delete</h1>
@@ -42,10 +44,11 @@
             @Html.DisplayFor(model => model.IsActive)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="OptionUserFundingPackageId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
+<div style="margin-bottom:3rem;"></div>

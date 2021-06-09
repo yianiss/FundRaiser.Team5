@@ -8,8 +8,13 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Dto.Interfaces
 {
-    interface IHomeService
+    public interface IHomeDtoService
     {
         public Task<Result<HomeDto>> GetHomeDtoDetailsAsync(int UserId);
+
+        public Task<Result<int>> GetLoggedInUser(HomeDto homeDto);
+
     }
+
+
 }

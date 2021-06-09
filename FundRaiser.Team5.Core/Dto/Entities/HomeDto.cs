@@ -18,7 +18,7 @@ namespace FundRaiser_Team5.Dto.Entities
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        public string UserFulltName { get; set; }
+        public string UserFullName { get; set; }
         public List<ProjectDetails> Projects { get; set; }
 
         public HomeDto() { }

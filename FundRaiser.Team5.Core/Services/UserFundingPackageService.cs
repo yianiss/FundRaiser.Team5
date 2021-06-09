@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FundRaiser.Team5.Core.Services
 {
-    class UserFundingPackageService : IUserFundingPackageService
+    public class UserFundingPackageService : IUserFundingPackageService
     {
         private readonly IApplicationDbContext _context;
 

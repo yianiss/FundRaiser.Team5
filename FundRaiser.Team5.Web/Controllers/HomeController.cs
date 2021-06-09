@@ -1,26 +1,63 @@
 ﻿using FundRaiser.Team5.Web.Models;
 using FundRaiser_Team5.Dto.Entities;
+using FundRaiser_Team5.Dto.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
-
+using System.Threading.Tasks;
 
 namespace FundRaiser.Team5.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHomeDtoService _homeDtoService;
+        //private readonly IHttpContextAccessor _httpContextAccessor;
+        //private ISession _session => _httpContextAccessor.HttpContext.Session;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IHomeDtoService HomeDtoService,ILogger<HomeController> logger)
         {
-            
-            _logger = logger;
+            _homeDtoService = HomeDtoService;
+             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var homeDto=new HomeDto();
-            return View();
+            // Read Session of User Session[User]
+
+            int userId = 0;
+            if (HttpContext.Session.GetString("CurrentUser") != null)
+            {
+                userId = Int32.Parse( HttpContext.Session.GetString("CurrentUser"));
+            }
+            var dbHomeDto = await _homeDtoService.GetHomeDtoDetailsAsync(userId);
+
+            return View(dbHomeDto.Data);
+        }
+
+        // POST: UserFundingPackage/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([Bind("Email,Password")] HomeDto homeDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var dbuser = await _homeDtoService.GetLoggedInUser(homeDto);
+                if (dbuser.Data > 0)
+                {
+                    // Add Session[User}
+                    HttpContext.Session.SetString("CurrentUser", dbuser.Data + "");
+                }
+
+
+                return RedirectToAction(nameof(Index)); //OK
+            }
+
+            return NoContent(); // NOT OK
         }
 
         public IActionResult Privacy()

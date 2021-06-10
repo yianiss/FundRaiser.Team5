@@ -180,7 +180,10 @@ namespace FundRaiserMVC.Controllers
 
         public async Task<ActionResult> SearchBySearchBar([Bind("search")] string search)
         {
-
+            if(search == null)
+            {
+                search = "";
+            }
             var projectsResult = await _projectService.GetProjectsBySearch(search);
 
             if (projectsResult.Error != null)

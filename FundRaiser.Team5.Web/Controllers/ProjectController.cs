@@ -166,7 +166,7 @@ namespace FundRaiserMVC.Controllers
                 return NotFound();
             }
 
-            return View("Index",projectsResult.Data);
+            return View("ProjectForGuests",projectsResult.Data);
         }
 
         public async Task<ActionResult> SearchBySearchBar([Bind("search")] string search)
@@ -179,7 +179,7 @@ namespace FundRaiserMVC.Controllers
                 return NotFound();
             }
 
-            return View("Index", projectsResult.Data);
+            return View("ProjectsForGuests", projectsResult.Data);
         }
 
     }

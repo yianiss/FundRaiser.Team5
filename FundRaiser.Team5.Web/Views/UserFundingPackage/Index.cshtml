@@ -1,7 +1,13 @@
 ﻿@model IEnumerable<FundRaiser.Team5.Core.Options.OptionUserFundingPackage>
 
 @{
-    ViewData["Title"] = "Index";
+
+    if (Model.UserId != 0)
+    {        
+        ViewData["Title"] = "Index";
+        Layout = "_LayoutLoggedIn";
+    }
+   
 }
 
 <h1>Index</h1>

@@ -1,0 +1,128 @@
+﻿@model IEnumerable<FundRaiser.Team5.Core.Options.OptionProject>
+@{
+    ViewData["Title"] = "Projects";
+    Layout = "_Layout";
+
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FundingGoal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Videos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Images)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deadline)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FundingGoal)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Videos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Images)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deadline)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div style="margin-bottom:3rem;"></div>
+
+@section Scripts
+{
+    <script>
+        const uri = 'Project';
+
+        function getProject() {
+            fetch(`${uri}/Get`)
+                .then(response => response.json())
+                .then(data => _displayProject(data))
+                .catch(error => console.error('Unable to get Project.', error));
+        }
+
+
+        function _displayProject(data) {
+            const tBody = document.getElementById('Project');
+            tBody.innerHTML = '';
+
+            const anchorElement = document.createElement('a');
+
+            data.forEach(item => {
+                let detailsAnchor = anchorElement.cloneNode(false);
+                detailsAnchor.innerText = 'Details';
+                detailsAnchor.setAttribute('href', `${uri}/Details/${item.OptionProjectId}`);
+
+                let tr = tBody.insertRow();
+
+                let td1 = tr.insertCell(0);
+                let projectIdNode = document.createTextNode(item.ProjectId);
+                td1.appendChild(projectIdNode);
+
+                let td2 = tr.insertCell(1);
+                let titleNode = document.createTextNode(item.Title);
+                td2.appendChild(titleNode);
+
+                let td3 = tr.insertCell(2);
+                let descriptionNode = document.createTextNode(item.Description);
+                td3.appendChild(descriptionNode);
+
+                let td3 = tr.insertCell(3);
+                let category = document.createTextNode(item.Category);
+                td3.appendChild(category);
+
+                let td3 = tr.insertCell(4);
+                let fundingGoal = document.createTextNode(item.FundingGoal);
+                td3.appendChild(fundingGoal);
+
+                let td4 = tr.insertCell(5);
+                let deadline = document.createTextNode(item.Deadline);
+                td4.appendChild(deadline);
+
+                let td5 = tr.insertCell(6);
+                td5.appendChild(detailsAnchor);
+
+            });
+        }
+    </script>
+}

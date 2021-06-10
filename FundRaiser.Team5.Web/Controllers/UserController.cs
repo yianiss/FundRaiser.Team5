@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using FundRaiser.Team5.Core.Interfaces;
 using FundRaiser.Team5.Core.Options;
+using System;
+using FundRaiser_Team5.Dto.Interfaces;
 
 namespace FundRaiser.Team5.Web.Controllers
 {
@@ -10,11 +12,15 @@ namespace FundRaiser.Team5.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly IProjectService _projectService;
+        private readonly IHomeDtoService _homeDtoService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
 
-        public UserController(IUserService userService, IProjectService projectService)
+        public UserController(IUserService userService, IProjectService projectService, IHomeDtoService HomeDtoService)
         {
             _userService = userService;
             _projectService = projectService;
+            _homeDtoService = HomeDtoService;
         }
 
         // GET: UserController
@@ -168,6 +174,26 @@ namespace FundRaiser.Team5.Web.Controllers
                 return RedirectToAction("Index", "ProjectController");
             }
             return View();
+        }
+
+        [Route("[controller]/Profile/{id}")]
+        public async Task<ActionResult> Profile([Bind("Id")] int? id)
+        {
+            // Read Session of User Session[User]
+            int userId = 0;
+            var sessionUser = HttpContext.Session.GetString("CurrentUser");
+            if (sessionUser != null)
+            {
+                userId = Int32.Parse(sessionUser);
+            }
+
+            var dbHomeDto = await _homeDtoService.GetHomeDtoDetailsAsync(userId);
+           
+            if (id == null)
+            {
+                return NotFound();
+            }
+            return View(dbHomeDto.Data);
         }
     }
 }

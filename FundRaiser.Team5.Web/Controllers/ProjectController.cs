@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using FundRaiser_Team5.Dto.Entities;
 
 namespace FundRaiserMVC.Controllers
 {
@@ -31,9 +32,10 @@ namespace FundRaiserMVC.Controllers
         public async Task<IActionResult> Index()
         {
             int userId = 0;
-            if (HttpContext.Session.GetString("CurrentUser") != null)
+            var sessionUser = HttpContext.Session.GetString("CurrentUser");
+            if (sessionUser != null)
             {
-                userId = Int32.Parse(HttpContext.Session.GetString("CurrentUser"));
+                userId = Int32.Parse(sessionUser);
             }
 
             var optionProjects = await _projectService.GetProjectsAsync();
@@ -64,8 +66,8 @@ namespace FundRaiserMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("ProjectId,Title,Category,Description,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] OptionProject project)
-        public async Task<IActionResult> Create([Bind("Title", "Description")] OptionProject project)
+        public async Task<IActionResult> Create([Bind("ProjectId,Title,Category,Description,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] OptionProject project)
+        //public async Task<IActionResult> Create([Bind("Title", "Description")] OptionProject project)
         {
             var checkUser = await _userService.CheckLoggedInUserAsync();
 
@@ -198,6 +200,21 @@ namespace FundRaiserMVC.Controllers
             }
 
             return View("Index", projectsResult.Data);
+        }
+
+        public async Task<ActionResult> MyProject(int? id)
+        {
+            ProjectDto projectDto = new ProjectDto();
+
+            return NotFound();
+            //var projectsResult = await _projectService.GetProjectsBySearch(search);
+
+            //if (projectsResult.Error != null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return View("Index", projectsResult.Data);
         }
 
     }

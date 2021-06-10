@@ -27,9 +27,10 @@ namespace FundRaiser.Team5.Web.Controllers
         {
             // Read Session of User Session[User]
             int userId = 0;
-            if (HttpContext.Session.GetString("CurrentUser") != null)
+            var sessionUser = HttpContext.Session.GetString("CurrentUser");
+            if (sessionUser != null)
             {
-                userId = Int32.Parse(HttpContext.Session.GetString("CurrentUser"));
+                userId = Int32.Parse(sessionUser);
             }
             var dbHomeDto = await _homeDtoService.GetHomeDtoDetailsAsync(userId);
 

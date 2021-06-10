@@ -2,11 +2,17 @@
 
 @{
 
-    if (Model.UserId != 0)
+    @*if (Model.UserId != 0)
     {
         Layout = "_LayoutLoggedIn";
     }
-   
+    else
+    {
+        Layout = "_Layout";
+    }*@
+    Layout = "_Layout";
+
+
 }
 
 <h1>Index</h1>

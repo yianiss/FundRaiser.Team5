@@ -2,11 +2,12 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "_LayoutLoggedIn";
-
-
+    var sessionUser = Model.First().SessionUser;
 }
 
 <h1>Index</h1>
+
+<h2>I am User @sessionUser</h2>
 
 <p>
     <a asp-action="Create">Create New</a>

@@ -21,6 +21,8 @@ namespace FundRaiser.Team5.Core.Options
 
         public bool IsActive { get; set; }
 
+        public int SessionUser { get; set; } = 0;
+
         public OptionUserFundingPackage() { }
 
         public OptionUserFundingPackage(UserFundingPackage userFundingPackage)

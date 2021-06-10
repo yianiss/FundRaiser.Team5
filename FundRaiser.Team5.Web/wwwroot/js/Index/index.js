@@ -27,6 +27,7 @@ getProjects();
 
 
 function getProjects() {
+    //fetch(`hhtps/Asuresite/api/Home/Get`)
     fetch(`Home/Get`)
         .then(response => response.json())
         .then(data => _displayProjects(data))

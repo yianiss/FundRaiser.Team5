@@ -28,6 +28,8 @@ namespace FundRaiser.Team5.Core
 
             services.AddScoped<IHomeDtoService, HomeDtoService>();
 
+            services.AddScoped<IUserDtoService, UserDtoService>();
+
 
             return services;
         }

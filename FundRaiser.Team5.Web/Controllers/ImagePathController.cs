@@ -32,6 +32,8 @@ namespace FundRaiser.Team5.Web.Controllers
             }
             var allImagesResult = await _imagePathService.GetImagePathsAsync();
 
+            allImagesResult.Data[0].SessionUser = userId;
+
             return View(allImagesResult.Data);
         }
 

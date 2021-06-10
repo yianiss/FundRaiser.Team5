@@ -30,6 +30,8 @@ namespace FundRaiser.Team5.Web.Controllers
             }
             var allStatusUpdatesResult = await _statusUpdateService.GetStatusUpdatesAsync();
 
+            allStatusUpdatesResult.Data[0].SessionUser = userId;
+
             return View(allStatusUpdatesResult.Data);
         }
 

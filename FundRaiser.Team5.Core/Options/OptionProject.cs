@@ -48,6 +48,9 @@ namespace FundRaiser.Team5.Core.Options
 
         public int UserId { get; set; }
 
+        public int SessionUser { get; set; }
+
+
         public OptionProject() { }
 
         public OptionProject(Project project)

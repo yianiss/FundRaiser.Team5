@@ -15,6 +15,8 @@ namespace FundRaiser_Team5.Options
 
         public string Image { get; set; }
 
+        public int SessionUser { get; set; } = 0;
+
         public OptionImagePath() { }
 
         public OptionImagePath(ImagePath imagePath)

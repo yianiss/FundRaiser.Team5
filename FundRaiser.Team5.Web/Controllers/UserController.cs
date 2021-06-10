@@ -13,14 +13,17 @@ namespace FundRaiser.Team5.Web.Controllers
         private readonly IUserService _userService;
         private readonly IProjectService _projectService;
         private readonly IHomeDtoService _homeDtoService;
+        private readonly IUserDtoService _userDtoService;
+
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ISession _session => _httpContextAccessor.HttpContext.Session;
 
-        public UserController(IUserService userService, IProjectService projectService, IHomeDtoService HomeDtoService)
+        public UserController(IUserService userService, IProjectService projectService, IHomeDtoService HomeDtoService, IUserDtoService userDtoService)
         {
             _userService = userService;
             _projectService = projectService;
             _homeDtoService = HomeDtoService;
+            _userDtoService = userDtoService;
         }
 
         // GET: UserController
@@ -34,6 +37,9 @@ namespace FundRaiser.Team5.Web.Controllers
                 userId = Int32.Parse(sessionUser);
             }
             var optionUser = await _userService.GetUsersAsync();
+
+            optionUser.Data[0].SessionUser= userId;
+
             return View(optionUser.Data);
         }
 
@@ -233,13 +239,13 @@ namespace FundRaiser.Team5.Web.Controllers
                 userId = Int32.Parse(sessionUser);
             }
 
-            var dbHomeDto = await _homeDtoService.GetHomeDtoDetailsAsync(userId);
+            var UserDto = await _userDtoService.GetUserDtoDetailsAsync(userId);
            
             if (id == null)
             {
                 return NotFound();
             }
-            return View(dbHomeDto.Data);
+            return View(UserDto.Data);
         }
     }
 }

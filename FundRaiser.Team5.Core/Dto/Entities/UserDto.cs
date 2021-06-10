@@ -6,7 +6,7 @@ namespace FundRaiser_Team5.Dto.Entities
     public class UserDto
     {
         public int UserId { get; set; }
-        public string UserFulltName { get; set; }
+        public string UserFullName { get; set; }
         public List<ProjectDetails> Projects { get; set; }
         public List<FundingPackageDetails> MyFundingPackage { get; set; }
 

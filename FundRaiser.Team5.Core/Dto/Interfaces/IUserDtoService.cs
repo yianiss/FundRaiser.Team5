@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FundRaiser_Team5.Dto.Interfaces
 {
-    interface IUserDtoService
+    public interface IUserDtoService
     {
         public Task<Result<UserDto>> GetUserDtoDetailsAsync(int UserId);
     }

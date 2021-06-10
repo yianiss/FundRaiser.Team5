@@ -32,6 +32,8 @@ namespace FundRaiser.Team5.Core.Options
 
         public List<Project> Projects { get; set; }
 
+        public int SessionUser { get; set; } = 0;
+
         public OptionUser() { }
 
         public OptionUser(User user)

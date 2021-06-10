@@ -25,7 +25,7 @@ namespace FundRaiser.Team5.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Read Session of User Session[User]
+            // Read Session of User Session[CurrentUser]
             int userId = 0;
             var sessionUser = HttpContext.Session.GetString("CurrentUser");
             if (sessionUser != null)

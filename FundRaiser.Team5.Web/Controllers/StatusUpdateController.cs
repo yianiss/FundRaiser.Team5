@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using FundRaiser.Team5.Core.Interfaces;
 using FundRaiser.Team5.Core.Options;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FundRaiser.Team5.Web.Controllers
@@ -8,6 +10,8 @@ namespace FundRaiser.Team5.Web.Controllers
     public class StatusUpdateController : Controller
     {
         private readonly IStatusUpdateService _statusUpdateService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
 
         public StatusUpdateController(IStatusUpdateService statusUpdateService)
         {
@@ -17,6 +21,13 @@ namespace FundRaiser.Team5.Web.Controllers
         // GET: /project/id/StatusUpdate/Details/
         public async Task<IActionResult> Index()
         {
+            // Read Session of User Session[CurrentUser]
+            int userId = 0;
+            var sessionUser = HttpContext.Session.GetString("CurrentUser");
+            if (sessionUser != null)
+            {
+                userId = Int32.Parse(sessionUser);
+            }
             var allStatusUpdatesResult = await _statusUpdateService.GetStatusUpdatesAsync();
 
             return View(allStatusUpdatesResult.Data);

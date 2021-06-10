@@ -5,12 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace FundRaiser.Team5.Web.Controllers
 {
     public class UserFundingPackageController : Controller
     {
         private readonly IUserFundingPackageService _userFundingPackageService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
 
         public UserFundingPackageController(IUserFundingPackageService UserFundingPackageService)
         {
@@ -20,7 +23,13 @@ namespace FundRaiser.Team5.Web.Controllers
         // GET : UserFundingPackages
         public async Task<IActionResult> Index()
         {
-
+            // Read Session of User Session[CurrentUser]
+            int userId = 0;
+            var sessionUser = HttpContext.Session.GetString("CurrentUser");
+            if (sessionUser != null)
+            {
+                userId = Int32.Parse(sessionUser);
+            }
             var allUserFundingPackagesResult = await _userFundingPackageService.ReadUserFundingPackageAsync();
 
             return View(allUserFundingPackagesResult.Data);

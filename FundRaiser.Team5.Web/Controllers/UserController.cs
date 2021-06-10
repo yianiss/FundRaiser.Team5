@@ -26,6 +26,13 @@ namespace FundRaiser.Team5.Web.Controllers
         // GET: UserController
         public async Task<IActionResult> Index()
         {
+            // Read Session of User Session[CurrentUser]
+            int userId = 0;
+            var sessionUser = HttpContext.Session.GetString("CurrentUser");
+            if (sessionUser != null)
+            {
+                userId = Int32.Parse(sessionUser);
+            }
             var optionUser = await _userService.GetUsersAsync();
             return View(optionUser.Data);
         }

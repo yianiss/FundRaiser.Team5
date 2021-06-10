@@ -27,6 +27,8 @@ namespace FundRaiser_Team5.Options
             }
         }
 
+        public int SessionUser { get; set; } = 0;
+
         public VideoPath GetVideoPath()
         {
             return new VideoPath

@@ -40,6 +40,10 @@ namespace FundRaiserMVC.Controllers
             }
 
             var allProject = await _projectService.GetProjectsAsync();
+
+            allProject.Data[0].SessionUser = userId;
+
+
             return View(allProject.Data);
         }
 

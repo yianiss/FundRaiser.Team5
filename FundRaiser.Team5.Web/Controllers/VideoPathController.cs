@@ -31,7 +31,7 @@ namespace FundRaiser.Team5.Web.Controllers
                 userId = Int32.Parse(sessionUser);
             }
             var allVideosResult = await _videoPathService.GetVideoPathsAsync();
-
+            allVideosResult.Data[0].SessionUser = userId;
             return View(allVideosResult.Data);
         }
 

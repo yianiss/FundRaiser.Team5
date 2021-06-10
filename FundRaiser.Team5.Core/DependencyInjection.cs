@@ -3,6 +3,7 @@ using FundRaiser.Team5.Core.Services;
 using FundRaiser_Team5.Dto.Interfaces;
 using FundRaiser_Team5.Dto.Services;
 using FundRaiser_Team5.Interfaces;
+using FundRaiser_Team5.Scenario;
 using FundRaiser_Team5.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,6 +28,12 @@ namespace FundRaiser.Team5.Core
             services.AddScoped<IVideoPathService, VideoPathService>();
 
             services.AddScoped<IHomeDtoService, HomeDtoService>();
+
+            services.AddScoped<IUserDtoService, UserDtoService>();
+
+            services.AddScoped<ITest, Test>();
+
+            
 
 
             return services;

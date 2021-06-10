@@ -2,9 +2,11 @@
 @{
     ViewData["Title"] = "Project";
     Layout = "_LayoutLoggedIn";
-
+    var sessionUser = Model.First().SessionUser;
 }
 
+
+<h2>I am User @sessionUser</h2>
 <p>
     <a asp-action="Create">Create New Project</a>
 </p>

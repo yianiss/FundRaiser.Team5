@@ -22,6 +22,8 @@ namespace FundRaiser.Team5.Core.Options
 
         public int ProjectId { get; set; }
 
+        public int SessionUser { get; set; } = 0;
+
         public OptionStatusUpdate() { }
 
         public OptionStatusUpdate(StatusUpdate statusUpdate)

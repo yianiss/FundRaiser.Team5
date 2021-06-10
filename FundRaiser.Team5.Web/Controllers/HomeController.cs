@@ -2,6 +2,7 @@
 using FundRaiser.Team5.Web.Models;
 using FundRaiser_Team5.Dto.Entities;
 using FundRaiser_Team5.Dto.Interfaces;
+using FundRaiser_Team5.Scenario;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,12 +21,15 @@ namespace FundRaiser.Team5.Web.Controllers
         private static bool onStart = true;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ISession _session => _httpContextAccessor.HttpContext.Session;
+        private readonly ITest _test;
 
-        public HomeController(IHomeDtoService HomeDtoService,ILogger<HomeController> logger,IUserService userService)
+
+        public HomeController(ITest test, IHomeDtoService HomeDtoService, ILogger<HomeController> logger, IUserService userService)
         {
             _homeDtoService = HomeDtoService;
             _logger = logger;
             _userService = userService;
+            _test = test;
         }
 
         public async Task<IActionResult> Index()
@@ -99,6 +103,17 @@ namespace FundRaiser.Team5.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Test()
+        {
+            var doTest = false;
+            //doTest = true;
+            if (doTest)
+            {
+                _test.Createdb();
+            }
+            return Ok();
         }
     }
 }

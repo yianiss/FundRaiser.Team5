@@ -33,7 +33,7 @@ namespace FundRaiser.Team5.Core.Services
                 optionUserFundingPackage.FundingPackageId <= 0 ||
                 optionUserFundingPackage.Price < 0)
             {
-                return new Result<OptionUserFundingPackage>(ErrorCode.BadRequest, "Not all required customer options provided.");
+                return new Result<OptionUserFundingPackage>(ErrorCode.BadRequest, "Not all required UserFundingPackage options provided.");
             }
 
             FundingPackage dbFundingPackage = await _context.FundingPackages.SingleOrDefaultAsync(fundingPackage => fundingPackage.FundingPackageId == optionUserFundingPackage.FundingPackageId);

@@ -32,6 +32,8 @@ namespace FundRaiser.Team5.Web.Controllers
             }
             var allFundingPackagesResult = await _fundingPackageService.ReadFundingPackageAsync();
 
+            allFundingPackagesResult.Data[0].SessionUser = userId;
+
             //return View(allFundingPackagesResult;
             return View(allFundingPackagesResult.Data);
 

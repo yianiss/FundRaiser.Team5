@@ -57,7 +57,7 @@ namespace FundRaiser.Team5.Core.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return new Result<OptionFundingPackage>(ErrorCode.InternalServerError, "Could not save customer.");
+                return new Result<OptionFundingPackage>(ErrorCode.InternalServerError, "Could not save FundingPackage.");
             }
             return new Result<OptionFundingPackage>
             {
@@ -115,7 +115,7 @@ namespace FundRaiser.Team5.Core.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return new Result<int>(ErrorCode.InternalServerError, "Could not delete customer.");
+                return new Result<int>(ErrorCode.InternalServerError, "Could not delete FundingPackage.");
             }
 
             return new Result<int>

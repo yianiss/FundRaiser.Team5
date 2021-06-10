@@ -26,7 +26,7 @@ namespace FundRaiser_Team5.Dto.Services
         }
         public async Task<Result<UserDto>> GetUserDtoDetailsAsync(int userId)
         {
-            UserDto _userDto = new() { UserId = 0, UserFulltName = "" };
+            UserDto _userDto = new() { UserId = 0, UserFullName = "" };
             User dbUser;
             if (userId <= 0)
             {
@@ -41,7 +41,7 @@ namespace FundRaiser_Team5.Dto.Services
             }
 
             _userDto.UserId = dbUser.UserId;
-            _userDto.UserFulltName = dbUser.FirstName + " " + dbUser.LastName;
+            _userDto.UserFullName = dbUser.FirstName + " " + dbUser.LastName;
 
             List<ProjectDetails> projectDetails = new();
 

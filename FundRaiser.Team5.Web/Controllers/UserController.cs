@@ -143,6 +143,45 @@ namespace FundRaiser.Team5.Web.Controllers
             return View();
         }
 
+        public async Task<ActionResult> GetProjectCreated(OptionUser optionUser)
+        {
+            var checkUser = await _userService.CheckLoggedInUserAsync();
+
+            if (checkUser.Data.UserId == 0)
+            {
+                return NotFound();
+            }
+
+            var projectsCreated = await _userService.GetProjectsCreatedByUser(checkUser.Data.UserId);
+
+            if (projectsCreated.Error != null)
+            {
+                return NotFound();
+            }
+
+            return View("/Views/Project/Index.cshtml",projectsCreated.Data);
+        }
+
+
+        public async Task<ActionResult> GetProjectFunded(OptionUser optionUser)
+        {
+            var checkUser = await _userService.CheckLoggedInUserAsync();
+
+            if (checkUser.Data.UserId == 0)
+            {
+                return NotFound();
+            }
+
+            var projectsFunded = await _userService.GetProjectsFundedByUser(checkUser.Data.UserId);
+
+            if (projectsFunded.Error != null)
+            {
+                return NotFound();
+            }
+
+            return View("/Views/Project/Index.cshtml", projectsFunded.Data);
+        }
+
         // POST: UserController/LogIn
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -167,20 +206,20 @@ namespace FundRaiser.Team5.Web.Controllers
         }
 
 
-        public async Task<ActionResult> LogOut([Bind("Id")] int? id)
+        public async Task<ActionResult> LogOut()
         {
-            if (id == null)
+
+            var checkUser = await _userService.CheckLoggedInUserAsync();
+
+            if (checkUser.Data.UserId == 0)
             {
                 return NotFound();
             }
+           
+            await _userService.LogOutUser(checkUser.Data.UserId);
 
-            if (ModelState.IsValid)
-            {
-                await _userService.LogOutUser(id.Value);
-
-                return RedirectToAction("Index", "ProjectController");
-            }
-            return View();
+            return RedirectToAction("Index", "Home");
+                    
         }
 
         [Route("[controller]/Profile/{id}")]

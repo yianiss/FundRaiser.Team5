@@ -25,15 +25,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="Details">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="LogOut">Log out</a>
+                            <a class="nav-link text-light" asp-controller="User" asp-action="LogOut">Log out</a>
 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Project" asp-action="Index">Projects</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="GetProjectFunded">Funded Projects</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="GetProjectCreated">My Projects</a>
+                        </li>
+                      
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                         </li>

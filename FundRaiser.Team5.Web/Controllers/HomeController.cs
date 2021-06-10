@@ -1,4 +1,5 @@
-﻿using FundRaiser.Team5.Web.Models;
+﻿using FundRaiser.Team5.Core.Interfaces;
+using FundRaiser.Team5.Web.Models;
 using FundRaiser_Team5.Dto.Entities;
 using FundRaiser_Team5.Dto.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -14,13 +15,17 @@ namespace FundRaiser.Team5.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHomeDtoService _homeDtoService;
+
+        private readonly IUserService _userService;
+        private static bool onStart = true;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ISession _session => _httpContextAccessor.HttpContext.Session;
 
-        public HomeController(IHomeDtoService HomeDtoService, ILogger<HomeController> logger)
+        public HomeController(IHomeDtoService HomeDtoService,ILogger<HomeController> logger,IUserService userService)
         {
             _homeDtoService = HomeDtoService;
             _logger = logger;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Index()
@@ -32,6 +37,17 @@ namespace FundRaiser.Team5.Web.Controllers
             {
                 userId = Int32.Parse(sessionUser);
             }
+
+            if (onStart)
+            {
+                var ok = await _userService.LoggedOutAtBeginAsync();
+                if (ok.Error != null)
+                {
+                    return Error();
+                }
+                onStart = false;
+            }
+
             var dbHomeDto = await _homeDtoService.GetHomeDtoDetailsAsync(userId);
 
             return View(dbHomeDto.Data);

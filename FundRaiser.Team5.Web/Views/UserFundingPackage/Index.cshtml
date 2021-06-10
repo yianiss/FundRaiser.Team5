@@ -2,8 +2,9 @@
 
 @{
 
-    @*if (Model.UserId != 0)
-    {
+    if (Model.UserId != 0)
+    {        
+        ViewData["Title"] = "Index";
         Layout = "_LayoutLoggedIn";
     }
     else

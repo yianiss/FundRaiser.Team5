@@ -29,7 +29,7 @@ namespace FundRaiserMVC.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(List<OptionProject> optionProjects)
         {
             // Read Session of User Session[CurrentUser]
             int userId = 0;
@@ -39,8 +39,8 @@ namespace FundRaiserMVC.Controllers
                 userId = Int32.Parse(sessionUser);
             }
 
-            var optionProjects = await _projectService.GetProjectsAsync();
-            return View(optionProjects.Data);
+            var allProject = await _projectService.GetProjectsAsync();
+            return View(allProject.Data);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -118,7 +118,7 @@ namespace FundRaiserMVC.Controllers
                     }
             }
             
-            return RedirectToAction("Create","FundingPackage");
+            return RedirectToAction("Details");
         }
 
 
@@ -187,12 +187,15 @@ namespace FundRaiserMVC.Controllers
                 return NotFound();
             }
 
-            return View("Index",projectsResult.Data);
+            return View("ProjectForGuests",projectsResult.Data);
         }
 
         public async Task<ActionResult> SearchBySearchBar([Bind("search")] string search)
         {
-
+            if(search == null)
+            {
+                search = "";
+            }
             var projectsResult = await _projectService.GetProjectsBySearch(search);
 
             if (projectsResult.Error != null)
@@ -200,7 +203,7 @@ namespace FundRaiserMVC.Controllers
                 return NotFound();
             }
 
-            return View("Index", projectsResult.Data);
+            return View("ProjectsForGuests", projectsResult.Data);
         }
 
         public async Task<ActionResult> MyProject(int? id)

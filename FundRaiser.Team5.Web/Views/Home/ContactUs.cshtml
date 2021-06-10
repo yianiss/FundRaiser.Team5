@@ -1,31 +1,24 @@
 ﻿@{
     ViewData["Title"] = "Contact Us";
-    if (Model.UserId != 0)
-    {
-        Layout = "_LayoutLoggedIn";
-    }
-    else
-    {
-        Layout = "_Layout";
-
-    }
 }
 
-<center><h1>@ViewData["Title"]</h1></center>
+<div> <h1>@ViewData["Title"]</h1></div>
 
-<div class="container">
-    <table class="table table-info">
+
+
+<div>
+    <table class="table table-info" >
         <thead>
-        <th>
-            <i class="fas fa-user"></i>  Full Name
-        </th>
-        <th>
-            <i class="far fa-envelope"></i> Email
-        </th>
-        <th>
-            <i class="fab fa-github"></i> Github
-        </th>
-        <th></th>
+            <th>
+                Full Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Github
+            </th>
+            <th></th>
         </thead>
         <tbody>
             <tr>
@@ -33,11 +26,10 @@
                     Yianis Karopoulos
                 </td>
                 <td>
-                    <a href="mailto:gkaropoulos@athtech.gr"> gkaropoulos@athtech.gr</a>
-
+                    gkaropoulos@athtech.gr
                 </td>
                 <td>
-                    <a href="https://github.com/yianiss">https://github.com/yianiss</a>
+                    https://github.com/yianiss
                 </td>
             </tr>
             <tr>
@@ -45,10 +37,10 @@
                     Konstantinos Papadopoulos
                 </td>
                 <td>
-                    <a href="mailto:kpapadopoulos@athtech.gr"> kpapadopoulos@athtech.gr</a>
+                    kpapadopoulos@athtech.gr
                 </td>
                 <td>
-                    <a href=" https://github.com/KonstantinosIoPapadopoulos"> https://github.com/KonstantinosIoPapadopoulos</a>
+                    https://github.com/KonstantinosIoPapadopoulos
                 </td>
             </tr>
             <tr>
@@ -56,10 +48,10 @@
                     Andreas Sempros
                 </td>
                 <td>
-                    <a href="mailto:asempros@athtech.gr"> asempros@athtech.gr</a>
+                    asempros@athtech.gr
                 </td>
                 <td>
-                    <a href="https://github.com/Andreas-Sempros"> https://github.com/Andreas-Sempros</a>
+                    https://github.com/Andreas-Sempros
                 </td>
             </tr>
             <tr>
@@ -67,15 +59,13 @@
                     Theodora Tasia
                 </td>
                 <td>
-                    <a href="mailto:ttasia@athtech.gr"> ttasia@athtech.gr</a>
+                    ttasia@athtech.gr
                 </td>
                 <td>
-                    <a href=" https://github.com/theodtasia"> https://github.com/theodtasia</a>
-
+                    https://github.com/theodtasia
                 </td>
             </tr>
         </tbody>
     </table>
-    </div>
 
-<div style="margin-bottom:3rem;"></div>
+</div>

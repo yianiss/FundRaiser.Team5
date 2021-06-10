@@ -8,7 +8,7 @@ document.querySelector('#login_bg').addEventListener("click", function () {
     document.querySelector('#Password').nodeValue = "";
 
     console.log("Hide");
-    
+
 
 });
 
@@ -23,21 +23,22 @@ if (login != null) {
     });
 }
 
+getProjects();
 
 
-
-function getUserFundingPackage() {
-    fetch(`$/Get`)
+function getProjects() {
+    fetch(`Home/Get`)
         .then(response => response.json())
-        .then(data => _displayProject(data))
+        .then(data => _displayProjects(data))
         .catch(error => console.error('Unable to get Projects.', error));
 }
 
 function _displayProjects(data) {
-    const rowProject = document.querySelector('#row_project').firstChild;
-    let projectList = document.querySelector('#projectList');
+    console.log(data);
+    const rowProject = document.querySelector('#project_list_template').firstChild;
+    let projectList = document.querySelector('#project_list');
     projectList.innerHTML = "";
-    data.ProjectDetails.forEach(item => {
+    data.projects.forEach(item => {
         let newProjectRow = rowProject.cloneNode(false);
 
         newProjectRow.querySelector(".ProjectTitle").innerText = item.ProjectTitle;
@@ -55,23 +56,21 @@ function _displayProjects(data) {
         projectList.appendChild(newProjectRow);
 
     });
-
-    document.querySelector('#loginbtn').addEventListener("click", function () {
-
-        let form=document.querySelector('#loginform');
-        $.ajax(
-            {
-                url: "/login",
-                dataType: 'POST',
-                data: form.serialize(),
-                success: function (data) {
-                    alert("FormOK"); // show response from the php script.
-                }
-            }
-
-        );
-
-
-    });
-    
 }
+
+document.querySelector('#loginbtn').addEventListener("click", function () {
+
+    let form = document.querySelector('#loginform');
+    $.ajax(
+        {
+            url: "/login",
+            dataType: 'POST',
+            data: form.serialize(),
+            success: function (data) {
+                alert("FormOK"); // show response from the php script.
+            }
+        }
+
+    );
+});
+

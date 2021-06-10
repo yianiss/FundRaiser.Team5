@@ -14,23 +14,22 @@ namespace FundRaiser.Team5.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHomeDtoService _homeDtoService;
-        //private readonly IHttpContextAccessor _httpContextAccessor;
-        //private ISession _session => _httpContextAccessor.HttpContext.Session;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
 
-        public HomeController(IHomeDtoService HomeDtoService,ILogger<HomeController> logger)
+        public HomeController(IHomeDtoService HomeDtoService, ILogger<HomeController> logger)
         {
             _homeDtoService = HomeDtoService;
-             _logger = logger;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
             // Read Session of User Session[User]
-
             int userId = 0;
             if (HttpContext.Session.GetString("CurrentUser") != null)
             {
-                userId = Int32.Parse( HttpContext.Session.GetString("CurrentUser"));
+                userId = Int32.Parse(HttpContext.Session.GetString("CurrentUser"));
             }
             var dbHomeDto = await _homeDtoService.GetHomeDtoDetailsAsync(userId);
 
@@ -59,6 +58,15 @@ namespace FundRaiser.Team5.Web.Controllers
 
             return NoContent(); // NOT OK
         }
+
+        //[HttpPost]
+        public async Task<IActionResult> Get()
+        {
+            HomeDto homeDto = new HomeDto();
+            var returnData = await _homeDtoService.GetHomeDtoDetailsAsync(1);
+            return Ok(returnData.Data); //OK
+        }
+
 
         public IActionResult Privacy()
         {

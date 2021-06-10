@@ -16,6 +16,9 @@ namespace FundRaiserMVC.Controllers
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IProjectService _projectService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
+
         public ProjectController(IProjectService projectService, IWebHostEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
@@ -24,6 +27,12 @@ namespace FundRaiserMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
+            int userId = 0;
+            if (HttpContext.Session.GetString("CurrentUser") != null)
+            {
+                userId = Int32.Parse(HttpContext.Session.GetString("CurrentUser"));
+            }
+
             var optionProjects = await _projectService.GetProjectsAsync();
             return View(optionProjects.Data);
         }
@@ -50,16 +59,16 @@ namespace FundRaiserMVC.Controllers
             return View();
         }
 
-       
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,Title,Category,Description,FundingPackages,Images,Videos,StatusUpdates,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] OptionProject project)
+        //public async Task<IActionResult> Create([Bind("ProjectId,Title,Category,Description,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] OptionProject project)
+        public async Task<IActionResult> Create([Bind("Title", "Description")] OptionProject project)
         {
 
             if (ModelState.IsValid)
             {
+
+
                 await _projectService.CreateProjectAsync(new OptionProject
                 {
                     ProjectId = project.ProjectId,

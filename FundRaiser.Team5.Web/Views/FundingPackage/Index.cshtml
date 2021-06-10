@@ -4,11 +4,11 @@
     ViewData["Title"] = "Index";
     if (User.Identity.IsAuthenticated)
     {
-        Layout = "__LayoutLoggedIn";
+        Layout = "_LayoutLoggedIn";
     }
     else
     {
-        Layout = "__Layout";
+        Layout = "_Layout";
     }
 }
 }

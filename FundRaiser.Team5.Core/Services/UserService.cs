@@ -107,14 +107,14 @@ namespace FundRaiser.Team5.Core.Services
 
         public async Task<Result<int>> LogOutUser(int id)
         {
-            var userToLogOut = await GetUserByIdAsync(id);
+            var userToLogOut = await _context.Users.FindAsync(id);
 
-            if (userToLogOut.Error != null || userToLogOut.Data == null)
+            if (userToLogOut == null)
             {
                 return new Result<int>(ErrorCode.NotFound, $"User with id #{id} not found.");
             }
 
-            userToLogOut.Data.IsLoggedIn = false;
+            userToLogOut.IsLoggedIn = false;
 
             try
             {
@@ -288,6 +288,7 @@ namespace FundRaiser.Team5.Core.Services
 
         public async Task<Result<List<OptionProject>>> GetProjectsCreatedByUser(int id)
         {
+
             var dbProjects = _context.Projects;
 
             List<Project> projectsCreatedByUser = await dbProjects.Where(pro => pro.User.UserId == id).ToListAsync();
@@ -331,7 +332,7 @@ namespace FundRaiser.Team5.Core.Services
 
             var user = dbUsers.Where(use => use.IsLoggedIn).ToList();
 
-            if (user == null)
+            if (user.Count() == 0)
             {
                 var guestUser = new OptionUser()
                 {

@@ -25,10 +25,10 @@ namespace FundRaiserMVC.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(List<OptionProject> optionProjects)
         {
-            var optionProjects = await _projectService.GetProjectsAsync();
-            return View(optionProjects.Data);
+             var allProject = await _projectService.GetProjectsAsync();
+             return View(allProject.Data);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -106,7 +106,7 @@ namespace FundRaiserMVC.Controllers
                     }
             }
             
-            return RedirectToAction("Create","FundingPackage");
+            return RedirectToAction("Details");
         }
 
 

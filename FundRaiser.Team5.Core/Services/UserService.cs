@@ -331,7 +331,7 @@ namespace FundRaiser.Team5.Core.Services
 
             var user = dbUsers.Where(use => use.IsLoggedIn).ToList();
 
-            if (user == null)
+            if (user.Count() == 0)
             {
                 var guestUser = new OptionUser()
                 {

@@ -2,7 +2,9 @@
 
 @{
     ViewData["Title"] = "Index";
-   
+    Layout = "_LayoutLoggedIn";
+
+
 }
 
 <h1>Status Update Index</h1>
@@ -52,8 +54,7 @@
     <script>
         const uri = 'Status Update';
 
-        function getStatusUpdate()
-        {
+        function getStatusUpdate() {
             fetch(`${uri}/Get`)
                 .then(response => response.json())
                 .then(data => _displayStatusUpdate(data))
@@ -74,8 +75,7 @@
 
             const anchorElement = document.createElement('a');
 
-            data.forEach(item =>
-            {
+            data.forEach(item => {
                 let detailsAnchor = anchorElement.cloneNode(false);
                 detailsAnchor.innerText = 'Details';
                 detailsAnchor.setAttribute('href', `${uri}/Details/${item.OptionStatusUpdateId}`);
@@ -108,3 +108,4 @@
         }
     </script>
 }
+<div style="margin-bottom:3rem;"></div>

@@ -324,5 +324,57 @@ namespace FundRaiser.Team5.Core.Services
                 Data = optionProjects.Count > 0 ? optionProjects : new List<OptionProject>()
             };
         }
+
+        public async Task<Result<OptionUser>> CheckLoggedInUserAsync()
+        {
+            var dbUsers = await _context.Users.ToListAsync();
+
+            var user = dbUsers.Where(use => use.IsLoggedIn).ToList();
+
+            if (user == null)
+            {
+                var guestUser = new OptionUser()
+                {
+                    UserId = 0
+                };
+                return new Result<OptionUser>
+                {
+                    Data = guestUser
+                };
+            }
+
+            var optionUser = new OptionUser(user[0]);
+
+            return new Result<OptionUser>
+            {
+                Data = optionUser
+            };
+        }
+
+        public async Task<Result<int>> LoggedOutAtBeginAsync()
+        {
+            var dbUsers = await _context.Users.ToListAsync();
+
+            var user = dbUsers.Where(use => use.IsLoggedIn).ToList();
+
+            user.ForEach(u => u.IsLoggedIn = false);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+
+                return new Result<int>(ErrorCode.InternalServerError, "Could not log out users.");
+            }
+
+            return new Result<int>()
+            {
+                Data = 1
+            };
+        }
     }
 }

@@ -19,10 +19,13 @@ namespace FundRaiserMVC.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private ISession _session => _httpContextAccessor.HttpContext.Session;
 
-        public ProjectController(IProjectService projectService, IWebHostEnvironment hostingEnvironment)
+        private readonly IUserService _userService;
+
+        public ProjectController(IProjectService projectService, IWebHostEnvironment hostingEnvironment, IUserService userService)
         {
             _hostingEnvironment = hostingEnvironment;
             _projectService = projectService;
+            _userService = userService;
         }
 
         public async Task<IActionResult> Index()
@@ -64,6 +67,12 @@ namespace FundRaiserMVC.Controllers
         //public async Task<IActionResult> Create([Bind("ProjectId,Title,Category,Description,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] OptionProject project)
         public async Task<IActionResult> Create([Bind("Title", "Description")] OptionProject project)
         {
+            var checkUser = await _userService.CheckLoggedInUserAsync();
+
+            if(checkUser.Data.UserId == 0)
+            {
+                return NotFound();
+            }
 
             if (ModelState.IsValid)
             {
@@ -83,7 +92,7 @@ namespace FundRaiserMVC.Controllers
                     CurrentFund = project.CurrentFund,
                     DateCreated = project.DateCreated,
                     Deadline = project.Deadline,
-                    UserId = project.UserId
+                    UserId = checkUser.Data.UserId
                 });
                     var ProjectFromDb = await _projectService.GetProjectByIdAsync(project.ProjectId);
                     string webRootPath = _hostingEnvironment.WebRootPath;

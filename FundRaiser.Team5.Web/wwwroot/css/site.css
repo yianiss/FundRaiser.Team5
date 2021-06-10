@@ -69,9 +69,13 @@ button.accept-policy
     line-height: inherit;
 }
 
-/* Sticky footer styles
+.table-info, .table-info > td, .table-info > th {
+    background-color: #d1dadb;
+    box-shadow: 0 20px 50px rgba(8, 112, 184, 0.7);
+}
+    /* Sticky footer styles
 -------------------------------------------------- */
-html {
+    html {
     position: relative;
     min-height: 100%;
 }
@@ -82,7 +86,7 @@ body {
 }
 
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     white-space: nowrap;

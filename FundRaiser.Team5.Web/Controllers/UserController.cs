@@ -130,6 +130,31 @@ namespace FundRaiser.Team5.Web.Controllers
             return View();
         }
 
+        public async Task<ActionResult> GetProjectCreated(OptionUser optionUser)
+        {
+            var projectsCreated = await _userService.GetProjectsCreatedByUser(optionUser.UserId);
+
+            if (projectsCreated.Error != null)
+            {
+                return NotFound();
+            }
+
+            return View(projectsCreated.Data);
+        }
+
+
+        public async Task<ActionResult> GetProjectFunded(OptionUser optionUser)
+        {
+            var projectsCreated = await _userService.GetProjectsFundedByUser(optionUser.UserId);
+
+            if (projectsCreated.Error != null)
+            {
+                return NotFound();
+            }
+
+            return View(projectsCreated.Data);
+        }
+
         // POST: UserController/LogIn
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -1,15 +1,18 @@
 ﻿@{
     ViewData["Title"] = "Project";
-    if (User.Identity.IsAuthenticated)
+    if (Model.UserId != 0)
     {
         Layout = "_LayoutLoggedIn";
     }
     else
     {
         Layout = "_Layout";
+
     }
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+
+<div style="margin-bottom:3rem;"></div>

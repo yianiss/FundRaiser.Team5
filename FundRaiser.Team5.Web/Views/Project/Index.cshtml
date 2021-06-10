@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<FundRaiser.Team5.Core.Options.OptionProject>
 @{
     ViewData["Title"] = "Project";
+    Layout = "_LayoutLoggedIn";
+
 }
 
 <p>
@@ -69,14 +71,14 @@
         }
     </tbody>
 </table>
+<div style="margin-bottom:3rem;"></div>
 
 @section Scripts
 {
     <script>
         const uri = 'Project';
 
-        function getProject()
-        {
+        function getProject() {
             fetch(`${uri}/Get`)
                 .then(response => response.json())
                 .then(data => _displayProject(data))

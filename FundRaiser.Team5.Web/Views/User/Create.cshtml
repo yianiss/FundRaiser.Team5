@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "_Layout";
+
 }
 
 <h1 class="text-center"> Sign Up</h1>
@@ -39,12 +41,13 @@
                 </form>
             </div>
         </div>
-        </div>
     </div>
-        <div>
-            <a asp-controller="Home" asp-action="Index">Back to Home</a>
-        </div>
+</div>
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+</div>
+<div style="margin-bottom:4rem;"></div>
 
-        @section Scripts {
-            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-        }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

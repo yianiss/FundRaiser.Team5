@@ -1,14 +1,9 @@
 ﻿@model IEnumerable<FundRaiser.Team5.Core.Options.OptionUser>
 @{
     ViewData["Title"] = "Index";
-    if (User.Identity.IsAuthenticated)
-    {
-        Layout = "_LayoutLoggedIn";
-    }
-    else
-    {
-        Layout = "_Layout";
-    }
+    Layout = "_LayoutLoggedIn";
+
+
 }
 
 <h1>Index</h1>

@@ -2,15 +2,9 @@
 
 @{
     ViewData["Title"] = "Details";
-    if (User.Identity.IsAuthenticated)
-    {
-        Layout = "_LayoutLoggedIn";
-    }
-    else
-    {
-        Layout = "_Layout";
-    }
-}
+    Layout = "_LayoutLoggedIn";
+
+
 }
 
 <h1>Details</h1>
@@ -60,3 +54,4 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<div style="margin-bottom:3rem;"></div>

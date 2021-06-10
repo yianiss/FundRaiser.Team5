@@ -17,6 +17,10 @@ namespace FundRaiser.Team5.Core.Interfaces
 
         Task<Result<int>> LogOutUser(int id);
 
+        Task<Result<OptionUser>> CheckLoggedInUserAsync();
+
+        Task<Result<int>> LoggedOutAtBeginAsync();
+
         public Task<Result<List<OptionUser>>> GetUsersAsync(OptionUser optionUser);
 
         public Task<Result<OptionUser>> UpdateUserAsync(OptionUser optionUser, int id);

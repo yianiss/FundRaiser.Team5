@@ -1,13 +1,11 @@
 ﻿@model IEnumerable<FundRaiser.Team5.Core.Options.OptionProject>
 @{
-    ViewData["Title"] = "Project";
-    Layout = "_LayoutLoggedIn";
+    ViewData["Title"] = "Projects";
+    Layout = "_Layout";
 
 }
 
-<p>
-    <a asp-action="Create">Create New Project</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -63,9 +61,7 @@
                     @Html.DisplayFor(modelItem => item.Deadline)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.ProjectId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
                 </td>
             </tr>
         }
@@ -85,13 +81,6 @@
                 .catch(error => console.error('Unable to get Project.', error));
         }
 
-        function deleteProject(id) {
-            fetch(`${uri}/Delete/${id}`, {
-                method: 'DELETE'
-            })
-                .then(() => getProjec())
-                .catch(error => console.error('Unable to delete Project.', error));
-        }
 
         function _displayProject(data) {
             const tBody = document.getElementById('Project');
@@ -103,11 +92,6 @@
                 let detailsAnchor = anchorElement.cloneNode(false);
                 detailsAnchor.innerText = 'Details';
                 detailsAnchor.setAttribute('href', `${uri}/Details/${item.OptionProjectId}`);
-
-                let deleteAnchor = anchorElement.cloneNode(false);
-                deleteAnchor.innerText = 'Delete';
-                deleteAnchor.setAttribute('onclick', `deleteProject(${item.OptionProjectId})`);
-                deleteAnchor.setAttribute('href', 'javascript:void(0)');
 
                 let tr = tBody.insertRow();
 
@@ -138,8 +122,6 @@
                 let td5 = tr.insertCell(6);
                 td5.appendChild(detailsAnchor);
 
-                let td6 = tr.insertCell(7);
-                td6.appendChild(deleteAnchor);
             });
         }
     </script>

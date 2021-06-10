@@ -50,10 +50,33 @@
                 </div>
             </div>
         }
-        
+
     </div>
     <div style="margin-bottom:3rem;"></div>
 </div>
+
+<section id="project_list">
+</section>
+
+
+<section id="project_list_template" class="d-none">
+    <div class="border col-md-10 mx-auto m-lg-5">
+        <div class="row">
+            <div class="col-md-9"><center><h2>Title</h2></center></div>
+            <div class="col-md-3"><center><h2>Creator</h2></center></div>
+        </div>
+        <div class="row">
+            <div class="col-md-9"><center><p >Category</p></center></div>
+            <div class="col-md-3"><center><p>Progress : <span >56</span>%</p></center></div>
+            <p class="ProjectDescription">Decription</p>
+        </div>
+        <div class="row">
+            <div class="col-md-9"><center><p>You can found this project until: <span class="ProjectDeadline"></span></p></center></div>
+            <div class="col-md-3"><center><button class="btn btn-success">More Info</button></center></div>
+        </div>
+    </div>
+</section>
+
 
 <sesion id="login_session" class="position-fixed row d-none">
     <div id="login_bg" class="position-fix fixed-top min-vw-100 min-vh-100 fnt5-bg-semitransparent"></div>
@@ -83,6 +106,8 @@
         </div>
     </div>
 </sesion>
+
+<div class="d-inline-block h-25"></div>
 
 @section Scripts
     {

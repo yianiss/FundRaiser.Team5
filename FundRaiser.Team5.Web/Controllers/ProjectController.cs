@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using FundRaiser_Team5.Dto.Entities;
 
 namespace FundRaiserMVC.Controllers
 {
@@ -16,6 +17,9 @@ namespace FundRaiserMVC.Controllers
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IProjectService _projectService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private ISession _session => _httpContextAccessor.HttpContext.Session;
+
         private readonly IUserService _userService;
 
         public ProjectController(IProjectService projectService, IWebHostEnvironment hostingEnvironment, IUserService userService)
@@ -27,8 +31,16 @@ namespace FundRaiserMVC.Controllers
 
         public async Task<IActionResult> Index(List<OptionProject> optionProjects)
         {
-             var allProject = await _projectService.GetProjectsAsync();
-             return View(allProject.Data);
+            // Read Session of User Session[CurrentUser]
+            int userId = 0;
+            var sessionUser = HttpContext.Session.GetString("CurrentUser");
+            if (sessionUser != null)
+            {
+                userId = Int32.Parse(sessionUser);
+            }
+
+            var allProject = await _projectService.GetProjectsAsync();
+            return View(allProject.Data);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -53,12 +65,10 @@ namespace FundRaiserMVC.Controllers
             return View();
         }
 
-       
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,Title,Category,Description,FundingPackages,Images,Videos,StatusUpdates,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] OptionProject project)
+        public async Task<IActionResult> Create([Bind("ProjectId,Title,Category,Description,FundingGoal,CurrentFund,DateCreated, Deadline,Users")] OptionProject project)
+        //public async Task<IActionResult> Create([Bind("Title", "Description")] OptionProject project)
         {
             var checkUser = await _userService.CheckLoggedInUserAsync();
 
@@ -69,6 +79,8 @@ namespace FundRaiserMVC.Controllers
 
             if (ModelState.IsValid)
             {
+
+
                 await _projectService.CreateProjectAsync(new OptionProject
                 {
                     ProjectId = project.ProjectId,
@@ -192,6 +204,21 @@ namespace FundRaiserMVC.Controllers
             }
 
             return View("ProjectsForGuests", projectsResult.Data);
+        }
+
+        public async Task<ActionResult> MyProject(int? id)
+        {
+            ProjectDto projectDto = new ProjectDto();
+
+            return NotFound();
+            //var projectsResult = await _projectService.GetProjectsBySearch(search);
+
+            //if (projectsResult.Error != null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return View("Index", projectsResult.Data);
         }
 
     }

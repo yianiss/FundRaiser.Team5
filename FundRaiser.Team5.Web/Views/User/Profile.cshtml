@@ -19,7 +19,7 @@
 <h1>Profile</h1>
 
 
-<h1> I am user @Model.UserId @Model.UserFullName</h1>
+<h1> I am @Model.UserFullName</h1>
 
 My Projects
 <section id="project_list">
@@ -33,10 +33,10 @@ My Projects
             <div class="row">
                 <div class="col-md-9"><center><p>@Html.DisplayFor(modelItem => item.ProjectCategory)</p></center></div>
                 <div class="col-md-3"><center><p>@Html.DisplayFor(modelItem => item.ProjectProgress) : %</p></center></div>
-                <p>@Html.DisplayFor(modelItem => item.ProjectDescription)Decription</p>
+                <p>@Html.DisplayFor(modelItem => item.ProjectDescription)</p>
             </div>
             <div class="row">
-                <div class="col-md-9"><center><p>You can found this project until: @Html.DisplayFor(modelItem => item.ProjectDeadline) </p></center></div>
+                <div class="col-md-9"><center><p>You can find this project until: @Html.DisplayFor(modelItem => item.ProjectDeadline) </p></center></div>
                 <div class="col-md-3"><center><button class="btn btn-success" href="project/details/@Html.DisplayFor(modelItem => item.ProjectId)">More Info</button></center></div>
             </div>
         </div>

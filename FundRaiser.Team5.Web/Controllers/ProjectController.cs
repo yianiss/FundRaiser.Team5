@@ -202,7 +202,7 @@ namespace FundRaiserMVC.Controllers
                 return NotFound();
             }
 
-            return View("ProjectForGuests",projectsResult.Data);
+            return View("Index", projectsResult.Data);
         }
 
         public async Task<ActionResult> SearchBySearchBar([Bind("search")] string search)

@@ -3,14 +3,13 @@
 @{
     var sessionUser = Model.First().SessionUser;
 
-    //Layout = "_Layout";
-    if (sessionUser <= 0)
+    if (sessionUser > 0)
     {
         Layout = "_LayoutLoggedIn";
     }
     else
     {
-        Layout = "_Layout";
+       <script type="text/javascript"> window.location.href="@Url.Action("Index", "Home")"</script>
     }
 
 }

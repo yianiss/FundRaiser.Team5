@@ -61,6 +61,19 @@ namespace FundRaiserMVC.Controllers
                 return NotFound();
             }
 
+            // Read Session of User Session[CurrentUser]
+            int userId = 0;
+            var sessionUser = HttpContext.Session.GetString("CurrentUser");
+            if (sessionUser != null)
+            {
+                userId = Int32.Parse(sessionUser);
+            }
+
+            var allProject = await _projectService.GetProjectByIdAsync();
+
+            allProject.Data[0].SessionUser = userId;
+
+
             return View(project);
         }
 

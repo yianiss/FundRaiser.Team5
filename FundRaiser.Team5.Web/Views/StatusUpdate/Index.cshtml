@@ -2,8 +2,17 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "_LayoutLoggedIn";
+    var sessionUser = Model.First().SessionUser;
 
+    if (sessionUser > 0)
+    {
+        Layout = "_LayoutLoggedIn";
+    }
+    else
+    {
+        <script type="text/javascript"> window.location.href="@Url.Action("Index", "Home")"</script>
+    }
+}
 
 }
 

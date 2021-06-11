@@ -2,7 +2,14 @@
 
 @{
     ViewData["Title"] = "Delete";
-    Layout = "_LayoutLoggedIn";
+    if (Model.UserId > 0)
+    {
+        Layout = "_LayoutLoggedIn";
+    }
+    else
+    {
+        <script type="text/javascript"> window.location.href="@Url.Action("Index", "Home")"</script>
+    }
 
 }<h1>Delete</h1>
 

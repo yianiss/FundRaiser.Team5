@@ -2,7 +2,15 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "_Layout";
+    var sessionUser = Model.First().SessionUser;
+    if (sessionUser != 0)
+    {
+        Layout = "_LayoutLoggedIn";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 
 }
 

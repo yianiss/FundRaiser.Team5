@@ -3,7 +3,15 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "_LayoutLoggedIn";
+    var sessionUser = Model.First().SessionUser;
+    if (sessionUser != 0)
+    {
+        Layout = "_LayoutLoggedIn";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 
 
 }

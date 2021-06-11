@@ -2,8 +2,14 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "_LayoutLoggedIn";
-
+    if (Model.UserId > 0)
+    {
+        Layout = "_LayoutLoggedIn";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 
 }
 

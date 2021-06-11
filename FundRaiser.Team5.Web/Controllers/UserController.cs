@@ -221,15 +221,17 @@ namespace FundRaiser.Team5.Web.Controllers
             {
                 return NotFound();
             }
-           
+
+            HttpContext.Session.SetString("CurrentUser", "0");
+
             await _userService.LogOutUser(checkUser.Data.UserId);
 
             return RedirectToAction("Index", "Home");
                     
         }
 
-        [Route("[controller]/Profile/{id}")]
-        public async Task<ActionResult> Profile([Bind("Id")] int? id)
+        [Route("[controller]/Profile")]
+        public async Task<ActionResult> Profile()
         {
             // Read Session of User Session[User]
             int userId = 0;
@@ -240,11 +242,7 @@ namespace FundRaiser.Team5.Web.Controllers
             }
 
             var UserDto = await _userDtoService.GetUserDtoDetailsAsync(userId);
-           
-            if (id == null)
-            {
-                return NotFound();
-            }
+
             return View(UserDto.Data);
         }
     }

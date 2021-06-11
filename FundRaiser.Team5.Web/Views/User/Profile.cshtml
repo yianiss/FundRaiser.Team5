@@ -1,9 +1,9 @@
-﻿@model  FundRaiser_Team5.Dto.Entities.UserDto ;
+﻿@model FundRaiser_Team5.Dto.Entities.UserDto ;
 
 
 @{
     ViewData["Title"] = "Index";
-    var sessionUser = 1;
+    var sessionUser = Model.UserId;
     if (sessionUser != 0)
     {
         Layout = "_LayoutLoggedIn";
@@ -21,4 +21,40 @@
 
 <h1> I am user @Model.UserId @Model.UserFullName</h1>
 
+My Projects
+<section id="project_list">
+    @foreach (var item in Model.Projects)
+    {
+        <div class="border col-md-10 mx-auto m-lg-5">
+            <div class="row">
+                <div class="col-md-9"><center><h2>@Html.DisplayFor(modelItem => item.ProjectTitle)</h2></center></div>
+                <div class="col-md-3"><center><h2>@Html.DisplayFor(modelItem => item.ProjectCreatorFullName)</h2></center></div>
+            </div>
+            <div class="row">
+                <div class="col-md-9"><center><p>@Html.DisplayFor(modelItem => item.ProjectCategory)</p></center></div>
+                <div class="col-md-3"><center><p>@Html.DisplayFor(modelItem => item.ProjectProgress) : %</p></center></div>
+                <p>@Html.DisplayFor(modelItem => item.ProjectDescription)Decription</p>
+            </div>
+            <div class="row">
+                <div class="col-md-9"><center><p>You can found this project until: @Html.DisplayFor(modelItem => item.ProjectDeadline) </p></center></div>
+                <div class="col-md-3"><center><button class="btn btn-success" href="project/details/@Html.DisplayFor(modelItem => item.ProjectId)">More Info</button></center></div>
+            </div>
+        </div>
+    }
+</section>
+<section id="fundingpackage_list">
+    @foreach (var item in Model.MyFundingPackage)
+    {
+        <div class="border col-md-10 mx-auto m-lg-5">
+            <div class="row">
+                <div class="col-md-9"><center><h2>@Html.DisplayFor(modelItem => item.TitleProject)</h2></center></div>
+                <div class="col-md-3"><center><h2>@Html.DisplayFor(modelItem => item.Title)</h2></center></div>
+            </div>
+            <div class="row">
+                <div class="col-md-9"><center><p>Price : @Html.DisplayFor(modelItem => item.Price) </p></center></div>
+                <div class="col-md-3"><center><button class="btn btn-success" href="project/details/@Html.DisplayFor(modelItem => item.ProjectId)">More Info</button></center></div>
+            </div>
+        </div>
+    }
+</section>
 

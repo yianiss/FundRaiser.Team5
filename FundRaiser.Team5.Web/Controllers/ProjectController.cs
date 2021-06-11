@@ -72,7 +72,7 @@ namespace FundRaiserMVC.Controllers
             project.Data.SessionUser = userId;
 
 
-            return View(project);
+            return View(project.Data);
         }
 
         public ActionResult Create()

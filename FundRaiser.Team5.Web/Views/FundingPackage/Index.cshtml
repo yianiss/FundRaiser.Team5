@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    var sessionUser = Model.First().SessionUser;
+    var sessionUser = 1;
     if (sessionUser>0)
     {
         Layout = "_LayoutLoggedIn";
@@ -17,7 +17,7 @@
 <h1>Index</h1>
 <h2>I am User @sessionUser</h2>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="FundingPackage" asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>

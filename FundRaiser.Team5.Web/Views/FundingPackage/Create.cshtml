@@ -2,9 +2,18 @@
 
 
 @{
-    ViewData["Title"] = "Create";
-   
+    ViewData["Title"] = "Details";
+    var sessionUser = 1;
+    if (sessionUser != 0)
+    {
+        Layout = "_LayoutLoggedIn";
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
 }
+
 
 <h1 class="text-center"> Create New Funding Package</h1> >
 <hr />
@@ -41,7 +50,7 @@
                     </div>
                     <div class="form-group">
                         <center> <input type="submit" value="Create" class="btn btn-secondary btn-lg" /> </center>
-</div>
+                    </div>
                 </form>
             </div>
         </div>

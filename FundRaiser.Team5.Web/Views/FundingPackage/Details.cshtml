@@ -1,14 +1,15 @@
 ﻿@model FundRaiser.Team5.Core.Options.OptionFundingPackage
 
 @{
-    ViewData["Title"] = "Details";
-    if (User.Identity.IsAuthenticated)
+    ViewData["Title"] = "Status Update";
+    var sessionUser = 1;
+    if (sessionUser > 0)
     {
         Layout = "_LayoutLoggedIn";
     }
     else
     {
-        Layout = "_Layout";
+        <script type="text/javascript"> window.location.href="@Url.Action("Index", "Home")"</script>
     }
 }
 
@@ -16,15 +17,9 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Customer</h4>
+    <h4>Funding Package</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProjectId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProjectId)
-        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>

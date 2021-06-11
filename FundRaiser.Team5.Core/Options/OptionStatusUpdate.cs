@@ -38,7 +38,7 @@ namespace FundRaiser.Team5.Core.Options
 
             IsActive = statusUpdate.IsActive;
 
-            ProjectId = statusUpdate.Project.ProjectId;
+            //ProjectId = statusUpdate.Project.ProjectId;
         }
 
         public StatusUpdate GetStatusUpdate()

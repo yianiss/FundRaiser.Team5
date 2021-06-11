@@ -181,10 +181,8 @@ namespace FundRaiser.Team5.Core.Services
                 return new Result<List<OptionProject>>(ErrorCode.BadRequest, "There was an error");
             }
 
-            var projectsBySearch = projects.Data.Where(pro => pro.Title.Contains(search)).ToList()
-                .Union
-                (projects.Data.Where(pro => pro.Description.Contains(search))).ToList()
-                .Union(projects.Data.Where(pro => pro.IsActive)).ToList();
+            var projectsBySearch = projects.Data.Where(pro => pro.Title.Contains(search) && pro.IsActive)
+                                      .Union(projects.Data.Where(pro => pro.Description.Contains(search) && pro.IsActive)).ToList();
 
             return new Result<List<OptionProject>>
             {

@@ -2,7 +2,8 @@
 
 @{
     ViewData["Title"] = "Details";
-    if (Model.UserId > 0)
+    var sessionUser = 1;
+    if (sessionUser != 0)
     {
         Layout = "_LayoutLoggedIn";
     }
@@ -16,44 +17,83 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Status Update</h4>
+    <h4>Project Info</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Category)
+            @Html.DisplayFor(model => model.Title)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DateCreated)
         </dd>
-        <dt class="col-sm-10">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Deadline)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Deadline)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CurrentFund)
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CurrentFund)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FundingGoal)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FundingGoal)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Deadline)
-        </dt>
-        <dt class="col-sm-10">
-            @Html.DisplayFor(model => model.StatusUpdates)
+            Completed (%)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FundingPackages)
+            @{
+                string parameterValue = (Model.CurrentFund / Model.FundingGoal).ToString("P");
+            }
+            @Html.DisplayFor(modelItem => parameterValue)
         </dd>
-        <dt class="col-sm-10">
-            @Html.DisplayFor(model => model.Images)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FundingPackages)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Videos)
+            <a asp-controller="FundingPackage" asp-action="Index" class="bg-info"> Funding Packages </a>
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StatusUpdates)
+        </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
+            <a asp-controller="StatusUpdate" asp-action="Index" class="bg-info"> Status Updates </a>
+        </dd>
+        <dt class="col-sm-2">
+            Images
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-controller="ImagePath" asp-action="Index" class="bg-info"> See Images </a>
+        </dd>
+        <dt class="col-sm-2">
+            Images
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-controller="VideoPath" asp-action="Index" class="bg-info"> See Videos </a>
         </dd>
     </dl>
 </div>

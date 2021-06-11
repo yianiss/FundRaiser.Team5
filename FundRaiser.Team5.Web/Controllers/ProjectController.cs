@@ -69,9 +69,7 @@ namespace FundRaiserMVC.Controllers
                 userId = Int32.Parse(sessionUser);
             }
 
-            var allProject = await _projectService.GetProjectByIdAsync();
-
-            allProject.Data[0].SessionUser = userId;
+            project.Data.SessionUser = userId;
 
 
             return View(project);
@@ -135,7 +133,7 @@ namespace FundRaiserMVC.Controllers
                     }
             }
             
-            return RedirectToAction("Details");
+            return View("/Views/Project/Details.cshtml",project);
         }
 
 

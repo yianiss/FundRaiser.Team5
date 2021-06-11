@@ -2,111 +2,113 @@
 
 @{
     ViewData["Title"] = "Create";
-
-    if (Model.UserId > 0)
+    var sessionUser = 1;
+    if (sessionUser != 0)
     {
         Layout = "_LayoutLoggedIn";
     }
     else
     {
-        <script type="text/javascript"> window.location.href="@Url.Action("Index", "Home")"</script>
+        Layout = "_Layout";
     }
 
-    <h1 class="text-center">Create New Project</h1>
+}
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6 mx-auto">
-                <div class="mainForm">
-                    <form asp-action="Create" enctype="multipart/form-data" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="Title" class="control-label"></label>
-                            <input asp-for="Title" class="form-control" id="Title" />
-                            <span asp-validation-for="Title" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Description" class="control-label"></label>
-                            <textarea asp-for="Description" class="form-control" id="Description"></textarea>
-                            <span asp-validation-for="Description" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Category" class="control-label"></label>
-                            <select asp-for="Category" id="Category"
-                                    class="form-control"
-                                    asp-items="Html.GetEnumSelectList<FundRaiser.Team5.Core.Entities.Category>()">
-                                <option>Select Category ...</option>
-                            </select>
-                            <span asp-validation-for="Category" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="FundingGoal" class="control-label"></label>
-                            <input asp-for="FundingGoal" class="form-control" id="FundingGoal" />
-                            <span asp-validation-for="FundingGoal" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Deadline" class="control-label"></label>
-                            <input type=date asp-for="Deadline" class="form-control" id="Deadline" />
-                            <span asp-validation-for="Deadline" class="text-danger"></span>
-                        </div>
+<h1 class="text-center">Create New Project</h1>
 
-                        <div class="form-field">
-                            <p>Select pictures:</p>
-                            <div class="upload-container">
-                                <div class="upload">
-                                    <input type="file" name="images" id="images" onchange="uploadFiles('images');" multiple />
-                                </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="mainForm">
+                <form asp-action="Create" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" id="Title" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control" id="Description"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Category" class="control-label"></label>
+                        <select asp-for="Category" id="Category"
+                                class="form-control"
+                                asp-items="Html.GetEnumSelectList<FundRaiser.Team5.Core.Entities.Category>()">
+                            <option>Select Category ...</option>
+                        </select>
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FundingGoal" class="control-label"></label>
+                        <input asp-for="FundingGoal" class="form-control" id="FundingGoal" />
+                        <span asp-validation-for="FundingGoal" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Deadline" class="control-label"></label>
+                        <input type=date asp-for="Deadline" class="form-control" id="Deadline" />
+                        <span asp-validation-for="Deadline" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-field">
+                        <p>Select pictures:</p>
+                        <div class="upload-container">
+                            <div class="upload">
+                                <input type="file" name="images" id="images" onchange="uploadFiles('images');" multiple />
                             </div>
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label asp-for="Videos" class="control-label"> Upload Video</label>
-                            <input type="file" name="video" id="Video" /><br>
-                            @ViewBag.Message
-                            <span asp-validation-for="Videos" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
+                    <div class="form-group">
+                        <label asp-for="Videos" class="control-label"> Upload Video</label>
+                        <input type="file" name="video" id="Video" /><br>
+                        @ViewBag.Message
+                        <span asp-validation-for="Videos" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
 
 
-                            <center><input type="submit" value="Submit" class="btn btn-secondary btn-lg" /></center>
+                        <center><input type="submit" value="Submit" class="btn btn-secondary btn-lg" /></center>
 
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <div style="margin-bottom:3rem;"></div>
+</div>
+<div style="margin-bottom:3rem;"></div>
 
-    @section Scripts
+@section Scripts
 {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
-    <script type="text/javascript">
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script type="text/javascript">
 
-        function douUpload() { }
-        function uploadFiles(inputId) {
-            var input = document.getElementById(inputId);
-            var files = input.files;
-            var formData = new FormData();
+    function douUpload() { }
+    function uploadFiles(inputId) {
+        var input = document.getElementById(inputId);
+        var files = input.files;
+        var formData = new FormData();
 
-            for (var i = 0; i !== files.length; i++) {
-                formData.append("files", files[i]);
-            }
-
-            $.ajax(
-                {
-                    url: "/account/uploadfiles",
-                    dataType: 'json',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    type: "POST",
-                    success: function (data) {
-                        $("#ResumeFileName").val(data.Image);
-                        alert("Files Uploaded! " + data.Image);
-                    }
-                }
-            );
+        for (var i = 0; i !== files.length; i++) {
+            formData.append("files", files[i]);
         }
-    </script>
+
+        $.ajax(
+            {
+                url: "/account/uploadfiles",
+                dataType: 'json',
+                data: formData,
+                processData: false,
+                contentType: false,
+                type: "POST",
+                success: function (data) {
+                    $("#ResumeFileName").val(data.Image);
+                    alert("Files Uploaded! " + data.Image);
+                }
+            }
+        );
+    }
+</script>

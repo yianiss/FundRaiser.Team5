@@ -358,6 +358,14 @@ namespace FundRaiser.Team5.Core.Services
 
             var user = dbUsers.Where(use => use.IsLoggedIn).ToList();
 
+            if (user.Count() == 0)
+            {
+                return new Result<int>
+                {
+                    Data = 0
+                };
+            }
+
             user.ForEach(u => u.IsLoggedIn = false);
 
             try
